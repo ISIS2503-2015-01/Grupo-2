@@ -1,0 +1,14 @@
+{
+    "displayName" : "Paciente",
+    "name" : "paciente",
+    "templateName" : "paciente",
+    "url" : "paciente.html",
+    "server": "localhost:8080",
+    "server": "localhost:8080",
+    
+    "context": "/ClinicaKennedy.web/webresources/PacienteMaster",
+    
+	
+    
+    "el" : "#main"
+}
