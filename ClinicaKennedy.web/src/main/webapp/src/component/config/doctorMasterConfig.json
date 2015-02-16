@@ -1,0 +1,14 @@
+{
+    "displayName" : "Doctor",
+    "name" : "doctor",
+    "templateName" : "doctor",
+    "url" : "doctor.html",
+    "server": "localhost:8080",
+    "server": "localhost:8080",
+    
+    "context": "/ClinicaKennedy.web/webresources/DoctorMaster",
+    
+	
+    
+    "el" : "#main"
+}

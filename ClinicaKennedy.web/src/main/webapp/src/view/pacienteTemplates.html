@@ -1,0 +1,29 @@
+<script type="text/template" id="paciente">
+    <div class="form-group">
+    <form role="form" id="<%= componentId %>-pacienteForm">
+    <% if(paciente.id) {%>
+    <input type="hidden" name="id" value="<%= paciente.id %>"/>
+    <% }%>
+		<div class="form-group" >
+		<label for="alturaMetros">Altura Metros</label>
+    	<input type="text" class="form-control" id="alturaMetros" name="alturaMetros" placeholder="Enter value" value="<%= paciente.get('alturaMetros') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="edad">Edad</label>
+    	<input type="text" class="form-control" id="edad" name="edad" placeholder="Enter value" value="<%= paciente.get('edad') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="name">Name</label>
+    	<input type="text" class="form-control" id="name" name="name" placeholder="Enter value" value="<%= paciente.get('name') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="pesoKg">Peso Kg</label>
+    	<input type="text" class="form-control" id="pesoKg" name="pesoKg" placeholder="Enter value" value="<%= paciente.get('pesoKg') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="documentoIdentificacion">Documento Identificacion</label>
+    	<input type="text" class="form-control" id="documentoIdentificacion" name="documentoIdentificacion" placeholder="Enter value" value="<%= paciente.get('documentoIdentificacion') %>"/>	
+		</div>
+    </form>
+    </div>
+</script> 
