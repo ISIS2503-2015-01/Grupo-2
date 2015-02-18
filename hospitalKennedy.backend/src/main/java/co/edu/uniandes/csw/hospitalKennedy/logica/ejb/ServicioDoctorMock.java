@@ -51,7 +51,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
 
     @Override
     public ArrayList<Paciente> getPacientes() {
-        return pacientes;
+        return (ArrayList<Paciente>)persistencia.findAll(Paciente.class);
     }
     
     
