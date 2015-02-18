@@ -55,16 +55,8 @@ public class DoctorService {
     
     @GET
     @Path("paciente/{idPaciente}")
-    public Paciente darPaciente(@PathParam("idPaciente") long idPaciente){
-        ArrayList<Paciente> pacientes = doctorEjb.getPacientes();
-        Paciente pacienteAct = null;
-        for(int i =0; i < pacientes.size();i++){
-            pacienteAct = pacientes.get(i);
-            if(pacienteAct.getId() == idPaciente){
-                i = pacientes.size();
-            }
-        }
-        return pacienteAct;
+    public List<Paciente> darPaciente(@PathParam("idPaciente") long idPaciente){
+        return doctorEjb.getPacientes();
                 
     }
 }
