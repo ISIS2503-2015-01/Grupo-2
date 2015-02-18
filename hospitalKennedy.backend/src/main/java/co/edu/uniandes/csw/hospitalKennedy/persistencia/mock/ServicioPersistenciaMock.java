@@ -77,24 +77,17 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             doctores.add(new Doctor(5L, "Carlos Carrillo", "lolita45", "ca.carrillo"));
 
             pacientes = new ArrayList<Paciente>();
-            
-            pacientes.add(new Paciente(1L, "Juana la loca", 25, 12365987, 200));
-            pacientes.add(new Paciente(2L, "Juana la sana", 15, 55689865, 185));
+            ArrayList<Reporte> reportes = new ArrayList<Reporte>();
+            pacientes.add(new Paciente(1L, "Juana la loca", 25, 12365987, 200, reportes));
+            ArrayList<Reporte> reportes2 = new ArrayList<Reporte>();
+            pacientes.add(new Paciente(2L, "Juana la sana", 15, 55689865, 185, reportes2));
 
-            reportes = new ArrayList<Reporte>();
             
-            reportes.add(new Reporte(1L, "Jugar bascketball", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 1, "Ninguno"));
-            reportes.add(new Reporte(2L, "Jugar football", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 2, "Ninguno"));
-
-            pacientes.get(0).setReportes(reportes);
+            pacientes.get(0).agregarReporte(new Reporte(1L, "Jugar bascketball", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 1, "Ninguno"));
+            pacientes.get(0).agregarReporte(new Reporte(2L, "Jugar football", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 2, "Ninguno"));
             
-            reportes = null;
-            reportes = new ArrayList<Reporte>();
-            
-            reportes.add(new Reporte(3L, "Jugar bascketball", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 1, "Ninguno"));
-            reportes.add(new Reporte(4L, "Jugar football", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 2, "Ninguno"));
-            
-            pacientes.get(1).setReportes(reportes);
+            pacientes.get(1).agregarReporte(new Reporte(3L, "Jugar bascketball", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 1, "Ninguno"));
+            pacientes.get(1).agregarReporte(new Reporte(4L, "Jugar football", "Sana", "1", new Date(System.currentTimeMillis()), "Espalda baja", "Normal", 2, "Ninguno"));
                         
         }
     }

@@ -28,12 +28,13 @@ public class Paciente {
     private String nombre;
     private ArrayList<Reporte> reportes;
     
-    public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura){
+    public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.cedulaCiudadania = cedulaCiudadania;
         this.altura = altura;
+        reportes = reportesN;
     }
 
     public void setReportes(ArrayList<Reporte> reportes) {
@@ -82,6 +83,11 @@ public class Paciente {
 
     public String getNombre() {
         return nombre;
+    }
+    
+    public void agregarReporte(Reporte reporte)
+    {
+        reportes.add(reporte);
     }
     
     

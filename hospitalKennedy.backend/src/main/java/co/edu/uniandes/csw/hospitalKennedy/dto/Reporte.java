@@ -24,7 +24,15 @@ public class Reporte {
     private String medicamentosRecientes;
     
     public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, Date fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
-        
+        this.id = id;
+        this.actividadFisica = actividadFisica;
+        this.alimentacion = alimentacion;
+        this.gravedad = gravedad;
+        this.fechaCreacion  = fechaCreacion;
+        this.localizacionDolor = localizacionDolor;
+        this.patronSuenio = patronSuenio;
+        this.numeroIdentificacion = numeroIdentificacion;
+        this.medicamentosRecientes = medicamentosRecientes;
     }
 
     public void setMedicamentosRecientes(String medicamentosRecientes) {
