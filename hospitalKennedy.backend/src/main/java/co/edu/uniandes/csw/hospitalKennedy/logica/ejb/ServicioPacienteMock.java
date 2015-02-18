@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMo
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,6 +110,21 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
 
         }
         return null;
+    }
+
+    @Override
+    public List<Reporte> getReportesEntreFechas(long id, long codFecha1, long codFecha2) {
+        
+        ArrayList<Reporte> reportes = getReportes(id);
+        ArrayList<Reporte> res = new ArrayList<Reporte>();
+        for(int i = 0; i< reportes.size(); i++){
+             Reporte reporteAct = reportes.get(i);
+             
+             if(reporteAct.getFechaCreacion().after(new Date(codFecha1)) && reporteAct.getFechaCreacion().before(new Date(codFecha2))){
+                 res.add(reporteAct);
+             }
+        }
+        return res;
     }
 
     
