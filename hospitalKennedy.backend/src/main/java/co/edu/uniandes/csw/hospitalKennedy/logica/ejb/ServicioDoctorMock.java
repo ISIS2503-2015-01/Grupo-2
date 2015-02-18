@@ -13,6 +13,8 @@ import javax.ejb.Stateless;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
@@ -61,22 +63,16 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     @Override
     public void agregarPaciente(Paciente paciente) 
     {
-        boolean found = false;
-        Paciente item;
-        for(int i= 0, max= pacientes.size(); i < max; i++)
+        try
         {
-            item = (Paciente)pacientes.get(i);
-            if (item.getCedulaCiudadania() == paciente.getCedulaCiudadania())
-            {
-                found = true;
-                break;
-            }
+            persistencia.create(paciente);
         }
-
-        if (!found)
+        catch(Exception ex)
         {
-            pacientes.add(paciente);           
+            Logger.getLogger(ServicioDoctorMock.class.getName()).log(Level.SEVERE, null, ex);                
+                    
         }
+        
 
     }
 
@@ -88,23 +84,17 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     @Override
     public void removerPaciente(Paciente paciente)
     {
-
-        Paciente foundItem = null;
-        Paciente item;
-        for(int i= 0, max= pacientes.size(); i < max; i++)
+        try
         {
-            item = (Paciente)pacientes.get(i);
-            if (item.getCedulaCiudadania()== paciente.getCedulaCiudadania())
-            {
-                foundItem = item;
-                break;
-            }
+            persistencia.delete(paciente);
         }
+        catch(Exception ex)
+        {
+            Logger.getLogger(ServicioDoctorMock.class.getName()).log(Level.SEVERE, null, ex);                
+                    
+        }
+        
 
-        if (foundItem != null) {
-            
-            pacientes.remove(foundItem);
-        }
     }
     
     
