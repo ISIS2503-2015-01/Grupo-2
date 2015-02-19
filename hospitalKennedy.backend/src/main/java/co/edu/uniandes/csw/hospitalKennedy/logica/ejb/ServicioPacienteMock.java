@@ -28,13 +28,18 @@ import javax.inject.Inject;
 public class ServicioPacienteMock implements IServicioPacienteMock {
     
     @EJB
-    private IServicioPersistenciaMockLocal persistencia;
+    public static IServicioPersistenciaMockLocal persistencia;
     
 
     public ServicioPacienteMock()
     {
-        persistencia = new ServicioPersistenciaMock();
-        
+        if(ServicioDoctorMock.persistencia == null)
+        {
+            persistencia = new ServicioPersistenciaMock();
+            
+        }
+        else
+            persistencia = ServicioDoctorMock.persistencia;
     }
 
     @Override

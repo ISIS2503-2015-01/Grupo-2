@@ -28,13 +28,18 @@ import javax.ejb.Stateful;
 public class ServicioDoctorMock implements IServicioDoctorMock {
     
     @EJB
-    private IServicioPersistenciaMockLocal persistencia;
+    public static IServicioPersistenciaMockLocal persistencia;
     
     private ArrayList<Paciente> pacientes;
 
     public ServicioDoctorMock()
     {
-        persistencia=new ServicioPersistenciaMock();
+        if(ServicioPacienteMock.persistencia == null)
+        {
+            persistencia=new ServicioPersistenciaMock();
+        }
+        else
+            persistencia = ServicioPacienteMock.persistencia;
     }
 
     @Override
