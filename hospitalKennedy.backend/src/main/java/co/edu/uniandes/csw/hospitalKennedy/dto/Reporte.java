@@ -16,14 +16,14 @@ public class Reporte {
     private String actividadFisica;
     private String alimentacion;
     private String gravedad;
-    private Date fechaCreacion;
+    private String fechaCreacion;
     private Long id;
     private String localizacionDolor;
     private String patronSuenio;
     private int numeroIdentificacion;
     private String medicamentosRecientes;
     
-    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, Date fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
+    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
         this.id = id;
         this.actividadFisica = actividadFisica;
         this.alimentacion = alimentacion;
@@ -63,7 +63,7 @@ public class Reporte {
         this.gravedad = gravedad;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -91,7 +91,7 @@ public class Reporte {
         return gravedad;
     }
 
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return fechaCreacion;
     }
 
