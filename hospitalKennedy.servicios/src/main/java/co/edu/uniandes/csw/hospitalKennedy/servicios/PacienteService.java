@@ -110,11 +110,11 @@ public class PacienteService {
         return null;
     }
     
-//    @GET
-//    @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
-//    public List<Reporte> getReportesEntreFechas(@PathParam("id") long id, @PathParam("fecha1") long codFecha1, @PathParam("fecha2") long codFecha2){
-//        
-//        return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
-//        
-//    }
+   @GET
+    @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
+    public List<Reporte> getReportesEntreFechas(@PathParam("id") long id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
+        
+        return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
+        
+    }
 }
