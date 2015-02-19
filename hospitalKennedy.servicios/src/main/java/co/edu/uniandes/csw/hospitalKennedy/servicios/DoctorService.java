@@ -7,10 +7,12 @@ package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
+import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioDoctorMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,7 +28,7 @@ import javax.ws.rs.core.MediaType;
  * @author estudiante
  */
 @Path("/Doctor")
-@Stateless
+@Stateful
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class DoctorService {
@@ -34,6 +36,10 @@ public class DoctorService {
     @EJB
     private IServicioDoctorMock doctorEjb;
     
+    
+    public DoctorService(){
+        doctorEjb = new ServicioDoctorMock();
+    }
     @POST
     @Path("agregar/")
     public List<Paciente> agregarPacientes(List<Paciente> lista){
