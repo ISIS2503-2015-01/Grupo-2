@@ -26,9 +26,9 @@ import co.edu.uniandes.csw.hospitalKennedy.dto.Vendedor;
 import co.edu.uniandes.csw.hospitalKennedy.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockRemote;
+import java.sql.Date;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateless;

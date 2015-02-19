@@ -23,7 +23,7 @@ public interface IServicioPacienteMock {
     public List<Paciente> darPacientes();
     public Reporte getReportePorPaciente(Long idPaciente,Long idReporte);
 
-    public List<Reporte> getReportesEntreFechas(long id, long codFecha1, long codFecha2);
+    public List<Reporte> getReportesEntreFechas(long id, String codFecha1, String codFecha2);
     
     
 }

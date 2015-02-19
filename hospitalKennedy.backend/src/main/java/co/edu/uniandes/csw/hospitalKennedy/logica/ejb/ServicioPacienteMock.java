@@ -113,14 +113,14 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public List<Reporte> getReportesEntreFechas(long id, long codFecha1, long codFecha2) {
+    public List<Reporte> getReportesEntreFechas(long id, String  codFecha1, String codFecha2) {
         
         ArrayList<Reporte> reportes = getReportes(id);
         ArrayList<Reporte> res = new ArrayList<Reporte>();
         for(int i = 0; i< reportes.size(); i++){
              Reporte reporteAct = reportes.get(i);
              
-             if(reporteAct.getFechaCreacion().after(new Date(codFecha1)) && reporteAct.getFechaCreacion().before(new Date(codFecha2))){
+             if(reporteAct.getFechaCreacion().compareTo(codFecha1)>0 && reporteAct.getFechaCreacion().compareTo(codFecha2)<0){
                  res.add(reporteAct);
              }
         }
