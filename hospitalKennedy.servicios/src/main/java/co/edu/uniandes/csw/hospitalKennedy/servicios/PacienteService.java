@@ -94,7 +94,7 @@ public class PacienteService {
            
     
     @GET
-    @Path("/reporte/{idReporte}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/reporte/123456
+    @Path("{id}/reporte/{idReporte}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/reporte/123456
     public Reporte getReporte(@PathParam("id") long id, @PathParam("idReporte") long idReporte){
         System.out.println("Entroooooooooo y cogio el id de "+ idReporte);
         List reportes = pacienteEjb.getReportes(id);
