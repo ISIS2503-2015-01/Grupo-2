@@ -127,7 +127,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
              
              if(reporteAct.getFechaCreacion().compareTo(codFecha1)>0 && reporteAct.getFechaCreacion().compareTo(codFecha2)<0){
                  res.add(reporteAct);
-             }
+            }
         }
         return res;
     }

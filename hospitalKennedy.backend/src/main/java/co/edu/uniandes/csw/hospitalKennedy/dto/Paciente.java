@@ -7,26 +7,57 @@ package co.edu.uniandes.csw.hospitalKennedy.dto;
 
 import java.util.ArrayList;
 
+
+ 
+import java.io.Serializable;
+import java.util.Calendar;
+ 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+ 
+import org.eclipse.persistence.nosql.annotations.DataFormatType;
+import org.eclipse.persistence.nosql.annotations.Field;
+import org.eclipse.persistence.nosql.annotations.NoSql;
+ 
+ 
+
 /**
  *
  * @author jssalamanca1967
  */
-public class Paciente {
-    
+
+@NoSql(dataFormat=DataFormatType.MAPPED)
+@Entity
+@XmlRootElement
+public class Paciente implements Serializable{
+     private static final long serialVersionUID = 1L;
     
     //--------------------------------
     // Atributos
     //--------------------------------
+    @Id
+    @GeneratedValue
+    @Field(name="_id")
+    private String id;
     
-    /**
-     * Altura en cm del paciente
-     */
+    
     private int altura;
     private int edad;
     private int cedulaCiudadania;
-    private String id;
     private String nombre;
     private ArrayList<Reporte> reportes;
+    
+     public Paciente(){
+        
+    }
     
     public Paciente(String id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
         this.id = id;
@@ -37,6 +68,7 @@ public class Paciente {
         reportes = reportesN;
     }
 
+   
     public void setReportes(ArrayList<Reporte> reportes) {
         this.reportes = reportes;
     }

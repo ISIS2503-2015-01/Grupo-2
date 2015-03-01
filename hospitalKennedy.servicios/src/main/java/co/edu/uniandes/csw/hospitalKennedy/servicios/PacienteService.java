@@ -47,7 +47,9 @@ public class PacienteService {
     @Path("{id}/agregarReportes/")
     public List<Reporte> agregarReportes(@PathParam("id") String id, List<Reporte> lista){
 
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + id + " - " + lista.get(0).getActividadFisica());
         for(Reporte reporte: lista){
+            
             pacienteEjb.agregarReporte(id, reporte);
         }
 
@@ -72,6 +74,7 @@ public class PacienteService {
     }
     
     @GET
+    @Path("/paciente")
     public List<Paciente> darPacientes(){
         System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         return pacienteEjb.darPacientes();

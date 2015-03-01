@@ -6,18 +6,44 @@
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
 import java.util.Date;
+import java.io.Serializable;
+import java.util.Calendar;
+ 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+ 
+import org.eclipse.persistence.nosql.annotations.DataFormatType;
+import org.eclipse.persistence.nosql.annotations.Field;
+import org.eclipse.persistence.nosql.annotations.NoSql;
+
 
 /**
  *
  * @author estudiante
  */
-public class Reporte {
+@NoSql(dataFormat=DataFormatType.MAPPED)
+@Entity
+@XmlRootElement
+public class Reporte implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue
+    @Field(name="_id")
+    private String id;
     
     private String actividadFisica;
     private String alimentacion;
     private String gravedad;
     private String fechaCreacion;
-    private String id;
     private String localizacionDolor;
     private String patronSuenio;
     private int numeroIdentificacion;

@@ -6,8 +6,8 @@
         <properties>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform"/>
             <property name="eclipselink.nosql.connection-spec" value="org.eclipse.persistence.nosql.adapters.mongo.MongoConnectionSpec"/>
-            <property name="eclipselink.nosql.property.mongo.port" value="45021"/>
-            <property name="eclipselink.nosql.property.mongo.host" value="ds045021.mongolab.com"/>
+            <property name="eclipselink.nosql.property.mongo.port" value="49181"/>
+            <property name="eclipselink.nosql.property.mongo.host" value="ds049181.mongolab.com"/>
             <property name="eclipselink.nosql.property.mongo.db" value="arquisoft"/>
             <property name="javax.persistence.jdbc.password" value="user"/>
             <property name="javax.persistence.jdbc.user" value="user"/>
