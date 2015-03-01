@@ -50,10 +50,10 @@ public interface IServicioPersistenciaMockLocal
      */
     public java.util.List findAll(java.lang.Class c);
     
-    public java.util.List findReportes(Long idPaciente) throws Exception;
-    public void updateReporte(Long idPaciente, Reporte reporte) throws Exception;
-    public void deleteReporte(Long idPaciente, Reporte reporte) throws Exception;
-    public void createReporte(Long idPaciente, Reporte reporte) throws Exception;    
+    public java.util.List findReportes(String idPaciente) throws Exception;
+    public void updateReporte(String idPaciente, Reporte reporte) throws Exception;
+    public void deleteReporte(String idPaciente, Reporte reporte) throws Exception;
+    public void createReporte(String idPaciente, Reporte reporte) throws Exception;    
 
 
     /**

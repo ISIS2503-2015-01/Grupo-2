@@ -73,21 +73,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             doctores = new ArrayList<Doctor>();
 
-            doctores.add(new Doctor(1L, "Carlos Mendieta", "lolita45", "ca.mendieta45"));
-            doctores.add(new Doctor(5L, "Carlos Carrillo", "lolita45", "ca.carrillo"));
+            doctores.add(new Doctor("1L", "Carlos Mendieta", "lolita45", "ca.mendieta45"));
+            doctores.add(new Doctor("5L", "Carlos Carrillo", "lolita45", "ca.carrillo"));
 
             pacientes = new ArrayList<Paciente>();
             ArrayList<Reporte> reportes = new ArrayList<Reporte>();
-            pacientes.add(new Paciente(1L, "Juana la loca", 25, 12365987, 200, reportes));
+            pacientes.add(new Paciente("1L", "Juana la loca", 25, 12365987, 200, reportes));
             ArrayList<Reporte> reportes2 = new ArrayList<Reporte>();
-            pacientes.add(new Paciente(2L, "Juana la sana", 15, 55689865, 185, reportes2));
+            pacientes.add(new Paciente("2L", "Juana la sana", 15, 55689865, 185, reportes2));
 
             
-            pacientes.get(0).agregarReporte(new Reporte(1L, "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
-            pacientes.get(0).agregarReporte(new Reporte(2L, "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
+            pacientes.get(0).agregarReporte(new Reporte("1L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
+            pacientes.get(0).agregarReporte(new Reporte("2L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
             
-            pacientes.get(1).agregarReporte(new Reporte(3L, "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
-            pacientes.get(1).agregarReporte(new Reporte(4L, "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
+            pacientes.get(1).agregarReporte(new Reporte("3L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
+            pacientes.get(1).agregarReporte(new Reporte("4L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
                         
         }
     }
@@ -111,7 +111,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if(doc.getLogin().equals(v.getLogin()))
                     throw new OperacionInvalidaException("El doctor con el login " + v.getLogin() + " ya existe.");
             }
-            v.setId(new Long(doctores.size()) + 1);
+            v.setId(new String(""+doctores.size() + 1));
             doctores.add(v);
         }
         else if (obj instanceof Paciente)
@@ -122,20 +122,20 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if(paciente.getCedulaCiudadania() == m.getCedulaCiudadania())
                     throw new OperacionInvalidaException("El paciente con la cedula de ciudadania " + m.getCedulaCiudadania() + " ya se encuentar registrado en el sistema");
             }
-            m.setId(new Long(pacientes.size()) + 1);
+            m.setId(new String(""+pacientes.size()) + 1);
             pacientes.add(m);
         }
     }
     
     @Override
-    public void createReporte(Long idPaciente, Reporte reporte) throws Exception
+    public void createReporte(String idPaciente, Reporte reporte) throws Exception
     {
         Paciente pac = (Paciente) findById(Paciente.class, idPaciente);
         
         if(pac == null)
             throw new Exception("El paciente con el id " + idPaciente + " no existe.");
         
-        reporte.setId(Long.parseLong(idPaciente + "" + (pac.getReportes().size()+1)));
+        reporte.setId(""+Long.parseLong(idPaciente + "" + (pac.getReportes().size()+1)));
         reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         pac.getReportes().add(reporte);
         
@@ -155,7 +155,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for (int i = 0; i < doctores.size(); i++)
             {
                 doc = doctores.get(i);
-                if (doc.getId() == editar.getId())
+                if (doc.getId().equals(editar.getId()))
                 {
                     doctores.set(i, editar);
                     break;
@@ -182,7 +182,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     
     
     @Override
-    public void updateReporte(Long idPaciente, Reporte reporte) throws Exception
+    public void updateReporte(String idPaciente, Reporte reporte) throws Exception
     {
         Paciente pac = (Paciente) findById(Paciente.class, idPaciente);
         
@@ -192,7 +192,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         for(Reporte rep: pac.getReportes())
         {
             
-            if(rep.getId() == reporte.getId())
+            if(rep.getId().equals(reporte.getId()))
             {
                 pac.getReportes().set(i, reporte);
             }
@@ -214,7 +214,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for (int e = 0; e < doctores.size(); e++)
             {
                 Doctor ven = (Doctor) doctores.get(e);
-                if (ven.getId() == vendedorABorrar.getId())
+                if (ven.getId().equals(vendedorABorrar.getId()))
                 {
                     doctores.remove(e);
                     break;
@@ -229,7 +229,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for (int i = 0; i < pacientes.size(); i++)
             {
                 mueble = pacientes.get(i);
-                if (eliminar.getCedulaCiudadania() == mueble.getCedulaCiudadania())
+                if (eliminar.getCedulaCiudadania()== mueble.getCedulaCiudadania())
                 {
                     pacientes.remove(i);
                     break;
@@ -242,7 +242,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     }
     
     @Override
-    public void deleteReporte(Long idPaciente, Reporte reporte)
+    public void deleteReporte(String idPaciente, Reporte reporte)
     {
         Paciente pac = (Paciente) findById(Paciente.class, idPaciente);
         
@@ -250,7 +250,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         for(Reporte rep: pac.getReportes())
         {
             
-            if(rep.getId() == reporte.getId())
+            if(rep.getId().equals( reporte.getId()))
             {
                 pac.getReportes().remove(i);
             }
@@ -279,7 +279,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     }
     
     @Override
-    public List findReportes(Long idPaciente)
+    public List findReportes(String idPaciente)
     {
         Paciente encontrado = (Paciente) findById(Paciente.class, idPaciente );
         
@@ -313,7 +313,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for (Object v : findAll(c))
             {
                 Paciente mue = (Paciente) v;
-                if (Long.parseLong(id.toString())== mue.getId())
+                if (id.toString().equals(mue.getId()))
                 {
                     resp = mue;
                 }

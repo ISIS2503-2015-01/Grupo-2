@@ -15,19 +15,19 @@ public class Doctor {
     // Atributos
     //--------------------------
     
-    private Long id;
+    private String id;
     private String nombre;
     private String password;
     private String login;
     
-    public Doctor(Long id, String pNombre, String pPsw, String pLogin){
+    public Doctor(String id, String pNombre, String pPsw, String pLogin){
         this.id = id;
         nombre = pNombre;
         password = pPsw;
         login = pLogin;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,7 +43,7 @@ public class Doctor {
         this.login = login;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

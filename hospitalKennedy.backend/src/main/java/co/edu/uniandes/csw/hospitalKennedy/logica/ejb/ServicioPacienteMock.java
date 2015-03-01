@@ -43,7 +43,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public ArrayList<Reporte> getReportes(Long idPaciente) 
+    public ArrayList<Reporte> getReportes(String idPaciente) 
     {
         ArrayList<Reporte> rta = new ArrayList<Reporte>();
         
@@ -61,7 +61,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     
              
     @Override
-    public void agregarReporte(Long idPaciente, Reporte reporte){
+    public void agregarReporte(String idPaciente, Reporte reporte){
     
         try
         {
@@ -77,7 +77,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
     
     @Override
-    public void removerReporte(Long idPaciente, Reporte reporte)
+    public void removerReporte(String idPaciente, Reporte reporte)
     {
 
         try
@@ -102,13 +102,13 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }  
 
     @Override
-    public Reporte getReportePorPaciente(Long idPaciente, Long idReporte) {
+    public Reporte getReportePorPaciente(String idPaciente, String idReporte) {
     
         ArrayList<Reporte> reportes = getReportes(idPaciente);
         
         for(int i =0;i<reportes.size();i++)
         {
-            if( reportes.get(i).getId() == idReporte)
+            if( reportes.get(i).getId().equals(idReporte))
             {
                 return reportes.get(i);
             }
@@ -118,7 +118,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public List<Reporte> getReportesEntreFechas(long id, String  codFecha1, String codFecha2) {
+    public List<Reporte> getReportesEntreFechas(String id, String  codFecha1, String codFecha2) {
         
         ArrayList<Reporte> reportes = getReportes(id);
         ArrayList<Reporte> res = new ArrayList<Reporte>();

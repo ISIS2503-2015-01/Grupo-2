@@ -17,13 +17,13 @@ public class Reporte {
     private String alimentacion;
     private String gravedad;
     private String fechaCreacion;
-    private Long id;
+    private String id;
     private String localizacionDolor;
     private String patronSuenio;
     private int numeroIdentificacion;
     private String medicamentosRecientes;
     
-    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
+    public Reporte(String id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
         this.id = id;
         this.actividadFisica = actividadFisica;
         this.alimentacion = alimentacion;
@@ -67,7 +67,7 @@ public class Reporte {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -95,7 +95,7 @@ public class Reporte {
         return fechaCreacion;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

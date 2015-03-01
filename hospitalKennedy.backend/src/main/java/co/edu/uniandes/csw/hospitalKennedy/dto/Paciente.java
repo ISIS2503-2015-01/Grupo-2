@@ -24,11 +24,11 @@ public class Paciente {
     private int altura;
     private int edad;
     private int cedulaCiudadania;
-    private Long id;
+    private String id;
     private String nombre;
     private ArrayList<Reporte> reportes;
     
-    public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
+    public Paciente(String id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -61,7 +61,7 @@ public class Paciente {
         this.edad = edad;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class Paciente {
         return edad;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

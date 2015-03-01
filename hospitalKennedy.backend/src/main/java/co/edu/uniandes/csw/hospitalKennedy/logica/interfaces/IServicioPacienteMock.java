@@ -17,13 +17,13 @@ import java.util.List;
 public interface IServicioPacienteMock {
  
     
-    public ArrayList<Reporte> getReportes(Long idPaciente);
-    public void agregarReporte(Long idPaciente, Reporte reporte);
-    public void removerReporte(Long idPaciente, Reporte reporte);
+    public ArrayList<Reporte> getReportes(String idPaciente);
+    public void agregarReporte(String idPaciente, Reporte reporte);
+    public void removerReporte(String idPaciente, Reporte reporte);
     public List<Paciente> darPacientes();
-    public Reporte getReportePorPaciente(Long idPaciente,Long idReporte);
+    public Reporte getReportePorPaciente(String idPaciente,String idReporte);
 
-    public List<Reporte> getReportesEntreFechas(long id, String codFecha1, String codFecha2);
+    public List<Reporte> getReportesEntreFechas(String id, String codFecha1, String codFecha2);
     
     
 }
