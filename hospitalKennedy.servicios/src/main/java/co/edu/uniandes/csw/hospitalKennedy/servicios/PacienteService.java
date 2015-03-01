@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioPacienteMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMock;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -44,7 +45,7 @@ public class PacienteService {
     
     @POST
     @Path("{id}/agregarReportes/")
-    public List<Reporte> agregarReportes(@PathParam("id") Long id, List<Reporte> lista){
+    public List<Reporte> agregarReportes(@PathParam("id") String id, List<Reporte> lista){
 
         for(Reporte reporte: lista){
             pacienteEjb.agregarReporte(id, reporte);
@@ -63,7 +64,7 @@ public class PacienteService {
     
     @DELETE
     @Path("{id}/borrar/")
-    public void eliminarReportes(@PathParam("id") Long id, List<Reporte> lista) throws Exception{
+    public void eliminarReportes(@PathParam("id") String id, List<Reporte> lista) throws Exception{
         for(Reporte reporte: lista){
             pacienteEjb.removerReporte(id, reporte);
         }
@@ -78,22 +79,26 @@ public class PacienteService {
     
     @GET
     @Path("{id}/reportes/")
-    public List<Reporte> darReportes(@PathParam("id") Long id){
+    public List<Reporte> darReportes(@PathParam("id") String id){
         return pacienteEjb.getReportes(id);
     }
     
+    @GET
+    @Path("{id}/reportes/{idReporte}") //URL de ejemplo http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1L/reportes/1L
 
-    @Path("{id}/reportes/{idReporte}") //URL de ejemplo http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/1
-
-    public Reporte darReportePorPaciente(@PathParam("id") Long id, @PathParam("idReporte")Long idReporte)
+    public List<Reporte> darReportePorPaciente(@PathParam("id") String id, @PathParam("idReporte")String idReporte)
     {
         System.out.println("YAAAAAAAAAAAAAA id paciente "+ id +" id reporte "+ idReporte );
-        return pacienteEjb.getReportePorPaciente(id, idReporte);
+        Reporte rep = pacienteEjb.getReportePorPaciente(id, idReporte); 
+        ArrayList res = new ArrayList<Reporte>();
+        res.add(rep);
+        System.out.println(res);
+        return res;
     }
     
    @GET
     @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
-    public List<Reporte> getReportesEntreFechas(@PathParam("id") long id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
+    public List<Reporte> getReportesEntreFechas(@PathParam("id") String id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
         
         return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
         
