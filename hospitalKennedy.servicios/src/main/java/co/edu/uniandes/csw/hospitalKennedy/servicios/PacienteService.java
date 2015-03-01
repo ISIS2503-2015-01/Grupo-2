@@ -91,25 +91,6 @@ public class PacienteService {
         return pacienteEjb.getReportePorPaciente(id, idReporte);
     }
     
-           
-    
-    @GET
-    @Path("{id}/reporte/{idReporte}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/reporte/123456
-    public Reporte getReporte(@PathParam("id") long id, @PathParam("idReporte") long idReporte){
-        System.out.println("Entroooooooooo y cogio el id de "+ idReporte);
-        List reportes = pacienteEjb.getReportes(id);
-        Iterator<Reporte> it = reportes.iterator();
-        while(it.hasNext()){
-            Reporte reporteAct = it.next();
-            if(reporteAct.getId()== idReporte)
-            {
-             } else {
-               return reporteAct;
-            }
-        }
-        return null;
-    }
-    
    @GET
     @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
     public List<Reporte> getReportesEntreFechas(@PathParam("id") long id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
