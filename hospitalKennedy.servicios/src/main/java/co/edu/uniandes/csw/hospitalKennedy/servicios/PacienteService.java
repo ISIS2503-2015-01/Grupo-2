@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
+import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioPacienteMock;
@@ -12,10 +13,13 @@ import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMo
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,12 +39,24 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class PacienteService {
     
-    @EJB    
-    private IServicioPacienteMock pacienteEjb;
+    //@EJB    
+    //private IServicioPacienteMock pacienteEjb;
     
-    public PacienteService()
-    {
-        pacienteEjb = new ServicioPacienteMock();
+    //public PacienteService()
+    //{
+    //    pacienteEjb = new ServicioPacienteMock();
+    //}
+    
+    @PersistenceContext(unitName = "HospitalKennedyPU")
+    EntityManager entityManager;
+    
+      @PostConstruct
+    public void init() {
+        try {
+            entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @POST

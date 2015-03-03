@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Calendar;
  
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,14 +31,12 @@ import org.eclipse.persistence.nosql.annotations.NoSql;
  * @author estudiante
  */
 @NoSql(dataFormat=DataFormatType.MAPPED)
-@Entity
+@Embeddable
 @XmlRootElement
 public class Reporte implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue
-    @Field(name="_id")
+    
     private String id;
     
     private String actividadFisica;
@@ -61,6 +60,8 @@ public class Reporte implements Serializable{
         this.medicamentosRecientes = medicamentosRecientes;
     }
 
+   
+    
     public void setMedicamentosRecientes(String medicamentosRecientes) {
         this.medicamentosRecientes = medicamentosRecientes;
     }

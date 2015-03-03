@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
+import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioDoctorMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock;
@@ -18,6 +19,7 @@ import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,7 +29,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.codehaus.jettison.json.JSONObject;
+//import org.codehaus.jettison.json.JSONObject;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -39,8 +42,8 @@ import org.codehaus.jettison.json.JSONObject;
 @Produces(MediaType.APPLICATION_JSON)
 public class DoctorService {
     
-    @EJB
-    private IServicioDoctorMock doctorEjb;
+    //@EJB
+    //private IServicioDoctorMock doctorEjb;
    
   
     @PersistenceContext(unitName = "HospitalKennedyPU")
@@ -55,28 +58,25 @@ public class DoctorService {
         }
     }
     
-    public DoctorService(){
-        doctorEjb = new ServicioDoctorMock();
-    }
+    //public DoctorService(){
+    //    doctorEjb = new ServicioDoctorMock();
+    //}
     @POST
     @Path("/agregar")
-    public void agregarPacientes(List<Paciente> lista){
+    public Response agregarPaciente(PacienteDTO paciente){
       //  System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
       //  for(Paciente paciente: lista){
       //      doctorEjb.agregarPaciente(paciente);
       //  }
         
       //  return lista;
-        
-        for(Paciente paciente: lista){
-            Paciente p = new Paciente();
-            JSONObject rta = new JSONObject();
-            p.setAltura(paciente.getAltura());
-            p.setCedulaCiudadania(paciente.getCedulaCiudadania());
-            p.setEdad(paciente.getEdad());
-            p.setNombre(paciente.getNombre());
-            p.setReportes(paciente.getReportes());
-           
+        Paciente p = new Paciente();
+        JSONObject rta = new JSONObject();
+        p.setAltura(paciente.getAltura());
+        p.setCedulaCiudadania(paciente.getCedulaCiudadania());
+        p.setEdad(paciente.getEdad());
+        p.setNombre(paciente.getNombre());
+        p.setReportes(paciente.getReportes());
 
         try {
             entityManager.getTransaction().begin();
@@ -94,23 +94,30 @@ public class DoctorService {
         	entityManager.clear();
         	entityManager.close();
         }
-
-        }
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
        
     }
     
     @DELETE
     @Path("borrar/")
-    public void eliminarPacientes(List<Paciente> lista){
-        for(Paciente paciente: lista){
-            doctorEjb.removerPaciente(paciente);
-        }
+    public Response eliminarPaciente(String idPaciente){
+        //for(Paciente paciente: lista){
+        //    doctorEjb.removerPaciente(paciente);
+        //}
+        Query q1 = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> paciente = q1.getResultList();
+        Query q2 = entityManager.createQuery("delete u from Paciente u where u.id = '"+idPaciente+"'");
+        q2.executeUpdate();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
+
     }
     
     @GET
     @Path("/paciente/{idPaciente}")
-    public List<Paciente> darPaciente(@PathParam("idPaciente") long idPaciente){
-        return doctorEjb.getPacientes();
-                
+    public Response darPaciente(@PathParam("idPaciente") String idPaciente){
+     //   return doctorEjb.getPacientes();
+     Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> paciente = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
     }
 }

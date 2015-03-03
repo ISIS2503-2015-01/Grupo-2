@@ -14,15 +14,8 @@ package co.edu.uniandes.csw.hospitalKennedy.persistencia.mock;
 
 
 import co.edu.uniandes.csw.hospitalKennedy.dto.Doctor;
-import co.edu.uniandes.csw.hospitalKennedy.dto.ExperienciaVendedor;
-import co.edu.uniandes.csw.hospitalKennedy.dto.Mueble;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
-import co.edu.uniandes.csw.hospitalKennedy.dto.RegistroVenta;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
-import co.edu.uniandes.csw.hospitalKennedy.dto.TipoMueble;
-import co.edu.uniandes.csw.hospitalKennedy.dto.TipoUsuario;
-import co.edu.uniandes.csw.hospitalKennedy.dto.Usuario;
-import co.edu.uniandes.csw.hospitalKennedy.dto.Vendedor;
 import co.edu.uniandes.csw.hospitalKennedy.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockRemote;
@@ -297,20 +290,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     public Object findById(Class c, Object id)
     {
         Object resp = null;
-        if (c.equals(Vendedor.class))
-        {
-            for (Object v : findAll(c))
-            {
-                Vendedor ven = (Vendedor) v;
-                if (ven.getIdentificacion() == Long.parseLong(id.toString()))
-                {
-                    resp = ven;
-                }
-            }
-        } 
-        else
-        {
-            for (Object v : findAll(c))
+        for (Object v : findAll(c))
             {
                 Paciente mue = (Paciente) v;
                 if (id.toString().equals(mue.getId()))
@@ -318,7 +298,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                     resp = mue;
                 }
             }
-        }
+        
         return resp;
         
     }

@@ -53,7 +53,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         }
         catch(Exception ex)
         {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
+            
 
         }
         return rta;
@@ -69,7 +69,6 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         }
         catch(Exception ex)
         {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
             
         }
         
@@ -86,7 +85,6 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         }
         catch(Exception ex)
         {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
             
         }
         

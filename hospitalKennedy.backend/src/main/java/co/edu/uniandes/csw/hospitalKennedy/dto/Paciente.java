@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Calendar;
  
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,6 +54,8 @@ public class Paciente implements Serializable{
     private int edad;
     private int cedulaCiudadania;
     private String nombre;
+    
+    @Embedded
     private ArrayList<Reporte> reportes;
     
      public Paciente(){
