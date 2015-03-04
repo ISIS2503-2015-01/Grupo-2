@@ -38,7 +38,7 @@ public class Reporte implements Serializable{
     
     @Id
     @GeneratedValue
-    @Field(name="_id")
+    @Field(name="_idReporte")
     private String id;
     
     private String actividadFisica;
