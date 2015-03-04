@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.hospitalKennedy.servicios;
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
+import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioPacienteMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMock;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -61,16 +64,50 @@ public class PacienteService {
     
     @POST
     @Path("{id}/agregarReportes/")
-    public List<Reporte> agregarReportes(@PathParam("id") String id, List<Reporte> lista){
+    public Response agregarReporte(ReporteDTO reporte){
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + id + " - " + lista.get(0).getActividadFisica());
-        for(Reporte reporte: lista){
+        //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + id + " - " + lista.get(0).getActividadFisica());
+        //for(Reporte reporte: lista){
             
-            pacienteEjb.agregarReporte(id, reporte);
-        }
-
+          //  pacienteEjb.agregarReporte(id, reporte);
+        //}
+        //return lista;
         
-        return lista;
+        Reporte r = new Reporte();
+        JSONObject rta = new JSONObject();
+        r.setActividadFisica(reporte.getActividadFisica());
+        r.setAlimentacion(reporte.getAlimentacion());
+        r.setGravedad(reporte.getGravedad());
+        r.setFechaCreacion(reporte.getFechaCreacion());
+        r.setLocalizacionDolor(reporte.getLocalizacionDolor());
+        r.setPatronSuenio(reporte.getPatronSuenio());
+        r.setNumeroIdentificacion(reporte.getNumeroIdentificacion());
+        r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());
+        
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(r);
+            entityManager.getTransaction().commit();
+            entityManager.refresh(r);
+            rta.put("reporte_id", r.getId());
+                    
+        }
+        catch(Throwable t)
+                {
+                    t.printStackTrace();
+                    if(entityManager.getTransaction().isActive())
+                    {
+                        entityManager.getTransaction().rollback();
+                    }
+                    r = null;
+                }
+        finally
+        {
+            entityManager.clear();
+            entityManager.close();
+        }
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
+        
     }
     
     @GET
