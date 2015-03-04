@@ -188,6 +188,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             if(rep.getId().equals(reporte.getId()))
             {
                 pac.getReportes().set(i, reporte);
+                
             }
             i++;
         }

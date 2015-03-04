@@ -41,7 +41,7 @@ public class Doctor implements Serializable{
     //--------------------------
     @Id
     @GeneratedValue
-    @Field(name="_id")
+    @Field(name="_idDoctor")
     private String id;
 
     private String nombre;

@@ -11,8 +11,10 @@ import java.util.ArrayList;
  
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
  
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +48,7 @@ public class Paciente implements Serializable{
     //--------------------------------
     @Id
     @GeneratedValue
-    @Field(name="_id")
+    @Field(name="_idPaciente")
     private String id;
     
     
@@ -55,7 +57,7 @@ public class Paciente implements Serializable{
     private int cedulaCiudadania;
     private String nombre;
     
-    @Embedded
+    @ElementCollection
     private ArrayList<Reporte> reportes;
     
      public Paciente(){
