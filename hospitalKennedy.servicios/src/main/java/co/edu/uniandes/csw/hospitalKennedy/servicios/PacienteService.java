@@ -145,28 +145,39 @@ public class PacienteService {
     
     @GET
     @Path("{id}/reportes/")
-    public List<Reporte> darReportes(@PathParam("id") String id){
-        return pacienteEjb.getReportes(id);
+    public Response darReportes(@PathParam("id") String idPaciente){
+        //return pacienteEjb.getReportes(id);
+        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+idPaciente+"'");
+        List<Reporte> reporte = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
+        
     }
     
     @GET
     @Path("{id}/reportes/{idReporte}") //URL de ejemplo http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1L/reportes/1L
 
-    public List<Reporte> darReportePorPaciente(@PathParam("id") String id, @PathParam("idReporte")String idReporte)
+    public Response darReportePorPaciente(@PathParam("id") String id, @PathParam("idReporte")String idReporte)
     {
-        System.out.println("YAAAAAAAAAAAAAA id paciente "+ id +" id reporte "+ idReporte );
-        Reporte rep = pacienteEjb.getReportePorPaciente(id, idReporte); 
-        ArrayList res = new ArrayList<Reporte>();
-        res.add(rep);
-        System.out.println(res);
-        return res;
+        
+        //System.out.println("YAAAAAAAAAAAAAA id paciente "+ id +" id reporte "+ idReporte );
+        //Reporte rep = pacienteEjb.getReportePorPaciente(id, idReporte); 
+        //ArrayList res = new ArrayList<Reporte>();
+        //res.add(rep);
+        //System.out.println(res);
+        //return res;
+        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+id+"'"+" and u.id = "+idReporte+"'");
+        List<Reporte> reporte = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
     }
     
    @GET
     @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
-    public List<Reporte> getReportesEntreFechas(@PathParam("id") String id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
+    public Response getReportesEntreFechas(@PathParam("id") String id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
         
-        return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
+        //return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
+        Query q = entityManager.createQuery("select u from Reporte u where u.fecha1 = '"+codFecha1+"' and u.fecha2 = '"+codFecha2+"' and u.idPaciente = '"+id+"'");
+        List<Reporte> reporte = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
         
     }
 }
