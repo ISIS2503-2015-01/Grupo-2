@@ -133,10 +133,14 @@ public class PacienteService {
     }
     
     @GET
-    @Path("/paciente")
-    public List<Paciente> darPacientes(){
-        System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-        return pacienteEjb.darPacientes();
+    @Path("/paciente/{idPaciente}")
+    public Response darPaciente(@PathParam("idPaciente") String idPaciente)
+    {
+        //System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        //return pacienteEjb.darPacientes();
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> paciente = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();  
     }
     
     @GET
