@@ -54,6 +54,10 @@ public class Doctor implements Serializable{
         password = pPsw;
         login = pLogin;
     }
+    public Doctor ()
+    {
+        
+    }
 
     public void setId(String id) {
         this.id = id;
