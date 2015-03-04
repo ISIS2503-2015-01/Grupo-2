@@ -36,7 +36,9 @@ import org.eclipse.persistence.nosql.annotations.NoSql;
 public class Reporte implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    
+    @Id
+    @GeneratedValue
+    @Field(name="_id")
     private String id;
     
     private String actividadFisica;
@@ -48,6 +50,10 @@ public class Reporte implements Serializable{
     private int numeroIdentificacion;
     private String medicamentosRecientes;
     
+    
+    public Reporte(){
+        
+    }
     public Reporte(String id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
         this.id = id;
         this.actividadFisica = actividadFisica;
