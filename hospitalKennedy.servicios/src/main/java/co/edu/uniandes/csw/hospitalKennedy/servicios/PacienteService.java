@@ -90,7 +90,7 @@ public class PacienteService {
             entityManager.persist(r);
             entityManager.getTransaction().commit();
             entityManager.refresh(r);
-            rta.put("reportes_id", r.getId());
+            rta.put("reporte_id", r.getId());
                     
         }
         catch(Throwable t)
