@@ -21,6 +21,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -119,10 +120,15 @@ public class PacienteService {
     
     @DELETE
     @Path("{id}/borrar/")
-    public void eliminarReportes(@PathParam("id") String id, List<Reporte> lista) throws Exception{
-        for(Reporte reporte: lista){
-            pacienteEjb.removerReporte(id, reporte);
-        }
+    public Response eliminarReporte(String idReporte) throws Exception{
+        //for(Reporte reporte: lista){
+        //    pacienteEjb.removerReporte(id, reporte);
+        //}
+        Query q1 = entityManager.createQuery("select u from Reporte where u.id = '"+idReporte+"'");
+        List<Reporte> reporte = q1.getResultList();
+        Query q2 = entityManager.createQuery("delete u from Reporte u where u.id = '"+idReporte+"'");
+        q2.executeUpdate();
+        return Response.status(200).header("Access-Control-Allow-Origin","*").entity(reporte).build();
 
     }
     
