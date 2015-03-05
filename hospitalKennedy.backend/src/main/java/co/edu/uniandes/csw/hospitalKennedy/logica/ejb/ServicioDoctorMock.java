@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
+import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
+import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock;
 import javax.ejb.Stateless;
@@ -17,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 
 /**
@@ -30,6 +34,9 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     @EJB
     public static IServicioPersistenciaMockLocal persistencia;
     
+    @PersistenceContext(unitName = "HospitalKennedyPU")
+    EntityManager entityManager;
+    
     private ArrayList<Paciente> pacientes;
 
     public ServicioDoctorMock()
@@ -40,6 +47,12 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         }
         else
             persistencia = ServicioPacienteMock.persistencia;
+        
+        try {
+            entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -66,18 +79,34 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
      * @param mueble Mueble que se agrega al carrito
      */
     @Override
-    public void agregarPaciente(Paciente paciente) 
+    public PacienteDTO agregarPaciente(PacienteDTO paciente) 
     {
-        try
-        {
-            persistencia.create(paciente);
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ServicioDoctorMock.class.getName()).log(Level.SEVERE, null, ex);                
-                    
+        Paciente p = new Paciente();
+        
+        p.setAltura(paciente.getAltura());
+        p.setCedulaCiudadania(paciente.getCedulaCiudadania());
+        p.setEdad(paciente.getEdad());
+        p.setNombre(paciente.getNombre());
+        p.setReportes(paciente.getReportes());
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(paciente);
+            entityManager.getTransaction().commit();
+            entityManager.refresh(paciente);
+            
+        } catch (Throwable t) {
+            t.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            p = null;
+        } finally {
+        	entityManager.clear();
+        	entityManager.close();
         }
         
+        return paciente;
 
     }
 
