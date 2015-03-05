@@ -45,22 +45,12 @@ public class DoctorService {
     //@EJB
     //private IServicioDoctorMock doctorEjb;
    
+    ServicioDoctorMock servicioDoctor;
   
-    @PersistenceContext(unitName = "HospitalKennedyPU")
-    EntityManager entityManager;
     
-      @PostConstruct
-    public void init() {
-        try {
-            entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public DoctorService(){
+        servicioDoctor = new ServicioDoctorMock();
     }
-    
-    //public DoctorService(){
-    //    doctorEjb = new ServicioDoctorMock();
-    //}
     @POST
     @Path("/agregar")
     public Response agregarPaciente(PacienteDTO paciente){
@@ -70,54 +60,37 @@ public class DoctorService {
       //  }
         
       //  return lista;
-        Paciente p = new Paciente();
-        JSONObject rta = new JSONObject();
-        p.setAltura(paciente.getAltura());
-        p.setCedulaCiudadania(paciente.getCedulaCiudadania());
-        p.setEdad(paciente.getEdad());
-        p.setNombre(paciente.getNombre());
-        p.setReportes(paciente.getReportes());
-
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(p);
-            entityManager.getTransaction().commit();
-            entityManager.refresh(p);
-            rta.put("paciente_id", p.getId());
-        } catch (Throwable t) {
-            t.printStackTrace();
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            p = null;
-        } finally {
-        	entityManager.clear();
-        	entityManager.close();
-        }
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
+        PacienteDTO p = servicioDoctor.agregarPaciente(paciente);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();
        
     }
     
     @DELETE
-    @Path("borrar/")
-    public Response eliminarPaciente(String idPaciente){
+    @Path("borrar/{idPaciente}")
+    public Response eliminarPaciente(@PathParam("idPaciente") String idPaciente){
         //for(Paciente paciente: lista){
         //    doctorEjb.removerPaciente(paciente);
         //}
-        Query q1 = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> paciente = q1.getResultList();
-        Query q2 = entityManager.createQuery("delete u from Paciente u where u.id = '"+idPaciente+"'");
-        q2.executeUpdate();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
+        Paciente p = servicioDoctor.removerPaciente(idPaciente);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
 
     }
     
-    @GET
-    @Path("/paciente/{idPaciente}")
-    public Response darPaciente(@PathParam("idPaciente") String idPaciente){
+    //@GET
+    //@Path("/paciente/{idPaciente}")
+    //public Response darPaciente(@PathParam("idPaciente") String idPaciente){
      //   return doctorEjb.getPacientes();
-     Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> paciente = q.getResultList();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
+     
+    //    return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
+    //}
+    
+    @GET
+    @Path("/paciente/")
+    public Response darPacientes(){
+     //   return doctorEjb.getPacientes();
+        
+        ArrayList<Paciente> p = servicioDoctor.getPacientes();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
     }
+    
 }

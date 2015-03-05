@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.hospitalKennedy.logica.interfaces;
 
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
+import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,13 @@ public interface IServicioPacienteMock {
  
     
     public ArrayList<Reporte> getReportes(String idPaciente);
-    public void agregarReporte(String idPaciente, Reporte reporte);
-    public void removerReporte(String idPaciente, Reporte reporte);
+    public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte);
+    public Reporte removerReporte(String idPaciente, String idReporte);
+    public Paciente darPaciente(String idPaciente);
     public List<Paciente> darPacientes();
     public Reporte getReportePorPaciente(String idPaciente,String idReporte);
 
-    public List<Reporte> getReportesEntreFechas(String id, String codFecha1, String codFecha2);
+    public List<Reporte> getReportesEntreFechas(String idPaciente, String codFecha1, String codFecha2);
     
     
 }

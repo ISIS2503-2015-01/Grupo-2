@@ -51,21 +51,21 @@ public class PacienteService {
     //    pacienteEjb = new ServicioPacienteMock();
     //}
     
-    @PersistenceContext(unitName = "HospitalKennedyPU")
-    EntityManager entityManager;
+     ServicioPacienteMock servicioPaciente;
     
-      @PostConstruct
-    public void init() {
-        try {
-            entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //@PostConstruct
+    //public void init() {
+       
+    //}
+     
+     public PacienteService()
+     {
+         servicioPaciente = new ServicioPacienteMock();
+     }
     
     @POST
     @Path("{id}/agregarReportes/")
-    public Response agregarReporte(ReporteDTO reporte){
+    public Response agregarReporte(@PathParam("id") String idPaciente, ReporteDTO reporte){
 
         //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + id + " - " + lista.get(0).getActividadFisica());
         //for(Reporte reporte: lista){
@@ -74,40 +74,8 @@ public class PacienteService {
         //}
         //return lista;
         
-        Reporte r = new Reporte();
-        JSONObject rta = new JSONObject();
-        r.setActividadFisica(reporte.getActividadFisica());
-        r.setAlimentacion(reporte.getAlimentacion());
-        r.setGravedad(reporte.getGravedad());
-        r.setFechaCreacion(reporte.getFechaCreacion());
-        r.setLocalizacionDolor(reporte.getLocalizacionDolor());
-        r.setPatronSuenio(reporte.getPatronSuenio());
-        r.setNumeroIdentificacion(reporte.getNumeroIdentificacion());
-        r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());
-        
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.persist(r);
-            entityManager.getTransaction().commit();
-            entityManager.refresh(r);
-            rta.put("reporte_id", r.getId());
-                    
-        }
-        catch(Throwable t)
-                {
-                    t.printStackTrace();
-                    if(entityManager.getTransaction().isActive())
-                    {
-                        entityManager.getTransaction().rollback();
-                    }
-                    r = null;
-                }
-        finally
-        {
-            entityManager.clear();
-            entityManager.close();
-        }
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
+        ReporteDTO r = servicioPaciente.agregarReporte(idPaciente, reporte);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(r).build();
         
     }
     
@@ -119,16 +87,14 @@ public class PacienteService {
     }
     
     @DELETE
-    @Path("{id}/borrar/")
-    public Response eliminarReporte(String idReporte) throws Exception{
+    @Path("{id}/borrar/{idReporte}")
+    public Response eliminarReporte(@PathParam("id") String idPaciente, @PathParam("idReporte") String idReporte) throws Exception{
         //for(Reporte reporte: lista){
         //    pacienteEjb.removerReporte(id, reporte);
         //}
-        Query q1 = entityManager.createQuery("select u from Reporte where u.id = '"+idReporte+"'");
-        List<Reporte> reporte = q1.getResultList();
-        Query q2 = entityManager.createQuery("delete u from Reporte u where u.id = '"+idReporte+"'");
-        q2.executeUpdate();
-        return Response.status(200).header("Access-Control-Allow-Origin","*").entity(reporte).build();
+        Reporte r = servicioPaciente.removerReporte(idPaciente, idReporte);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin","*").entity(r).build();
 
     }
     
@@ -138,25 +104,23 @@ public class PacienteService {
     {
         //System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         //return pacienteEjb.darPacientes();
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> paciente = q.getResultList();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();  
+        Paciente p = servicioPaciente.darPaciente(idPaciente);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();  
     }
     
     @GET
     @Path("{id}/reportes/")
     public Response darReportes(@PathParam("id") String idPaciente){
         //return pacienteEjb.getReportes(id);
-        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+idPaciente+"'");
-        List<Reporte> reporte = q.getResultList();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
+       ArrayList<Reporte>reportes= servicioPaciente.getReportes(idPaciente);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reportes).build();
         
     }
     
     @GET
     @Path("{id}/reportes/{idReporte}") //URL de ejemplo http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1L/reportes/1L
 
-    public Response darReportePorPaciente(@PathParam("id") String id, @PathParam("idReporte")String idReporte)
+    public Response darReportePorPaciente(@PathParam("id") String idPaciente, @PathParam("idReporte")String idReporte)
     {
         
         //System.out.println("YAAAAAAAAAAAAAA id paciente "+ id +" id reporte "+ idReporte );
@@ -165,18 +129,18 @@ public class PacienteService {
         //res.add(rep);
         //System.out.println(res);
         //return res;
-        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+id+"'"+" and u.id = "+idReporte+"'");
-        List<Reporte> reporte = q.getResultList();
+      
+        Reporte reporte = servicioPaciente.getReportePorPaciente(idPaciente, idReporte);
+        
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
     }
     
    @GET
     @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
-    public Response getReportesEntreFechas(@PathParam("id") String id, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
+    public Response getReportesEntreFechas(@PathParam("id") String idPaciente, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
         
         //return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
-        Query q = entityManager.createQuery("select u from Reporte u where u.fecha1 = '"+codFecha1+"' and u.fecha2 = '"+codFecha2+"' and u.idPaciente = '"+id+"'");
-        List<Reporte> reporte = q.getResultList();
+        List<Reporte> reporte = servicioPaciente.getReportesEntreFechas(idPaciente, codFecha1, codFecha2);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
         
     }

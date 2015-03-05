@@ -15,12 +15,14 @@ import javax.ejb.Stateless;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.ws.rs.core.Response;
 
 
 /**
@@ -31,8 +33,8 @@ import javax.persistence.PersistenceContext;
 @Stateful
 public class ServicioDoctorMock implements IServicioDoctorMock {
     
-    @EJB
-    public static IServicioPersistenciaMockLocal persistencia;
+    //@EJB
+    //public static IServicioPersistenciaMockLocal persistencia;
     
     @PersistenceContext(unitName = "HospitalKennedyPU")
     EntityManager entityManager;
@@ -41,42 +43,45 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
 
     public ServicioDoctorMock()
     {
-        if(ServicioPacienteMock.persistencia == null)
-        {
-            persistencia=new ServicioPersistenciaMock();
-        }
-        else
-            persistencia = ServicioPacienteMock.persistencia;
         
         try {
             entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //if(ServicioPacienteMock.persistencia == null)
+        //{
+        //    persistencia=new ServicioPersistenciaMock();
+        //}
+        //else
+        //    persistencia = ServicioPacienteMock.persistencia;
     }
-
+    
     @Override
     public void setPacientes(ArrayList<Paciente> pacientes) {
         this.pacientes = pacientes;
     }
 
     @Override
-    public IServicioPersistenciaMockLocal getPersistencia() {
-        return persistencia;
+    public EntityManager getPersistencia() {
+        return entityManager;
     }
     
     
 
     @Override
     public ArrayList<Paciente> getPacientes() {
-        return (ArrayList<Paciente>)persistencia.findAll(Paciente.class);
+        //return (ArrayList<Paciente>)entityManager.find(Paciente.class, pacientes);
+        Query q = entityManager.createQuery("select u from Paciente u");
+        List<Paciente> paciente = q.getResultList();
+        ArrayList p = new ArrayList(paciente);
+        return p;
     }
     
     
     
     /**
-     * Agrega un nuevo mueble al carro de compras
-     * @param mueble Mueble que se agrega al carrito
+     * 
      */
     @Override
     public PacienteDTO agregarPaciente(PacienteDTO paciente) 
@@ -116,18 +121,13 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
      * @param removerCero Indica si al ser cero se elimina de la lista
      */
     @Override
-    public void removerPaciente(Paciente paciente)
+    public Paciente removerPaciente(String idPaciente)
     {
-        try
-        {
-            persistencia.delete(paciente);
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ServicioDoctorMock.class.getName()).log(Level.SEVERE, null, ex);                
-                    
-        }
-        
+        Query q1 = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> p = q1.getResultList();
+        Query q2 = entityManager.createQuery("delete u from Paciente u where u.id = '"+idPaciente+"'");
+        q2.executeUpdate();
+        return p.get(0);
 
     }
     

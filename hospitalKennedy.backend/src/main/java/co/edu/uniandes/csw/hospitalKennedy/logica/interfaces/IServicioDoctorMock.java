@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.hospitalKennedy.logica.interfaces;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -17,9 +18,9 @@ public interface IServicioDoctorMock {
     
     
     public void setPacientes(ArrayList<Paciente> pacientes);
-    public IServicioPersistenciaMockLocal getPersistencia();
+    public EntityManager getPersistencia();
     public ArrayList<Paciente> getPacientes();
     public PacienteDTO agregarPaciente(PacienteDTO paciente);
-    public void removerPaciente(Paciente paciente);
+    public Paciente removerPaciente(String idPaciente);
     
 }

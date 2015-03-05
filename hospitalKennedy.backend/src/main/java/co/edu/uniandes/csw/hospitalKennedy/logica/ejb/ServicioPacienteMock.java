@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
+import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
+import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
@@ -19,6 +21,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -27,107 +33,121 @@ import javax.inject.Inject;
 @Stateful
 public class ServicioPacienteMock implements IServicioPacienteMock {
     
-    @EJB
-    public static IServicioPersistenciaMockLocal persistencia;
-    
+    //@EJB
+    //public static IServicioPersistenciaMockLocal persistencia;
+     @PersistenceContext(unitName = "HospitalKennedyPU")
+    EntityManager entityManager;
 
     public ServicioPacienteMock()
     {
-        if(ServicioDoctorMock.persistencia == null)
-        {
-            persistencia = new ServicioPersistenciaMock();
-            
+        
+        try {
+            entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else
-            persistencia = ServicioDoctorMock.persistencia;
+        //if(ServicioDoctorMock.persistencia == null)
+        //{
+        //    persistencia = new ServicioPersistenciaMock();
+            
+        //}
+        //else
+        //    persistencia = ServicioDoctorMock.persistencia;
     }
 
     @Override
     public ArrayList<Reporte> getReportes(String idPaciente) 
     {
-        ArrayList<Reporte> rta = new ArrayList<Reporte>();
-        
-        try
-        {
-            rta = (ArrayList<Reporte>) persistencia.findReportes(idPaciente);
-        }
-        catch(Exception ex)
-        {
-            
-
-        }
-        return rta;
+        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+idPaciente+"'");
+        List<Reporte> reporte = q.getResultList();
+        ArrayList<Reporte>reportes = new ArrayList(reporte);
+        return reportes;
     }
     
              
     @Override
-    public void agregarReporte(String idPaciente, Reporte reporte){
+    public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte){
     
-        try
-        {
-            persistencia.createReporte(idPaciente, reporte);
-        }
-        catch(Exception ex)
-        {
-            
-        }
+       Reporte r = new Reporte();
+        JSONObject rta = new JSONObject();
+        r.setActividadFisica(reporte.getActividadFisica());
+        r.setAlimentacion(reporte.getAlimentacion());
+        r.setGravedad(reporte.getGravedad());
+        r.setFechaCreacion(reporte.getFechaCreacion());
+        r.setLocalizacionDolor(reporte.getLocalizacionDolor());
+        r.setPatronSuenio(reporte.getPatronSuenio());
+        r.setNumeroIdentificacion(reporte.getNumeroIdentificacion());
+        r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());
         
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(r);
+            entityManager.getTransaction().commit();
+            entityManager.refresh(r);
+            rta.put("reporte_idReporte", r.getId());
+                    
+        }
+        catch(Throwable t)
+                {
+                    t.printStackTrace();
+                    if(entityManager.getTransaction().isActive())
+                    {
+                        entityManager.getTransaction().rollback();
+                    }
+                    r = null;
+                }
+        finally
+        {
+            entityManager.clear();
+            entityManager.close();
+        }
+        return reporte;
 
     }
     
     @Override
-    public void removerReporte(String idPaciente, Reporte reporte)
+    public Reporte removerReporte(String idPaciente, String idReporte)
     {
-
-        try
-        {
-            persistencia.deleteReporte(idPaciente, reporte);
-        }
-        catch(Exception ex)
-        {
-            
-        }
-        
+        Query q1 = entityManager.createQuery("select u from Paciente where u.id = '"+idPaciente+"' and u.idReporte ='"+idReporte+"'");
+        List<Reporte> reporte = q1.getResultList();
+        Query q2 = entityManager.createQuery("delete u from Reporte u where u.id = '"+idReporte+"'");
+        q2.executeUpdate();
+        return reporte.get(0);
     }
 
     
     @Override
     public List<Paciente> darPacientes(){
         
-        System.out.println("Eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-        return persistencia.findAll(Paciente.class);
+        Query q = entityManager.createQuery("select u from Paciente u");
+        List<Paciente> paciente = q.getResultList();
+        ArrayList p = new ArrayList(paciente);
+        return p;
 
     }  
+    
+    @Override
+    public Paciente darPaciente(String idPaciente){
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> paciente = q.getResultList();
+        return paciente.get(0);
+    }
 
     @Override
     public Reporte getReportePorPaciente(String idPaciente, String idReporte) {
     
-        ArrayList<Reporte> reportes = getReportes(idPaciente);
-        
-        for(int i =0;i<reportes.size();i++)
-        {
-            if( reportes.get(i).getId().equals(idReporte))
-            {
-                return reportes.get(i);
-            }
-
-        }
-        return null;
+        Query q = entityManager.createQuery("select u from Reporte u where u.idPaciente = '"+idPaciente+"'"+" and u.id = "+idReporte+"'");
+        List<Reporte> reporte = q.getResultList();
+        return reporte.get(0);
     }
 
     @Override
-    public List<Reporte> getReportesEntreFechas(String id, String  codFecha1, String codFecha2) {
+    public List<Reporte> getReportesEntreFechas(String idPaciente, String  codFecha1, String codFecha2) {
         
-        ArrayList<Reporte> reportes = getReportes(id);
-        ArrayList<Reporte> res = new ArrayList<Reporte>();
-        for(int i = 0; i< reportes.size(); i++){
-             Reporte reporteAct = reportes.get(i);
-             
-             if(reporteAct.getFechaCreacion().compareTo(codFecha1)>0 && reporteAct.getFechaCreacion().compareTo(codFecha2)<0){
-                 res.add(reporteAct);
-            }
-        }
-        return res;
+       Query q = entityManager.createQuery("select u from Reporte u where u.fecha1 = '"+codFecha1+"' and u.fecha2 = '"+codFecha2+"' and u.idPaciente = '"+idPaciente+"'");
+       List<Reporte> reporte = q.getResultList();
+       return reporte;
+        
     }
 
     
