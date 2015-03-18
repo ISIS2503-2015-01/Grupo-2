@@ -20,7 +20,7 @@ public class PacienteDTO {
     private int cedulaCiudadania;
     private String nombre;
     private ArrayList<Reporte> reportes;
-    private String id;
+    private Long id;
     
     public PacienteDTO()
     {
@@ -67,11 +67,11 @@ public class PacienteDTO {
         return this.nombre;
     }
     
-     public void setId(String id) {
+     public void setId(Long id) {
         this.id = id;
     }
      
-      public String getId() {
+      public Long getId() {
         return id;
     }
     

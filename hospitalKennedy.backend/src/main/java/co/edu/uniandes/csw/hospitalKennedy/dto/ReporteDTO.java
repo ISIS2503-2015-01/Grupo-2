@@ -11,7 +11,7 @@ package co.edu.uniandes.csw.hospitalKennedy.dto;
  */
 public class ReporteDTO {
     
-    private String id;
+    private long id;
     private String actividadFisica;
     private String alimentacion;
     private String gravedad;
@@ -106,12 +106,12 @@ public class ReporteDTO {
         return this.medicamentosRecientes;
     }
     
-   public void setId(String id)
+   public void setId(Long id)
     {
         this.id=id;
     }
     
-    public String getId()
+    public Long getId()
     {
         return this.id;
     } 

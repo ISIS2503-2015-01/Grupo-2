@@ -39,7 +39,8 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     //public static IServicioPersistenciaMockLocal persistencia;
     
     @PersistenceUnit(unitName = "HospitalKennedyPU")
-    EntityManager entityManager;
+    EntityManager entityManager; 
+
     
     private ArrayList<Paciente> pacientes;
 
@@ -91,7 +92,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         Paciente p = new Paciente();
         
         p.setAltura(paciente.getAltura());
-        p.setCedulaCiudadania(paciente.getCedulaCiudadania());
+        p.setId(paciente.getId());
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
         p.setReportes(paciente.getReportes());
@@ -121,18 +122,11 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
      * Remueve un mueble del carrito de compra
      */
     @Override
-    public Paciente removerPaciente(String idPaciente)
+    public Paciente removerPaciente(Long idPaciente)
     {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        Paciente p = new Paciente();
-        if(!pacientes.isEmpty())
-        {
-        p = pacientes.get(0);
-        }
         
-         
-        
+      Paciente p =  entityManager.find(Paciente.class, idPaciente);
+
         try {
             entityManager.getTransaction().begin();
             entityManager.remove(p);

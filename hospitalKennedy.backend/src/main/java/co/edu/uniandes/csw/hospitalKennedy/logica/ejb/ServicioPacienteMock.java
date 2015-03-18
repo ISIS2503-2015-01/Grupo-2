@@ -36,8 +36,8 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
-     @PersistenceUnit(unitName = "HospitalKennedyPU")
-    EntityManager entityManager;
+    @PersistenceUnit(unitName = "HospitalKennedyPU")
+    EntityManager entityManager; 
 
     public ServicioPacienteMock()
     {
@@ -57,7 +57,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public List<Reporte> getReportes(String idPaciente) 
+    public List<Reporte> getReportes(Long idPaciente) 
     {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
@@ -66,7 +66,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
     
      @Override        
-    public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte)
+    public ReporteDTO agregarReporte(Long idPaciente, ReporteDTO reporte)
     {
        Reporte r = new Reporte();
        
@@ -77,13 +77,10 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         r.setLocalizacionDolor(reporte.getLocalizacionDolor());
         r.setPatronSuenio(reporte.getPatronSuenio());
         r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());  
+        r.setId(reporte.getId());
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
-        
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah" + pacientes.size() + "--------" + q.toString());
-        
-        Paciente p = pacientes.get(0);      
-        
+        Paciente p = pacientes.get(0);
         p.agregarReporte(r);
         
         try{
@@ -109,7 +106,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
     
     @Override
-    public Reporte removerReporte(String idPaciente, String idReporte)
+    public Reporte removerReporte(Long idPaciente, Long idReporte)
     {
         Query q1 = entityManager.createQuery("select u from Paciente where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q1.getResultList();
@@ -153,14 +150,14 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }  
     
     @Override
-    public Paciente darPaciente(String idPaciente){
+    public Paciente darPaciente(Long idPaciente){
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> paciente = q.getResultList();
         return paciente.get(0);
     }
 
     @Override
-    public Reporte getReportePorPaciente(String idPaciente, String idReporte) {
+    public Reporte getReportePorPaciente(Long idPaciente, Long idReporte) {
     
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'"+"'");
         List<Paciente> pacientes = q.getResultList();
@@ -169,16 +166,11 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
 
     @Override
     //Arreglar
-    public List<Reporte> getReportesEntreFechas(String idPaciente, String  codFecha1, String codFecha2) {
+    public List<Reporte> getReportesEntreFechas(Long idPaciente, String  codFecha1, String codFecha2) {
         
        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
        List<Paciente> pacientes = q.getResultList();
-       if(!pacientes.isEmpty())
-       {
        return pacientes.get(0).getReportesEntreFechas(codFecha1,codFecha2);
-       }
-       else
-           return new ArrayList<Reporte>();
         
     }
 

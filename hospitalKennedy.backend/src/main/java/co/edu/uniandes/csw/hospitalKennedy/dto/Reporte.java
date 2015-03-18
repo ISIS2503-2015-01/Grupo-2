@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
+import com.sun.istack.NotNull;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -22,45 +23,44 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
- 
-import org.eclipse.persistence.nosql.annotations.DataFormatType;
-import org.eclipse.persistence.nosql.annotations.Field;
-import org.eclipse.persistence.nosql.annotations.NoSql;
 
 
 /**
  *
  * @author estudiante
  */
-@NoSql(dataFormat=DataFormatType.MAPPED)
-@Embeddable
-@XmlRootElement
+@Entity
 public class Reporte implements Serializable{
-    private static final long serialVersionUID = 1L;
     
-    //@Id
-    //@GeneratedValue
-    //@Field(name="_idReporte")
-    private String id;
+    private static final long serialVersionUID = 3L;
+    
+    @Id
+    private Long id;
     
     private String actividadFisica;
     private String alimentacion;
     private String gravedad;
     private String fechaCreacion;
     private String localizacionDolor;
-    private String patronSuenio;
-    
-    //@ManyToOne
-    //private Paciente paciente;
-    
-    
+    private String patronSuenio;   
     private String medicamentosRecientes;
+    
+    @NotNull
+    @Column(name = "create_at", updatable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar createdAt;
+ 
+    @NotNull
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    private Calendar updatedAt;
     
     
     public Reporte(){
         
     }
-    public Reporte(String id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, Paciente paciente,String medicamentosRecientes){
+    
+    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, Paciente paciente,String medicamentosRecientes){
         this.id = id;
         this.actividadFisica = actividadFisica;
         this.alimentacion = alimentacion;
@@ -68,11 +68,18 @@ public class Reporte implements Serializable{
         this.fechaCreacion  = fechaCreacion;
         this.localizacionDolor = localizacionDolor;
         this.patronSuenio = patronSuenio;
-       // this.paciente=paciente;
         this.medicamentosRecientes = medicamentosRecientes;
     }
-
-   
+    
+    @PreUpdate
+    private void updateTimestamp() {
+        this.updatedAt = Calendar.getInstance();
+    }
+ 
+    @PrePersist
+    private void creationTimestamp() {
+        this.createdAt = this.updatedAt = Calendar.getInstance();
+    }
     
     public void setMedicamentosRecientes(String medicamentosRecientes) {
         this.medicamentosRecientes = medicamentosRecientes;
@@ -81,14 +88,6 @@ public class Reporte implements Serializable{
     public String getMedicamentosRecientes() {
         return medicamentosRecientes;
     }
-
-    //public void setPaciente(Paciente paciente) {
-    //    this.paciente = paciente;
-    //}
-
-//    public Paciente getPaciente() {
-//        return paciente;
-//    }
 
     public void setActividadFisica(String actividadFisica) {
         this.actividadFisica = actividadFisica;
@@ -106,7 +105,7 @@ public class Reporte implements Serializable{
         this.fechaCreacion = fechaCreacion;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -134,7 +133,7 @@ public class Reporte implements Serializable{
         return fechaCreacion;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

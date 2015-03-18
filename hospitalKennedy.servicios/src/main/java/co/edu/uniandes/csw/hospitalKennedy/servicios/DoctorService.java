@@ -81,7 +81,7 @@ public class DoctorService {
      */
     @DELETE
     @Path("borrar/{idPaciente}")
-    public Response eliminarPaciente(String idPaciente){
+    public Response eliminarPaciente(@PathParam("idPaciente") Long idPaciente){
         //for(Paciente paciente: lista){
         //    doctorEjb.removerPaciente(paciente);
         //}

@@ -65,7 +65,7 @@ public class PacienteService {
     
     @POST
     @Path("{id}/agregarReportes/")
-    public Response agregarReporte(@PathParam("id") String idPaciente, ReporteDTO reporte){
+    public Response agregarReporte(@PathParam("id") Long idPaciente, ReporteDTO reporte){
 
         //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" + id + " - " + lista.get(0).getActividadFisica());
         //for(Reporte reporte: lista){
@@ -88,7 +88,7 @@ public class PacienteService {
     
     @DELETE
     @Path("{id}/borrar/{idReporte}")
-    public Response eliminarReporte(@PathParam("id") String idPaciente, @PathParam("idReporte") String idReporte) throws Exception{
+    public Response eliminarReporte(@PathParam("id") Long idPaciente, @PathParam("idReporte") Long idReporte) throws Exception{
         //for(Reporte reporte: lista){
         //    pacienteEjb.removerReporte(id, reporte);
         //}
@@ -100,7 +100,7 @@ public class PacienteService {
     
     @GET
     @Path("/paciente/{idPaciente}")
-    public Response darPaciente(@PathParam("idPaciente") String idPaciente)
+    public Response darPaciente(@PathParam("idPaciente") Long idPaciente)
     {
         //System.out.println("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         //return pacienteEjb.darPacientes();
@@ -110,7 +110,7 @@ public class PacienteService {
     
     @GET
     @Path("{id}/reportes/")
-    public Response darReportes(@PathParam("id") String idPaciente){
+    public Response darReportes(@PathParam("id") Long idPaciente){
         //return pacienteEjb.getReportes(id);
        List<Reporte>reportes= servicioPaciente.getReportes(idPaciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reportes).build();
@@ -120,7 +120,7 @@ public class PacienteService {
     @GET
     @Path("{id}/reportes/{idReporte}") //URL de ejemplo http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1L/reportes/1L
 
-    public Response darReportePorPaciente(@PathParam("id") String idPaciente, @PathParam("idReporte")String idReporte)
+    public Response darReportePorPaciente(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
         //System.out.println("YAAAAAAAAAAAAAA id paciente "+ id +" id reporte "+ idReporte );
@@ -137,7 +137,7 @@ public class PacienteService {
     
    @GET
     @Path("/{id}/reportes/{fecha1}/{fecha2}") //Ejemplo de este metodo: http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/1/reportes/0/6424221442709
-    public Response getReportesEntreFechas(@PathParam("id") String idPaciente, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
+    public Response getReportesEntreFechas(@PathParam("id") Long idPaciente, @PathParam("fecha1") String codFecha1, @PathParam("fecha2") String codFecha2){
         
         //return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
         List<Reporte> reporte = servicioPaciente.getReportesEntreFechas(idPaciente, codFecha1, codFecha2);

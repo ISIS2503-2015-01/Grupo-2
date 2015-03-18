@@ -5,16 +5,17 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
+import com.sun.istack.NotNull;
 import java.util.ArrayList;
 
-
- 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
  
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -30,10 +31,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
  
-import org.eclipse.persistence.nosql.annotations.DataFormatType;
-import org.eclipse.persistence.nosql.annotations.Field;
-import org.eclipse.persistence.nosql.annotations.NoSql;
- 
  
 
 /**
@@ -41,43 +38,62 @@ import org.eclipse.persistence.nosql.annotations.NoSql;
  * @author jssalamanca1967
  */
 
-@NoSql(dataFormat=DataFormatType.MAPPED)
 @Entity
-@XmlRootElement
 public class Paciente implements Serializable{
-     private static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = 2L;
     
     //--------------------------------
     // Atributos
     //--------------------------------
+     
+    /**
+     * La cédula del paciente
+     */
     @Id
-    @GeneratedValue
-    @Field(name="_idPaciente")
-    private String id;
-    
+    private Long id;
     
     private int altura;
     private int edad;
-    private int cedulaCiudadania;
+    //private int cedulaCiudadania;
     private String nombre;
     
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Reporte> reportes;
     
-     public Paciente(){
+    @NotNull
+    @Column(name = "create_at", updatable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar createdAt;
+ 
+    @NotNull
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    private Calendar updatedAt;
+    
+    public Paciente(){
         
     }
     
-    public Paciente(String id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
+    public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
-        this.cedulaCiudadania = cedulaCiudadania;
+//        this.cedulaCiudadania = cedulaCiudadania;
         this.altura = altura;
         reportes = reportesN;
     }
-
-   
+    
+    @PreUpdate
+    private void updateTimestamp() {
+        this.updatedAt = Calendar.getInstance();
+    }
+ 
+    @PrePersist
+    private void creationTimestamp() {
+        this.createdAt = this.updatedAt = Calendar.getInstance();
+    }
+    
     public void setReportes(ArrayList<Reporte> reportes) {
         if(this.reportes==null)
         {
@@ -89,12 +105,12 @@ public class Paciente implements Serializable{
     public List<Reporte> getReportes() {
         if(this.reportes==null)
         {
-            reportes=new ArrayList();
+            reportes=new ArrayList<Reporte>();
         }
         return reportes;
     }
     
-    public Reporte getReporte(String idReporte)
+    public Reporte getReporte(Long idReporte)
     {
         Reporte r = null;
         boolean ya = false;
@@ -135,7 +151,8 @@ public class Paciente implements Serializable{
         }
         return estos;
     }
-    public void removerReporte(String idReporte)
+    
+    public void removerReporte(Long idReporte)
     {
         boolean ya =false;
         for(int i =0;i<reportes.size()&&!ya;i++)
@@ -148,14 +165,14 @@ public class Paciente implements Serializable{
         }
     }
     
-    public void setCedulaCiudadania(int cedulaCiudadania) {
-        this.cedulaCiudadania = cedulaCiudadania;
-    }
-
-    public int getCedulaCiudadania() {
-        return cedulaCiudadania;
-    }
-    
+//    public void setCedulaCiudadania(int cedulaCiudadania) {
+//        this.cedulaCiudadania = cedulaCiudadania;
+//    }
+//
+//    public int getCedulaCiudadania() {
+//        return cedulaCiudadania;
+//    }
+//    
     public void setAltura(int altura) {
         this.altura = altura;
     }
@@ -164,7 +181,7 @@ public class Paciente implements Serializable{
         this.edad = edad;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -180,7 +197,7 @@ public class Paciente implements Serializable{
         return edad;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

@@ -21,6 +21,6 @@ public interface IServicioDoctorMock {
     public EntityManager getPersistencia();
     public ArrayList<Paciente> getPacientes();
     public PacienteDTO agregarPaciente(PacienteDTO paciente);
-    public Paciente removerPaciente(String idPaciente);
+    public Paciente removerPaciente(Long idPaciente);
     
 }

@@ -6,9 +6,12 @@
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
 
+import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.util.Calendar;
  
+import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +21,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
- 
-import org.eclipse.persistence.nosql.annotations.DataFormatType;
-import org.eclipse.persistence.nosql.annotations.Field;
-import org.eclipse.persistence.nosql.annotations.NoSql;
  
  
 
@@ -31,24 +29,34 @@ import org.eclipse.persistence.nosql.annotations.NoSql;
  *
  * @author jssalamanca1967
  */
-@NoSql(dataFormat=DataFormatType.MAPPED)
 @Entity
-@XmlRootElement
 public class Doctor implements Serializable{
      private static final long serialVersionUID = 1L;
     //--------------------------
     // Atributos
     //--------------------------
+     
+    /**
+     * El id del doctor será la cédula
+     */
     @Id
-    @GeneratedValue
-    @Field(name="_idDoctor")
-    private String id;
+    private Long id;
+    
+    @NotNull
+    @Column(name = "create_at", updatable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar createdAt;
+ 
+    @NotNull
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
+    private Calendar updatedAt;
 
     private String nombre;
     private String password;
     private String login;
     
-    public Doctor(String id, String pNombre, String pPsw, String pLogin){
+    public Doctor(Long id, String pNombre, String pPsw, String pLogin){
         this.id = id;
         nombre = pNombre;
         password = pPsw;
@@ -58,8 +66,18 @@ public class Doctor implements Serializable{
     {
         
     }
+    
+    @PreUpdate
+    private void updateTimestamp() {
+        this.updatedAt = Calendar.getInstance();
+    }
+ 
+    @PrePersist
+    private void creationTimestamp() {
+        this.createdAt = this.updatedAt = Calendar.getInstance();
+    }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,7 +93,7 @@ public class Doctor implements Serializable{
         this.login = login;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

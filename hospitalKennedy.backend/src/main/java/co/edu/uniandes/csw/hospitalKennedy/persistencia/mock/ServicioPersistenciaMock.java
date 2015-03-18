@@ -66,14 +66,14 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         {
             doctores = new ArrayList<Doctor>();
 
-            doctores.add(new Doctor("1L", "Carlos Mendieta", "lolita45", "ca.mendieta45"));
-            doctores.add(new Doctor("5L", "Carlos Carrillo", "lolita45", "ca.carrillo"));
+            doctores.add(new Doctor(1L, "Carlos Mendieta", "lolita45", "ca.mendieta45"));
+            doctores.add(new Doctor(5L, "Carlos Carrillo", "lolita45", "ca.carrillo"));
 
             pacientes = new ArrayList<Paciente>();
             ArrayList<Reporte> reportes = new ArrayList<Reporte>();
-            pacientes.add(new Paciente("1L", "Juana la loca", 25, 12365987, 200, reportes));
+            pacientes.add(new Paciente(1L, "Juana la loca", 25, 12365987, 200, reportes));
             ArrayList<Reporte> reportes2 = new ArrayList<Reporte>();
-            pacientes.add(new Paciente("2L", "Juana la sana", 15, 55689865, 185, reportes2));
+            pacientes.add(new Paciente(2L, "Juana la sana", 15, 55689865, 185, reportes2));
 
             
            // pacientes.get(0).agregarReporte(new Reporte("1L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
@@ -104,18 +104,18 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 if(doc.getLogin().equals(v.getLogin()))
                     throw new OperacionInvalidaException("El doctor con el login " + v.getLogin() + " ya existe.");
             }
-            v.setId(new String(""+doctores.size() + 1));
+            v.setId(Long.parseLong("" + (doctores.size() + 1)));
             doctores.add(v);
         }
         else if (obj instanceof Paciente)
         {
             Paciente m = (Paciente) obj;
             for(Paciente paciente: pacientes)
-            {
-                if(paciente.getCedulaCiudadania() == m.getCedulaCiudadania())
-                    throw new OperacionInvalidaException("El paciente con la cedula de ciudadania " + m.getCedulaCiudadania() + " ya se encuentar registrado en el sistema");
-            }
-            m.setId(new String(""+pacientes.size()) + 1);
+//            {
+//                if(paciente.getCedulaCiudadania() == m.getCedulaCiudadania())
+//                    throw new OperacionInvalidaException("El paciente con la cedula de ciudadania " + m.getCedulaCiudadania() + " ya se encuentar registrado en el sistema");
+//            }
+            m.setId(Long.parseLong(""+pacientes.size()) + 1);
             pacientes.add(m);
         }
     }
@@ -128,7 +128,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         if(pac == null)
             throw new Exception("El paciente con el id " + idPaciente + " no existe.");
         
-        reporte.setId(""+Long.parseLong(idPaciente + "" + (pac.getReportes().size()+1)));
+        reporte.setId(Long.parseLong(idPaciente + "" + (pac.getReportes().size()+1)));
         reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         pac.getReportes().add(reporte);
         
@@ -164,11 +164,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             for (int i = 0; i < pacientes.size(); i++)
             {
                 mueble = pacientes.get(i);
-                if (mueble.getCedulaCiudadania()== editar.getCedulaCiudadania())
-                {
-                    pacientes.set(i, editar);
-                    break;
-                }
+//                if (mueble.getCedulaCiudadania()== editar.getCedulaCiudadania())
+//                {
+//                    pacientes.set(i, editar);
+//                    break;
+//                }
             }
         }        
     }    
@@ -222,12 +222,12 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             Paciente eliminar = (Paciente) obj;
             for (int i = 0; i < pacientes.size(); i++)
             {
-                mueble = pacientes.get(i);
-                if (eliminar.getCedulaCiudadania()== mueble.getCedulaCiudadania())
-                {
-                    pacientes.remove(i);
-                    break;
-                }
+//                mueble = pacientes.get(i);
+//                if (eliminar.getCedulaCiudadania()== mueble.getCedulaCiudadania())
+//                {
+//                    pacientes.remove(i);
+//                    break;
+//                }
 
             }
 
