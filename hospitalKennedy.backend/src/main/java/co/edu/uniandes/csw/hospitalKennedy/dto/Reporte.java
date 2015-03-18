@@ -11,10 +11,12 @@ import java.util.Calendar;
  
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -38,7 +40,7 @@ public class Reporte implements Serializable{
     
     //@Id
     //@GeneratedValue
-    @Field(name="_idReporte")
+    //@Field(name="_idReporte")
     private String id;
     
     private String actividadFisica;
@@ -47,14 +49,18 @@ public class Reporte implements Serializable{
     private String fechaCreacion;
     private String localizacionDolor;
     private String patronSuenio;
-    private int numeroIdentificacion;
+    
+    //@ManyToOne
+    //private Paciente paciente;
+    
+    
     private String medicamentosRecientes;
     
     
     public Reporte(){
         
     }
-    public Reporte(String id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, int numeroIdentificacion,String medicamentosRecientes){
+    public Reporte(String id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, Paciente paciente,String medicamentosRecientes){
         this.id = id;
         this.actividadFisica = actividadFisica;
         this.alimentacion = alimentacion;
@@ -62,7 +68,7 @@ public class Reporte implements Serializable{
         this.fechaCreacion  = fechaCreacion;
         this.localizacionDolor = localizacionDolor;
         this.patronSuenio = patronSuenio;
-        this.numeroIdentificacion = numeroIdentificacion;
+       // this.paciente=paciente;
         this.medicamentosRecientes = medicamentosRecientes;
     }
 
@@ -76,13 +82,13 @@ public class Reporte implements Serializable{
         return medicamentosRecientes;
     }
 
-    public void setNumeroIdentificacion(int numeroIdentificacion) {
-        this.numeroIdentificacion = numeroIdentificacion;
-    }
+    //public void setPaciente(Paciente paciente) {
+    //    this.paciente = paciente;
+    //}
 
-    public int getNumeroIdentificacion() {
-        return numeroIdentificacion;
-    }
+//    public Paciente getPaciente() {
+//        return paciente;
+//    }
 
     public void setActividadFisica(String actividadFisica) {
         this.actividadFisica = actividadFisica;

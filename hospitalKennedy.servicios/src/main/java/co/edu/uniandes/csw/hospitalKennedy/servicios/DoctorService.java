@@ -45,35 +45,49 @@ public class DoctorService {
     //@EJB
     //private IServicioDoctorMock doctorEjb;
    
-    ServicioDoctorMock servicioDoctor;
-  
-    
+    private ServicioDoctorMock servicioDoctor;
+   
     public DoctorService(){
         servicioDoctor = new ServicioDoctorMock();
     }
+    
+    
     @POST
     @Path("/agregar")
     public Response agregarPaciente(PacienteDTO paciente){
-      //  System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
       //  for(Paciente paciente: lista){
       //      doctorEjb.agregarPaciente(paciente);
       //  }
         
       //  return lista;
+//<<<<<<< .mine
+//        
+//        PacienteDTO pacRta = doctor.agregarPaciente(paciente);
+//        
+//        JSONObject rta = new JSONObject();
+//        rta.put("paciente_id", pacRta.getId());
+//        
+//        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
+//=======
         PacienteDTO p = servicioDoctor.agregarPaciente(paciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();
+
        
     }
     
+    /**
+     *
+     * @param idPaciente
+     */
     @DELETE
     @Path("borrar/{idPaciente}")
-    public Response eliminarPaciente(@PathParam("idPaciente") String idPaciente){
+    public Response eliminarPaciente(String idPaciente){
         //for(Paciente paciente: lista){
         //    doctorEjb.removerPaciente(paciente);
         //}
         Paciente p = servicioDoctor.removerPaciente(idPaciente);
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
-
+        return Response.status(200).header("Access-Control-allow-Origin", "*").entity(p).build();
+        
     }
     
     //@GET
@@ -84,6 +98,11 @@ public class DoctorService {
     //    return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();           
     //}
     
+    /**
+     *
+     * @return
+     */
+        
     @GET
     @Path("/paciente/")
     public Response darPacientes(){

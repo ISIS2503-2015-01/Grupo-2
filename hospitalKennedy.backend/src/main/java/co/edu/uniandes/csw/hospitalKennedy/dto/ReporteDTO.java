@@ -11,13 +11,14 @@ package co.edu.uniandes.csw.hospitalKennedy.dto;
  */
 public class ReporteDTO {
     
+    private String id;
     private String actividadFisica;
     private String alimentacion;
     private String gravedad;
     private String fechaCreacion;
     private String localizacionDolor;
     private String patronSuenio;
-    private int numeroIdentificacion;
+//    private Paciente paciente;
     private String medicamentosRecientes;
     
     public ReporteDTO()
@@ -85,15 +86,15 @@ public class ReporteDTO {
         return this.patronSuenio;
     }
     
-    public void setNumeroIdentificacion(int numeroIdentificacion)
-    {
-        this.numeroIdentificacion=numeroIdentificacion;
-    }
-    
-    public int getNumeroIdentificacion()
-    {
-        return this.numeroIdentificacion;
-    }
+//    public void setPaciente(Paciente paciente)
+//    {
+//        this.paciente=paciente;
+//    }
+//    
+//    public Paciente getPaciente()
+//    {
+//        return this.paciente;
+//    }
     
     public void setMedicamentosRecientes(String medicamentosRecientes)
     {
@@ -104,5 +105,15 @@ public class ReporteDTO {
     {
         return this.medicamentosRecientes;
     }
+    
+   public void setId(String id)
+    {
+        this.id=id;
+    }
+    
+    public String getId()
+    {
+        return this.id;
+    } 
     
 }

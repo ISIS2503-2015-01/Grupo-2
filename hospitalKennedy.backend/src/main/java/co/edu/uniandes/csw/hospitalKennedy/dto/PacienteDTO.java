@@ -77,6 +77,10 @@ public class PacienteDTO {
     
     public void setReportes(ArrayList<Reporte> reportes)
     {
+        if(this.reportes==null)
+        {
+            reportes= new ArrayList();
+        }
         for(int i=0;i<reportes.size();i++)
         {
             this.reportes.add(reportes.get(i));

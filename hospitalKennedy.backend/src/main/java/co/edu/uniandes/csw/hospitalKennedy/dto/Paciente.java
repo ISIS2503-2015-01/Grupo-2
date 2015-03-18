@@ -10,7 +10,10 @@ import java.util.ArrayList;
 
  
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
  
 import javax.persistence.Column;
@@ -20,6 +23,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -58,7 +62,7 @@ public class Paciente implements Serializable{
     private String nombre;
     
     @ElementCollection
-    private ArrayList<Reporte> reportes;
+    private List<Reporte> reportes;
     
      public Paciente(){
         
@@ -75,13 +79,75 @@ public class Paciente implements Serializable{
 
    
     public void setReportes(ArrayList<Reporte> reportes) {
+        if(this.reportes==null)
+        {
+            reportes=new ArrayList();
+        }
         this.reportes = reportes;
     }
 
-    public ArrayList<Reporte> getReportes() {
+    public List<Reporte> getReportes() {
+        if(this.reportes==null)
+        {
+            reportes=new ArrayList();
+        }
         return reportes;
     }
-
+    
+    public Reporte getReporte(String idReporte)
+    {
+        Reporte r = null;
+        boolean ya = false;
+        for(int i=0;i<reportes.size()&&!ya;i++)
+        {
+            if(reportes.get(i).getId().equals(idReporte))
+            {
+                r = reportes.get(i);
+                ya=true;
+            }
+        }
+        return r;
+    }
+    
+    public List<Reporte> getReportesEntreFechas(String fecha1, String fecha2)
+    {
+        List<Reporte> estos= new ArrayList<Reporte>();
+        for(int i =0;i<reportes.size();i++)
+        {
+            SimpleDateFormat formato = new SimpleDateFormat("dd-mm-yyyy");
+            try
+            {
+                Date fech1 = formato.parse(fecha1);
+                Date fech2 = formato.parse(fecha2);
+                Date fecha = formato.parse(reportes.get(i).getFechaCreacion());
+                if(fecha.after(fech1)&&fecha.before(fech2))
+                {
+                    estos.add(reportes.get(i));
+                }
+            }
+            catch(ParseException e)
+            {
+                e.printStackTrace();
+            }
+            
+            
+            
+        }
+        return estos;
+    }
+    public void removerReporte(String idReporte)
+    {
+        boolean ya =false;
+        for(int i =0;i<reportes.size()&&!ya;i++)
+        {
+            if(reportes.get(i).getId().equals(idReporte))
+            {
+                reportes.remove(i);
+                ya=true;
+            }
+        }
+    }
+    
     public void setCedulaCiudadania(int cedulaCiudadania) {
         this.cedulaCiudadania = cedulaCiudadania;
     }

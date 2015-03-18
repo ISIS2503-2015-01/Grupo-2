@@ -112,7 +112,7 @@ public class PacienteService {
     @Path("{id}/reportes/")
     public Response darReportes(@PathParam("id") String idPaciente){
         //return pacienteEjb.getReportes(id);
-       ArrayList<Reporte>reportes= servicioPaciente.getReportes(idPaciente);
+       List<Reporte>reportes= servicioPaciente.getReportes(idPaciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reportes).build();
         
     }

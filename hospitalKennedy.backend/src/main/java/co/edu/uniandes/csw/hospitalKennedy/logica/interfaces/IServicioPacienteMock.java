@@ -18,7 +18,7 @@ import java.util.List;
 public interface IServicioPacienteMock {
  
     
-    public ArrayList<Reporte> getReportes(String idPaciente);
+    public List<Reporte> getReportes(String idPaciente);
     public ReporteDTO agregarReporte(String idPaciente, ReporteDTO reporte);
     public Reporte removerReporte(String idPaciente, String idReporte);
     public Paciente darPaciente(String idPaciente);

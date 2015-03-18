@@ -76,11 +76,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             pacientes.add(new Paciente("2L", "Juana la sana", 15, 55689865, 185, reportes2));
 
             
-            pacientes.get(0).agregarReporte(new Reporte("1L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
-            pacientes.get(0).agregarReporte(new Reporte("2L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
+           // pacientes.get(0).agregarReporte(new Reporte("1L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
+           // pacientes.get(0).agregarReporte(new Reporte("2L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
             
-            pacientes.get(1).agregarReporte(new Reporte("3L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
-            pacientes.get(1).agregarReporte(new Reporte("4L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
+           // pacientes.get(1).agregarReporte(new Reporte("3L", "Jugar bascketball", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 1, "Ninguno"));
+           // pacientes.get(1).agregarReporte(new Reporte("4L", "Jugar football", "Sana", "1", (new Date(System.currentTimeMillis())).toString(), "Espalda baja", "Normal", 2, "Ninguno"));
                         
         }
     }
