@@ -62,8 +62,7 @@ public class Paciente implements Serializable{
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Reporte> reportes;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Catalizador catalizadores;
+   
     
     @NotNull
     @Column(name = "create_at", updatable = false)
@@ -98,35 +97,7 @@ public class Paciente implements Serializable{
         this.createdAt = this.updatedAt = Calendar.getInstance();
     }
     
-    public void setCatalizadores(Catalizador catalizadores)
-    {
-        this.catalizadores=catalizadores;
-    }
     
-    public Catalizador getCatalizadores()
-    {
-        return catalizadores;
-    }
-    
-    public void agregarCatalizadorActividadFisica(String actividad)
-    {
-        catalizadores.agregarActividadFisica(actividad);
-    }
-    
-    public void agregarCatalizadorAlimentacion(String alimentacion)
-    {
-        catalizadores.agregarAlimentacion(alimentacion);
-    }
-    
-    public void agregarCatalizadorPatronSuenio(String patron)
-    {
-        catalizadores.agregarPatronSuenio(patron);
-    }
-    
-    public void agregarCatalizadorMedicamentosRecientes(String medicamentos)
-    {
-        catalizadores.agregarMedicamentosRecientes(medicamentos);
-    }
     
     public void setReportes(ArrayList<Reporte> reportes) {
         if(this.reportes==null)

@@ -97,7 +97,6 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
         p.setReportes(paciente.getReportes());
-        p.setCatalizadores(new Catalizador(paciente.getId()));
 
         try {
             entityManager.getTransaction().begin();

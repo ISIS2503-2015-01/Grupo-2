@@ -146,56 +146,56 @@ public class PacienteService {
     }
     
     @GET
-    @Path("{id}/Catalizador/actividadFisica") 
+    @Path("{id}/reportes/{idReporte}/catalizadoresFisicas") 
 
-    public Response darCatalizadoresActividadFisica(@PathParam("id") Long idPaciente)
+    public Response darCatalizadoresActividadFisica(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> actividadesFisicas = servicioPaciente.darCatalizadoresActividadFisica(idPaciente);
+        List<String> actividadesFisicas = servicioPaciente.darCatalizadoresActividadFisica(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(actividadesFisicas).build();
     }
     
     @GET
-    @Path("{id}/Catalizador/patronSuenio") 
+    @Path("{id}/reportes/{idReporte}/catalizadoresSuenio") 
 
-    public Response darCatalizadorespatronSuenio(@PathParam("id") Long idPaciente)
+    public Response darCatalizadorespatronSuenio(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> patrones = servicioPaciente.darCatalizadoresPatronSuenio(idPaciente);
+        List<String> patrones = servicioPaciente.darCatalizadoresPatronSuenio(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(patrones).build();
     }
     
     @GET
-    @Path("{id}/Catalizador/medicamentosRecientes") 
+    @Path("{id}/reportes/{idReporte}/catalizadoresMedicamentos") 
 
-    public Response darCatalizadoresMedicamentosRecientes(@PathParam("id") Long idPaciente)
+    public Response darCatalizadoresMedicamentosRecientes(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> medicamentos = servicioPaciente.darCatalizadoresMedicamentosRecientes(idPaciente);
+        List<String> medicamentos = servicioPaciente.darCatalizadoresMedicamentosRecientes(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(medicamentos).build();
     }
     
     @GET
-    @Path("{id}/Catalizador/alimentacion") 
+    @Path("{id}/reportes/{idReporte}/catalizadoresAlimentacion") 
 
-    public Response darCatalizadoresAlimentacion(@PathParam("id") Long idPaciente)
+    public Response darCatalizadoresAlimentacion(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> alimentacion = servicioPaciente.darCatalizadoresAlimentacion(idPaciente);
+        List<String> alimentacion = servicioPaciente.darCatalizadoresAlimentacion(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(alimentacion).build();
     }
     
     @GET
-    @Path("{id}/Catalizador/catalizadores") 
+    @Path("{id}/reportes/{idReporte}/catalizadores") 
 
-    public Response darCatalizadores(@PathParam("id") Long idPaciente)
+    public Response darCatalizadores(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> catalizadores = servicioPaciente.darCatalizadores(idPaciente);
+        List<String> catalizadores = servicioPaciente.darCatalizadores(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(catalizadores).build();
     }

@@ -20,6 +20,7 @@ public class ReporteDTO {
     private String patronSuenio;
 //    private Paciente paciente;
     private String medicamentosRecientes;
+    private Catalizador catalizadores;
     
     public ReporteDTO()
     {
@@ -116,4 +117,13 @@ public class ReporteDTO {
         return this.id;
     } 
     
+    public void setCatalizador(Catalizador catalizador)
+    {
+        catalizadores=catalizador;
+    }
+    
+    public Catalizador getCatalizador()
+    {
+        return catalizadores;
+    }
 }

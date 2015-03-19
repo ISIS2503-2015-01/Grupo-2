@@ -9,6 +9,7 @@ import com.sun.istack.NotNull;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
  
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -55,6 +57,9 @@ public class Reporte implements Serializable{
     @Temporal(TemporalType.DATE)
     private Calendar updatedAt;
     
+     @OneToOne(cascade = CascadeType.PERSIST)
+    private Catalizador catalizadores;
+    
     
     public Reporte(){
         
@@ -79,6 +84,36 @@ public class Reporte implements Serializable{
     @PrePersist
     private void creationTimestamp() {
         this.createdAt = this.updatedAt = Calendar.getInstance();
+    }
+    
+    public void setCatalizadores(Catalizador catalizadores)
+    {
+        this.catalizadores=catalizadores;
+    }
+    
+    public Catalizador getCatalizadores()
+    {
+        return catalizadores;
+    }
+    
+    public void agregarCatalizadorActividadFisica(String actividad)
+    {
+        catalizadores.agregarActividadFisica(actividad);
+    }
+    
+    public void agregarCatalizadorAlimentacion(String alimentacion)
+    {
+        catalizadores.agregarAlimentacion(alimentacion);
+    }
+    
+    public void agregarCatalizadorPatronSuenio(String patron)
+    {
+        catalizadores.agregarPatronSuenio(patron);
+    }
+    
+    public void agregarCatalizadorMedicamentosRecientes(String medicamentos)
+    {
+        catalizadores.agregarMedicamentosRecientes(medicamentos);
     }
     
     public void setMedicamentosRecientes(String medicamentosRecientes) {

@@ -24,11 +24,11 @@ public interface IServicioPacienteMock {
     public Paciente darPaciente(Long idPaciente);
     public List<Paciente> darPacientes();
     public Reporte getReportePorPaciente(Long idPaciente,Long idReporte);
-    public List<String> darCatalizadoresActividadFisica(Long idPaciente);
-    public List<String> darCatalizadoresAlimentacion(Long idPaciente);
-    public List<String> darCatalizadoresPatronSuenio(Long idPaciente);
-    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente);
-    public List<String> darCatalizadores(Long idPaciente);
+    public List<String> darCatalizadoresActividadFisica(Long idPaciente, Long idReporte);
+    public List<String> darCatalizadoresAlimentacion(Long idPaciente, Long idReporte);
+    public List<String> darCatalizadoresPatronSuenio(Long idPaciente, Long idReporte);
+    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte);
+    public List<String> darCatalizadores(Long idPaciente, Long idReporte);
     public List<Reporte> getReportesEntreFechas(Long idPaciente, String codFecha1, String codFecha2);
     
     

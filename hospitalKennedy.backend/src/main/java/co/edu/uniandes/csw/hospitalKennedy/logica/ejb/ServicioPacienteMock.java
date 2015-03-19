@@ -79,24 +79,19 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         r.setPatronSuenio(reporte.getPatronSuenio());
         r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());  
         r.setId(reporte.getId());
+        r.setCatalizadores(reporte.getCatalizador());
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
         Paciente p = pacientes.get(0);
         p.agregarReporte(r);
         //Agrega los catalizadores del reporte
-        Catalizador c = p.getCatalizadores();
-        c.agregarActividadFisica(reporte.getActividadFisica());
-        c.agregarAlimentacion(reporte.getAlimentacion());
-        c.agregarMedicamentosRecientes(reporte.getMedicamentosRecientes());
-        c.agregarPatronSuenio(reporte.getPatronSuenio());
+        
         
         try{
             entityManager.getTransaction().begin();
             entityManager.persist(p);
-            entityManager.persist(c);
             entityManager.getTransaction().commit();
             entityManager.refresh(p);   
-            entityManager.refresh(c);
         }catch(Throwable t){
                     t.printStackTrace();
                     if(entityManager.getTransaction().isActive())
@@ -184,39 +179,44 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     }
 
     @Override
-    public List<String> darCatalizadoresActividadFisica(Long idPaciente) {
+    public List<String> darCatalizadoresActividadFisica(Long idPaciente, Long idReporte) {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
-        return pacientes.get(0).getCatalizadores().getActividadesFisicas();
+        Reporte r = pacientes.get(0).getReporte(idReporte);
+        return r.getCatalizadores().getActividadesFisicas();
     }
 
     @Override
-    public List<String> darCatalizadoresAlimentacion(Long idPaciente) {
+    public List<String> darCatalizadoresAlimentacion(Long idPaciente, Long idReporte) {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
-        return pacientes.get(0).getCatalizadores().getAlimentacion();
+        Reporte r = pacientes.get(0).getReporte(idReporte);
+        return r.getCatalizadores().getAlimentacion();
     }
 
     @Override
-    public List<String> darCatalizadoresPatronSuenio(Long idPaciente) {
+    public List<String> darCatalizadoresPatronSuenio(Long idPaciente,Long idReporte) {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
-        return pacientes.get(0).getCatalizadores().getPatronSuenio();
+        Reporte r = pacientes.get(0).getReporte(idReporte);
+        return r.getCatalizadores().getPatronSuenio();
     }
 
     @Override
-    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente) {
+    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte) {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        return pacientes.get(0).getCatalizadores().getMedicamentosRecientes();
+       List<Paciente> pacientes = q.getResultList();
+        Reporte r = pacientes.get(0).getReporte(idReporte);
+        return r.getCatalizadores().getMedicamentosRecientes();
     }
     
     @Override
-    public List<String>darCatalizadores(Long idPaciente)
+    public List<String>darCatalizadores(Long idPaciente, Long idReporte)
     {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        return pacientes.get(0).getCatalizadores().getTodoCatalizador();
+       List<Paciente> pacientes = q.getResultList();
+        Reporte r = pacientes.get(0).getReporte(idReporte);
+        return r.getCatalizadores().getTodoCatalizador();
     }
 
     
