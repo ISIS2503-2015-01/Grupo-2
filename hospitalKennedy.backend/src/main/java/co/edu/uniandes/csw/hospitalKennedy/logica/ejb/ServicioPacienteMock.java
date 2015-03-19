@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
+import co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
@@ -82,12 +83,20 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         List<Paciente> pacientes = q.getResultList();
         Paciente p = pacientes.get(0);
         p.agregarReporte(r);
+        //Agrega los catalizadores del reporte
+        Catalizador c = p.getCatalizadores();
+        c.agregarActividadFisica(reporte.getActividadFisica());
+        c.agregarAlimentacion(reporte.getAlimentacion());
+        c.agregarMedicamentosRecientes(reporte.getMedicamentosRecientes());
+        c.agregarPatronSuenio(reporte.getPatronSuenio());
         
         try{
             entityManager.getTransaction().begin();
             entityManager.persist(p);
+            entityManager.persist(c);
             entityManager.getTransaction().commit();
-            entityManager.refresh(p);            
+            entityManager.refresh(p);   
+            entityManager.refresh(c);
         }catch(Throwable t){
                     t.printStackTrace();
                     if(entityManager.getTransaction().isActive())
@@ -172,6 +181,42 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
        List<Paciente> pacientes = q.getResultList();
        return pacientes.get(0).getReportesEntreFechas(codFecha1,codFecha2);
         
+    }
+
+    @Override
+    public List<String> darCatalizadoresActividadFisica(Long idPaciente) {
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getCatalizadores().getActividadesFisicas();
+    }
+
+    @Override
+    public List<String> darCatalizadoresAlimentacion(Long idPaciente) {
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getCatalizadores().getAlimentacion();
+    }
+
+    @Override
+    public List<String> darCatalizadoresPatronSuenio(Long idPaciente) {
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getCatalizadores().getPatronSuenio();
+    }
+
+    @Override
+    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente) {
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getCatalizadores().getMedicamentosRecientes();
+    }
+    
+    @Override
+    public List<String>darCatalizadores(Long idPaciente)
+    {
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getCatalizadores().getTodoCatalizador();
     }
 
     

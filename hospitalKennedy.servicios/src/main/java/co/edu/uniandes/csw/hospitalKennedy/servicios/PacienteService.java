@@ -144,4 +144,59 @@ public class PacienteService {
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
         
     }
+    
+    @GET
+    @Path("{id}/Catalizador/actividadFisica") 
+
+    public Response darCatalizadoresActividadFisica(@PathParam("id") Long idPaciente)
+    {
+        
+        List<String> actividadesFisicas = servicioPaciente.darCatalizadoresActividadFisica(idPaciente);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(actividadesFisicas).build();
+    }
+    
+    @GET
+    @Path("{id}/Catalizador/patronSuenio") 
+
+    public Response darCatalizadorespatronSuenio(@PathParam("id") Long idPaciente)
+    {
+        
+        List<String> patrones = servicioPaciente.darCatalizadoresPatronSuenio(idPaciente);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(patrones).build();
+    }
+    
+    @GET
+    @Path("{id}/Catalizador/medicamentosRecientes") 
+
+    public Response darCatalizadoresMedicamentosRecientes(@PathParam("id") Long idPaciente)
+    {
+        
+        List<String> medicamentos = servicioPaciente.darCatalizadoresMedicamentosRecientes(idPaciente);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(medicamentos).build();
+    }
+    
+    @GET
+    @Path("{id}/Catalizador/alimentacion") 
+
+    public Response darCatalizadoresAlimentacion(@PathParam("id") Long idPaciente)
+    {
+        
+        List<String> alimentacion = servicioPaciente.darCatalizadoresAlimentacion(idPaciente);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(alimentacion).build();
+    }
+    
+    @GET
+    @Path("{id}/Catalizador/catalizadores") 
+
+    public Response darCatalizadores(@PathParam("id") Long idPaciente)
+    {
+        
+        List<String> catalizadores = servicioPaciente.darCatalizadores(idPaciente);
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(catalizadores).build();
+    }
 }

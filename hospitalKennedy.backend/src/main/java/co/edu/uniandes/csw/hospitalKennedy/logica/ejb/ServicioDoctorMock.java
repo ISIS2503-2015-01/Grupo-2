@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
+import co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.excepciones.OperacionInvalidaException;
@@ -96,6 +97,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
         p.setReportes(paciente.getReportes());
+        p.setCatalizadores(new Catalizador(paciente.getId()));
 
         try {
             entityManager.getTransaction().begin();

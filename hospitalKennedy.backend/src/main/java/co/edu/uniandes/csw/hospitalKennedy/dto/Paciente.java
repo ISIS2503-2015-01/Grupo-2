@@ -25,6 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -61,6 +62,9 @@ public class Paciente implements Serializable{
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Reporte> reportes;
     
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Catalizador catalizadores;
+    
     @NotNull
     @Column(name = "create_at", updatable = false)
     @Temporal(TemporalType.DATE)
@@ -92,6 +96,36 @@ public class Paciente implements Serializable{
     @PrePersist
     private void creationTimestamp() {
         this.createdAt = this.updatedAt = Calendar.getInstance();
+    }
+    
+    public void setCatalizadores(Catalizador catalizadores)
+    {
+        this.catalizadores=catalizadores;
+    }
+    
+    public Catalizador getCatalizadores()
+    {
+        return catalizadores;
+    }
+    
+    public void agregarCatalizadorActividadFisica(String actividad)
+    {
+        catalizadores.agregarActividadFisica(actividad);
+    }
+    
+    public void agregarCatalizadorAlimentacion(String alimentacion)
+    {
+        catalizadores.agregarAlimentacion(alimentacion);
+    }
+    
+    public void agregarCatalizadorPatronSuenio(String patron)
+    {
+        catalizadores.agregarPatronSuenio(patron);
+    }
+    
+    public void agregarCatalizadorMedicamentosRecientes(String medicamentos)
+    {
+        catalizadores.agregarMedicamentosRecientes(medicamentos);
     }
     
     public void setReportes(ArrayList<Reporte> reportes) {
