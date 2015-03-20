@@ -1,0 +1,24 @@
+<h2 class="form-title">Lista de los pacientes</h2>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Pacientes</div>
+    <!-- Table -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Altura</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="paciente in this.getPacientes(adoaddad).pacientes | orderBy: 'id'">
+            <td>{{paciente.id}}</td>
+            <td>{{paciente.nombre}}</td>
+            <td>{{paciente.edad}}</td>
+            <td>{{paciente.altura}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div> 
