@@ -31,4 +31,24 @@ hospitalKennedy.directive('pacienteInfo', function(){
             controllerAs:'getPacientes'
         };
     });
+    
+    hospitalKennedy.directive('nuevoPaciente', function(){
+        return{
+            restrict:'E',
+            templateUrl:'index.html',
+            controller: ['$http',function($http){
+                var self=this;
+                self.paciente={};
+                this.addPaciente=function(){
+                    $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/agregar', JSON.stringify(self.paciente)).success(function(data){
+                        self.paciente={};
+                        toolbar.tab=0;
+                    });
+                };
+            }],
+            controllerAs:'agregarPaciente'
+        };
+    });
+    
+    
 })();
