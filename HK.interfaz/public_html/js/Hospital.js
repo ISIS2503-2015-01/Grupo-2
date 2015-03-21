@@ -19,13 +19,14 @@ hospitalKennedy.directive('toolbar', function(){
 hospitalKennedy.directive('pacienteInfo', function(){
         return{
             restrict:'E',
-            templateUrl:'partials/paciente-info.html',
+            templateUrl:'index.html',
             controller: ['$http',function($http){
                 var self=this;
-                self.pacientes=[];
-                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/paciente/').success(function(data){
+                self.pacientes=[{id:'12345678', nombre:'Yolo', edad:'19', altura:'50'},{id:'87654321', nombre:'Yolo2', edad:'17', altura:'148'}];
+                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
                         self.pacientes=data;
                     });
+                
             }],
             controllerAs:'getPacientes'
         };

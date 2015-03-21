@@ -131,8 +131,8 @@
 
     <!-- About Section -->
     <section id="pacientes">
-        <div class="container">
-            <div class="row">
+        <div ng-app="" class="container" >
+             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Pacientes</h2>
                     <hr class="star-light">
@@ -153,7 +153,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="paciente in this.getPacientes(adoaddad).pacientes | orderBy: 'id'">
+                        <tr ng-repeat="paciente in this.getPacientes.pacientes | orderBy: 'id'">
                             <td>{{paciente.id}}</td>
                             <td>{{paciente.nombre}}</td>
                             <td>{{paciente.edad}}</td>
@@ -498,7 +498,7 @@
     <script src="js/freelancer.js"></script>
     
     <script type="text/javascript" src="js/angular.min.js"></script>
-    <script type="text/javascript" src="js/Controller/Hospital.js"></script>
+    <script type="text/javascript" src="js/Hospital.js"></script>
 </body>
 
 </html>
