@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.logica.interfaces;
 
+import co.edu.uniandes.csw.hospitalKennedy.dto.DoctorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import java.util.ArrayList;
@@ -22,5 +23,6 @@ public interface IServicioDoctorMock {
     public ArrayList<Paciente> getPacientes();
     public PacienteDTO agregarPaciente(PacienteDTO paciente);
     public Paciente removerPaciente(Long idPaciente);
+    public DoctorDTO agregarDoctor(DoctorDTO doctor);
     
 }

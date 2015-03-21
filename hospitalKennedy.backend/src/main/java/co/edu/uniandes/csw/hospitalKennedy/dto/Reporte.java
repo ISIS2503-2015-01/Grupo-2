@@ -57,7 +57,7 @@ public class Reporte implements Serializable{
     @Temporal(TemporalType.DATE)
     private Calendar updatedAt;
     
-     @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Catalizador catalizadores;
     
     
@@ -94,28 +94,8 @@ public class Reporte implements Serializable{
     public Catalizador getCatalizadores()
     {
         return catalizadores;
-    }
-    
-    public void agregarCatalizadorActividadFisica(String actividad)
-    {
-        catalizadores.agregarActividadFisica(actividad);
-    }
-    
-    public void agregarCatalizadorAlimentacion(String alimentacion)
-    {
-        catalizadores.agregarAlimentacion(alimentacion);
-    }
-    
-    public void agregarCatalizadorPatronSuenio(String patron)
-    {
-        catalizadores.agregarPatronSuenio(patron);
-    }
-    
-    public void agregarCatalizadorMedicamentosRecientes(String medicamentos)
-    {
-        catalizadores.agregarMedicamentosRecientes(medicamentos);
-    }
-    
+    }    
+      
     public void setMedicamentosRecientes(String medicamentosRecientes) {
         this.medicamentosRecientes = medicamentosRecientes;
     }

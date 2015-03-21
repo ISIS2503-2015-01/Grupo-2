@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
+import co.edu.uniandes.csw.hospitalKennedy.dto.CatalizadorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
@@ -38,7 +39,7 @@ import org.json.simple.JSONObject;
  * @author estudiante
  */
 @Path("/Pacientes")
-@Stateful
+@Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class PacienteService {
@@ -151,7 +152,7 @@ public class PacienteService {
     public Response darCatalizadoresActividadFisica(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> actividadesFisicas = servicioPaciente.darCatalizadoresActividadFisica(idPaciente,idReporte);
+        String actividadesFisicas = servicioPaciente.darCatalizadoresActividadFisica(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(actividadesFisicas).build();
     }
@@ -162,7 +163,7 @@ public class PacienteService {
     public Response darCatalizadorespatronSuenio(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> patrones = servicioPaciente.darCatalizadoresPatronSuenio(idPaciente,idReporte);
+        String patrones = servicioPaciente.darCatalizadoresPatronSuenio(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(patrones).build();
     }
@@ -173,7 +174,7 @@ public class PacienteService {
     public Response darCatalizadoresMedicamentosRecientes(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> medicamentos = servicioPaciente.darCatalizadoresMedicamentosRecientes(idPaciente,idReporte);
+        String medicamentos = servicioPaciente.darCatalizadoresMedicamentosRecientes(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(medicamentos).build();
     }
@@ -184,18 +185,17 @@ public class PacienteService {
     public Response darCatalizadoresAlimentacion(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> alimentacion = servicioPaciente.darCatalizadoresAlimentacion(idPaciente,idReporte);
+        String alimentacion = servicioPaciente.darCatalizadoresAlimentacion(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(alimentacion).build();
     }
     
     @GET
     @Path("{id}/reportes/{idReporte}/catalizadores") 
-
     public Response darCatalizadores(@PathParam("id") Long idPaciente, @PathParam("idReporte")Long idReporte)
     {
         
-        List<String> catalizadores = servicioPaciente.darCatalizadores(idPaciente,idReporte);
+        CatalizadorDTO catalizadores = servicioPaciente.darCatalizadores(idPaciente,idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(catalizadores).build();
     }

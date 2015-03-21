@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.logica.interfaces;
 
+import co.edu.uniandes.csw.hospitalKennedy.dto.CatalizadorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
@@ -24,11 +25,11 @@ public interface IServicioPacienteMock {
     public Paciente darPaciente(Long idPaciente);
     public List<Paciente> darPacientes();
     public Reporte getReportePorPaciente(Long idPaciente,Long idReporte);
-    public List<String> darCatalizadoresActividadFisica(Long idPaciente, Long idReporte);
-    public List<String> darCatalizadoresAlimentacion(Long idPaciente, Long idReporte);
-    public List<String> darCatalizadoresPatronSuenio(Long idPaciente, Long idReporte);
-    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte);
-    public List<String> darCatalizadores(Long idPaciente, Long idReporte);
+    public String darCatalizadoresActividadFisica(Long idPaciente, Long idReporte);
+    public String darCatalizadoresAlimentacion(Long idPaciente, Long idReporte);
+    public String darCatalizadoresPatronSuenio(Long idPaciente,Long idReporte);
+    public String darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte);
+    public CatalizadorDTO darCatalizadores(Long idPaciente, Long idReporte);
     public List<Reporte> getReportesEntreFechas(Long idPaciente, String codFecha1, String codFecha2);
     
     

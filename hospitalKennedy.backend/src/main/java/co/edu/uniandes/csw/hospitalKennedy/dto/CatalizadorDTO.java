@@ -5,33 +5,15 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
-import com.sun.istack.NotNull;
-import java.io.Serializable;
-import java.util.Calendar;
- 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-
 
 /**
  *
  * @author estudiante
  */
-@Entity
-public class Catalizador implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class CatalizadorDTO {
+    
     //--------------------------
     // Atributos
     //--------------------------
@@ -39,27 +21,21 @@ public class Catalizador implements Serializable{
     /**
      * Va a tener el mismo id del reporte correspondiente
      */
-    @Id
     private Long id;    
-    
     private String actividadesFisicas;
     private String alimentacion;
     private String patronSuenio;
     private String medicamentosRecientes;
     private String todoCatalizador;
     
-    public Catalizador()
+    public CatalizadorDTO()
     {
         
     }
     
-    public Catalizador(Long id, String actividadesFisicas, String alimentacion, String patronSuenio, String medicamentosRecientes)
+    public CatalizadorDTO(Long id)
     {
         this.id=id;    
-        this.actividadesFisicas = actividadesFisicas;
-        this.alimentacion = alimentacion;
-        this.medicamentosRecientes = medicamentosRecientes;
-        this.patronSuenio = patronSuenio;
     }
     
     public void setId(Long id)
@@ -111,5 +87,6 @@ public class Catalizador implements Serializable{
     public void setTodoCatalizador(String todoCatalizador) {
         this.todoCatalizador = todoCatalizador;
     }
-            
+    
+    
 }

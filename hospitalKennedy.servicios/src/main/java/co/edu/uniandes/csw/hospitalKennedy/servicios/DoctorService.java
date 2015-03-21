@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
+import co.edu.uniandes.csw.hospitalKennedy.dto.DoctorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
@@ -37,7 +38,7 @@ import org.json.simple.JSONObject;
  * @author estudiante
  */
 @Path("/Doctor")
-@Stateful
+@Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class DoctorService {
@@ -51,27 +52,21 @@ public class DoctorService {
         servicioDoctor = new ServicioDoctorMock();
     }
     
+    @POST
+    @Path("/agregarDoctor")
+    public Response agregarDoctor(DoctorDTO doctor){
+        
+        DoctorDTO rta = servicioDoctor.agregarDoctor(doctor);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
+
+    }
     
     @POST
-    @Path("/agregar")
+    @Path("/agregarPaciente")
     public Response agregarPaciente(PacienteDTO paciente){
-      //  for(Paciente paciente: lista){
-      //      doctorEjb.agregarPaciente(paciente);
-      //  }
-        
-      //  return lista;
-//<<<<<<< .mine
-//        
-//        PacienteDTO pacRta = doctor.agregarPaciente(paciente);
-//        
-//        JSONObject rta = new JSONObject();
-//        rta.put("paciente_id", pacRta.getId());
-//        
-//        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta.toJSONString()).build();
-//=======
+
         PacienteDTO p = servicioDoctor.agregarPaciente(paciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();
-
        
     }
     

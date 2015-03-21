@@ -1,18 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador;
+import co.edu.uniandes.csw.hospitalKennedy.dto.CatalizadorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
 import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPacienteMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
-import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
+//import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +39,8 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
     @PersistenceUnit(unitName = "HospitalKennedyPU")
-    EntityManager entityManager; 
-
+            EntityManager entityManager;
+    
     public ServicioPacienteMock()
     {
         
@@ -51,14 +52,14 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         //if(ServicioDoctorMock.persistencia == null)
         //{
         //    persistencia = new ServicioPersistenciaMock();
-            
+        
         //}
         //else
         //    persistencia = ServicioDoctorMock.persistencia;
     }
-
+    
     @Override
-    public List<Reporte> getReportes(Long idPaciente) 
+    public List<Reporte> getReportes(Long idPaciente)
     {
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
@@ -66,47 +67,63 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         return reportes;
     }
     
-     @Override        
+    @Override
     public ReporteDTO agregarReporte(Long idPaciente, ReporteDTO reporte)
     {
-       Reporte r = new Reporte();
-       
+        Reporte r = new Reporte();
+        
         r.setActividadFisica(reporte.getActividadFisica());
         r.setAlimentacion(reporte.getAlimentacion());
         r.setGravedad(reporte.getGravedad());
         r.setFechaCreacion(reporte.getFechaCreacion());
         r.setLocalizacionDolor(reporte.getLocalizacionDolor());
         r.setPatronSuenio(reporte.getPatronSuenio());
-        r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());  
-        r.setId(reporte.getId());
-        r.setCatalizadores(reporte.getCatalizador());
+        r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());
+//        r.setId(reporte.getId());
+//        r.setCatalizadores(reporte.getCatalizador());
+        
+        
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
         List<Paciente> pacientes = q.getResultList();
         Paciente p = pacientes.get(0);
         p.agregarReporte(r);
+        
+        Reporte agregado = p.getReportes().get(p.getReportes().size()-1);
+        
+        r.setFechaCreacion(agregado.getFechaCreacion());
+        r.setId(agregado.getId());
+        
+        Catalizador c = new Catalizador(r.getId(), r.getActividadFisica(), r.getAlimentacion(), r.getPatronSuenio(), r.getMedicamentosRecientes());
+        
+        r.setCatalizadores(c);
+        
         //Agrega los catalizadores del reporte
         
         
         try{
             entityManager.getTransaction().begin();
+            entityManager.persist(c);
+            entityManager.persist(r);
             entityManager.persist(p);
             entityManager.getTransaction().commit();
-            entityManager.refresh(p);   
+            entityManager.refresh(c);
+            entityManager.refresh(r);
+            entityManager.refresh(p);
         }catch(Throwable t){
-                    t.printStackTrace();
-                    if(entityManager.getTransaction().isActive())
-                    {
-                        entityManager.getTransaction().rollback();
-                    }
-                    r = null;
-                }
+            t.printStackTrace();
+            if(entityManager.getTransaction().isActive())
+            {
+                entityManager.getTransaction().rollback();
+            }
+            r = null;
+        }
         finally
         {
             entityManager.clear();
             entityManager.close();
         }
         return reporte;
-
+        
     }
     
     @Override
@@ -120,17 +137,17 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         try{
             entityManager.getTransaction().begin();
             entityManager.persist(p);
-            entityManager.getTransaction().commit();                    
+            entityManager.getTransaction().commit();
         }
         catch(Throwable t)
-                {
-                    t.printStackTrace();
-                    if(entityManager.getTransaction().isActive())
-                    {
-                        entityManager.getTransaction().rollback();
-                    }
-                    r = null;
-                }
+        {
+            t.printStackTrace();
+            if(entityManager.getTransaction().isActive())
+            {
+                entityManager.getTransaction().rollback();
+            }
+            r = null;
+        }
         finally
         {
             entityManager.clear();
@@ -141,7 +158,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
 //        q2.executeUpdate();
         return r;
     }
-
+    
     
     @Override
     public List<Paciente> darPacientes(){
@@ -150,8 +167,8 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         List<Paciente> paciente = q.getResultList();
         ArrayList p = new ArrayList(paciente);
         return p;
-
-    }  
+        
+    }
     
     @Override
     public Paciente darPaciente(Long idPaciente){
@@ -159,65 +176,78 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         List<Paciente> paciente = q.getResultList();
         return paciente.get(0);
     }
-
+    
     @Override
     public Reporte getReportePorPaciente(Long idPaciente, Long idReporte) {
-    
+        
         Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'"+"'");
         List<Paciente> pacientes = q.getResultList();
         return pacientes.get(0).getReporte(idReporte);
     }
-
+    
     @Override
     //Arreglar
     public List<Reporte> getReportesEntreFechas(Long idPaciente, String  codFecha1, String codFecha2) {
         
-       Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-       List<Paciente> pacientes = q.getResultList();
-       return pacientes.get(0).getReportesEntreFechas(codFecha1,codFecha2);
+        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
+        List<Paciente> pacientes = q.getResultList();
+        return pacientes.get(0).getReportesEntreFechas(codFecha1,codFecha2);
         
-    }
-
-    @Override
-    public List<String> darCatalizadoresActividadFisica(Long idPaciente, Long idReporte) {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        Reporte r = pacientes.get(0).getReporte(idReporte);
-        return r.getCatalizadores().getActividadesFisicas();
-    }
-
-    @Override
-    public List<String> darCatalizadoresAlimentacion(Long idPaciente, Long idReporte) {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        Reporte r = pacientes.get(0).getReporte(idReporte);
-        return r.getCatalizadores().getAlimentacion();
-    }
-
-    @Override
-    public List<String> darCatalizadoresPatronSuenio(Long idPaciente,Long idReporte) {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-        List<Paciente> pacientes = q.getResultList();
-        Reporte r = pacientes.get(0).getReporte(idReporte);
-        return r.getCatalizadores().getPatronSuenio();
-    }
-
-    @Override
-    public List<String> darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte) {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-       List<Paciente> pacientes = q.getResultList();
-        Reporte r = pacientes.get(0).getReporte(idReporte);
-        return r.getCatalizadores().getMedicamentosRecientes();
     }
     
     @Override
-    public List<String>darCatalizadores(Long idPaciente, Long idReporte)
-    {
-        Query q = entityManager.createQuery("select u from Paciente u where u.id = '"+idPaciente+"'");
-       List<Paciente> pacientes = q.getResultList();
-        Reporte r = pacientes.get(0).getReporte(idReporte);
-        return r.getCatalizadores().getTodoCatalizador();
+    public String darCatalizadoresActividadFisica(Long idPaciente, Long idReporte) {
+        Query q = entityManager.createQuery("select u from Reporte u where u.id = '"+idReporte+"'");
+        List<Reporte> reportes = q.getResultList();
+        Reporte r = reportes.get(0);
+        String rta = r.getCatalizadores().getActividadesFisicas();
+        return rta;
     }
-
+    
+    @Override
+    public String darCatalizadoresAlimentacion(Long idPaciente, Long idReporte) {
+        Query q = entityManager.createQuery("select u from Reporte u where u.id = '"+idReporte+"'");
+        List<Reporte> reportes = q.getResultList();
+        Reporte r = reportes.get(0);
+        String rta = r.getCatalizadores().getAlimentacion();
+        return rta;
+    }
+    
+    @Override
+    public String darCatalizadoresPatronSuenio(Long idPaciente,Long idReporte) {
+        Query q = entityManager.createQuery("select u from Reporte u where u.id = '"+idReporte+"'");
+        List<Reporte> reportes = q.getResultList();
+        Reporte r = reportes.get(0);
+        String rta = r.getCatalizadores().getPatronSuenio();
+        return rta;
+    }
+    
+    @Override
+    public String darCatalizadoresMedicamentosRecientes(Long idPaciente, Long idReporte) {
+        Query q = entityManager.createQuery("select u from Reporte u where u.id = '"+idReporte+"'");
+        List<Reporte> reportes = q.getResultList();
+        Reporte r = reportes.get(0);
+        String rta = r.getCatalizadores().getMedicamentosRecientes();
+        return rta;
+    }
+    
+    @Override
+    public CatalizadorDTO darCatalizadores(Long idPaciente, Long idReporte)
+    {
+        Query q = entityManager.createQuery("select u from Reporte u where u.id = '"+idReporte+"'");
+        List<Reporte> reportes = q.getResultList();
+        Reporte r = reportes.get(0);
+        Catalizador a = r.getCatalizadores();
+        CatalizadorDTO rta = new CatalizadorDTO();
+        
+        rta.setActividadesFisicas(a.getActividadesFisicas());
+        rta.setAlimentacion(a.getAlimentacion());
+        rta.setId(a.getId());
+        rta.setMedicamentosRecientes(a.getMedicamentosRecientes());
+        rta.setPatronSuenio(a.getPatronSuenio());
+        
+        return rta;
+    }
+    
     
 }

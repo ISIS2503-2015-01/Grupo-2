@@ -15,6 +15,10 @@ public class DoctorDTO {
     // Atributos
     //--------------------------
     
+    /**
+     * La cédula es el id.
+     */
+    private Long id;
     private String nombre;
     private String password;
     private String login;
@@ -51,4 +55,14 @@ public class DoctorDTO {
     {
         return this.login;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 }

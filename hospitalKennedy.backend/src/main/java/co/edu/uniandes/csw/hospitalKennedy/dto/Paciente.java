@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
  
@@ -99,7 +99,7 @@ public class Paciente implements Serializable{
     
     
     
-    public void setReportes(ArrayList<Reporte> reportes) {
+    public void setReportes(List<Reporte> reportes) {
         if(this.reportes==null)
         {
             reportes=new ArrayList();
@@ -135,24 +135,12 @@ public class Paciente implements Serializable{
         List<Reporte> estos= new ArrayList<Reporte>();
         for(int i =0;i<reportes.size();i++)
         {
-            SimpleDateFormat formato = new SimpleDateFormat("dd-mm-yyyy");
-            try
+            Reporte actual = reportes.get(i);
+            
+            if(actual.getFechaCreacion().compareTo(fecha1) >= 0 && actual.getFechaCreacion().compareTo(fecha2) <= 0)
             {
-                Date fech1 = formato.parse(fecha1);
-                Date fech2 = formato.parse(fecha2);
-                Date fecha = formato.parse(reportes.get(i).getFechaCreacion());
-                if(fecha.after(fech1)&&fecha.before(fech2))
-                {
-                    estos.add(reportes.get(i));
-                }
+                estos.add(actual);
             }
-            catch(ParseException e)
-            {
-                e.printStackTrace();
-            }
-            
-            
-            
         }
         return estos;
     }
@@ -212,6 +200,8 @@ public class Paciente implements Serializable{
     
     public void agregarReporte(Reporte reporte)
     {
+        reporte.setId(Long.parseLong(id + "" + reportes.size()));
+        reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         reportes.add(reporte);
     }
     

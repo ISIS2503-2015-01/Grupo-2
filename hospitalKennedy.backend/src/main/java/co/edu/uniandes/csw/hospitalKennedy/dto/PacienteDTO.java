@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.hospitalKennedy.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,10 +18,15 @@ public class PacienteDTO {
     
     private int altura;
     private int edad;
-    private int cedulaCiudadania;
+    
+    /**
+     * La cédula es el id
+     */
+    private Long cedulaCiudadania;
     private String nombre;
-    private ArrayList<Reporte> reportes;
-    private Long id;
+    private List<Reporte> reportes;
+    
+    private int id;
     
     public PacienteDTO()
     {
@@ -47,12 +53,12 @@ public class PacienteDTO {
         return this.edad;
     }
     
-    public void setCedulaCiudadania(int cedulaCiudadania)
+    public void setCedulaCiudadania(Long cedulaCiudadania)
     {
         this.cedulaCiudadania=cedulaCiudadania;
     }
     
-    public int getCedulaCiudadania()
+    public Long getCedulaCiudadania()
     {
         return this.cedulaCiudadania;
     }
@@ -67,11 +73,11 @@ public class PacienteDTO {
         return this.nombre;
     }
     
-     public void setId(Long id) {
+     public void setId(int id) {
         this.id = id;
     }
      
-      public Long getId() {
+      public int getId() {
         return id;
     }
     
@@ -87,7 +93,7 @@ public class PacienteDTO {
         }
     }
     
-    public ArrayList<Reporte> getReportes()
+    public List<Reporte> getReportes()
     {
         return reportes;
     }

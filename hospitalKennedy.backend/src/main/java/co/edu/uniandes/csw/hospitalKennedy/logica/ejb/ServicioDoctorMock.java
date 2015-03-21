@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.hospitalKennedy.logica.ejb;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador;
+import co.edu.uniandes.csw.hospitalKennedy.dto.Doctor;
+import co.edu.uniandes.csw.hospitalKennedy.dto.DoctorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.excepciones.OperacionInvalidaException;
@@ -14,7 +16,7 @@ import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock
 import javax.ejb.Stateless;
 
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioPersistenciaMockLocal;
-import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
+//import co.edu.uniandes.csw.hospitalKennedy.persistencia.mock.ServicioPersistenciaMock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -93,9 +95,12 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         Paciente p = new Paciente();
         
         p.setAltura(paciente.getAltura());
-        p.setId(paciente.getId());
+        p.setId(paciente.getCedulaCiudadania());
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
+        
+        System.out.println("" + paciente.getReportes());
+        
         p.setReportes(paciente.getReportes());
 
         try {
@@ -118,6 +123,31 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         return paciente;
 
     }
+    
+    public DoctorDTO agregarDoctor(DoctorDTO doctor){
+        
+        Doctor d = new Doctor(doctor.getId(), doctor.getNombre(), doctor.getPassword(), doctor.getLogin());
+        
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(d);
+            entityManager.getTransaction().commit();
+            entityManager.refresh(d);
+            
+        } catch (Throwable t) {
+            t.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            doctor = null;
+        } finally {
+        	entityManager.clear();
+        	entityManager.close();
+        }
+        
+        return doctor;
+    }
+
 
     /**
      * Remueve un mueble del carrito de compra
