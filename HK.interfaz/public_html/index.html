@@ -4,12 +4,10 @@
     <head>
 
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
 
-        <title>Freelancer - Start Bootstrap Theme</title>
+        <title>Hospital de Kennedy</title>
 
         <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -34,50 +32,9 @@
 
     </head>
 
-    <body id="page-top" class="index">
+    <body>
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li ng-class="{
-                                    active:toolbar.isSelected(1)
-                                }" class="page-scroll">
-                            <a ng-click="toolbar.selectTab(1)" href="#portfolio">Doctores</a>
-                        </li>
-                        <li ng-class="{
-                                    active:toolbar.isSelected(2)
-                                }" class="page-scroll">
-                            <a ng-click="toolbar.selectTab(2)" href="#pacientes">Pacientes</a>
-                        </li>
-                        <li ng-class="{
-                                    active:toolbar.isSelected(3)
-                                }" class="page-scroll">
-                            <a ng-click="toolbar.selectTab(3)" href="#contact">Reportes</a>
-                        </li>
-                    </ul>
-                  
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-                           
-        </nav>
+         <toolbar></toolbar>
         <!-- Header -->
         <header>
             <div class="container">
@@ -130,51 +87,20 @@
                                     <i class="fa fa-search-plus fa-3x"></i>
                                 </div>
                             </div>
+
+                            <img src="imagenes/reporte.jpg" class="img-responsive" alt="">
+                        </a>
                     </div>
-                    <img src="imagenes/reporte.jpg" class="img-responsive" alt="">
-                    </a>
                 </div>
             </div>
         </section>
-
-
+        
         <!-- About Section -->
-        <section id="pacientes">
-            <div ng-app="" class="container" >
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h2>Pacientes</h2>
-                        <hr class="star-light">
-                    </div>
-                </div>
-                <h2 class="form-title">Lista de los pacientes</h2>
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading"></div>
-                    <!-- Table -->
-                    <table class="table" >
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Edad</th>
-                                <th>Altura</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="paciente in this.getPacientes.pacientes| orderBy: 'id'">
-                                <td>{{paciente.id}}</td>
-                                <td>{{paciente.nombre}}</td>
-                                <td>{{paciente.edad}}</td>
-                                <td>{{paciente.altura}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> 
-            </div>
+        <section ng-if="toolbar.isSelected(2)"  id="pacientes">
+            <paciente-info></paciente-info>
         </section>
-
-       <!-- Contact Section -->
+        
+        <!-- Contact Section -->
         <section id="contact">
             <div class="container">
                 <div class="row">
@@ -527,5 +453,4 @@
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/Hospital.js"></script>
     </body>
-
 </html>
