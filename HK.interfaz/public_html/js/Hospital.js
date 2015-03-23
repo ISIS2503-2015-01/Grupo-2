@@ -24,10 +24,11 @@
             controller: ['$http', function ($http) {
                     var self = this;
                     console.log("Put a message here.");
-                    self.pacientes = [{id: '12345678', nombre: 'Yolo', edad: '19', altura: '50'}, {id: '87654321', nombre: 'Yolo2', edad: '17', altura: '148'}];
-                    //$http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
-                    //    self.pacientes=data;
-                    //});
+                    self.pacientes = [];
+                    //self.pacientes = [{id: '12345678', nombre: 'Yolo', edad: '19', altura: '50'}, {id: '87654321', nombre: 'Yolo2', edad: '17', altura: '148'}];
+                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
+                        self.pacientes=data;
+                    });
                 }],
             controllerAs: 'getPacientes'
         };
@@ -58,7 +59,8 @@
             controller: ['$http', function ($http) {
                     var self = this;
                     console.log("Se busca los reportes del señor: " + idPaciente);
-                    self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                    //self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                    self.reportesPacientes = [];
                     //$http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
                     //    self.pacientes=data;
                     //});
