@@ -76,12 +76,11 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     
 
     @Override
-    public ArrayList<Paciente> getPacientes() {
+    public List<Paciente> getPacientes() {
         //return (ArrayList<Paciente>)entityManager.find(Paciente.class, pacientes);
         Query q = entityManager.createQuery("select u from Paciente u");
-        List<Paciente> paciente = q.getResultList();
-        ArrayList p = new ArrayList(paciente);
-        return p;
+        List<Paciente> paciente = q.getResultList();     
+        return paciente;
     }
     
     

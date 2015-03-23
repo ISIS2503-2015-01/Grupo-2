@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.hospitalKennedy.dto.DoctorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -20,7 +21,7 @@ public interface IServicioDoctorMock {
     
     public void setPacientes(ArrayList<Paciente> pacientes);
     public EntityManager getPersistencia();
-    public ArrayList<Paciente> getPacientes();
+    public List<Paciente> getPacientes();
     public PacienteDTO agregarPaciente(PacienteDTO paciente);
     public Paciente removerPaciente(Long idPaciente);
     public DoctorDTO agregarDoctor(DoctorDTO doctor);

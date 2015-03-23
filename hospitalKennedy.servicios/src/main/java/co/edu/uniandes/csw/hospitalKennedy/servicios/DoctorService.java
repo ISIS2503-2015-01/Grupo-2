@@ -100,11 +100,11 @@ public class DoctorService {
         
     @GET
     @Path("/paciente/")
-    public Response darPacientes(){
+    public List<Paciente> darPacientes(){
      //   return doctorEjb.getPacientes();
         
-        ArrayList<Paciente> p = servicioDoctor.getPacientes();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
+        List<Paciente> p = servicioDoctor.getPacientes();
+        return p;//Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
     }
     
 }
