@@ -1,36 +1,26 @@
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-
-
-
 <h2 class="form-title">Reportes del Paciente</h2>
- 
-<div ng-app="" class="panel panel-default">
+<div class="panel panel-default" ng-controller="pacientesActuales">
     <!-- Default panel contents -->
+    <div> Paciente: {{pacienteActual.nombre}} </div>
+    <div> Doc. identificacion: {{pacienteActual.id}} </div>
+    <div> :P {{pacienteActual}}</div>
     <!-- Table -->
-    <table class="table-responsive" >
+    <table class="table" >
         <thead>
-        <tr>
-            <th>Identificación</th>
-            <th>Actividad Fisica</th>
-            <th>Alimentación</th>
-            <th>Gravedad</th>
-            <th>Fecha de Creación</th>
-            <th>Localización de Dolor</th>
-            <th>Patron de Sueño</th>
-            <th>Medicamentos Recientes</th>
-        </tr>
+            <tr>
+                <th>Identificación</th>
+                <th>Gravedad</th>
+                <th>Fecha de Creación</th>
+                <th>Detalles</th>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="reporte in this.getReportes().competitors | orderBy: 'id'">
-            <td>{{reporte.id}}</td>
-            <td>{{reporte.actividadFisica}}</td>
-            <td>{{reporte.alimentacion}}</td>
-            <td>{{reporte.gravedad}}</td>
-            <td>{{reporte.fechaCreacion}}</td>
-            <td>{{reporte.localizacionDolor}}</td>
-            <td>{{reporte.patronSuenio}}</td>
-            <td>{{reporte.medicamentosRecientes}}</td>
-        </tr>
+            <tr ng-repeat="reporte in getReportes.reportesPacientes | orderBy: 'id'">
+                <td>{{reporte.id}}</td>
+                <td>{{reporte.gravedad}}</td>
+                <td>{{reporte.fechaCreacion}}</td>
+                <td>Ver</td>
+            </tr>
         </tbody>
     </table>
 </div> 
