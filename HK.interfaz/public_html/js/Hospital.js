@@ -1,5 +1,6 @@
 (function () {
     var hospitalKennedy = angular.module('hospitalKennedy', []);
+    var pacienteActual;
 
     hospitalKennedy.directive('toolbar', function () {
         return{
@@ -25,9 +26,9 @@
                     var self = this;
                     console.log("Put a message here.");
                     self.pacientes = [];
-                    //self.pacientes = [{id: '12345678', nombre: 'Yolo', edad: '19', altura: '50'}, {id: '87654321', nombre: 'Yolo2', edad: '17', altura: '148'}];
-                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
-                        self.pacientes=data;
+                    self.pacientes = [{id: '12345678', nombre: 'Yolo', edad: '19', altura: '50'}, {id: '87654321', nombre: 'Yolo2', edad: '17', altura: '148'}];
+                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function (data) {
+                        self.pacientes = data;
                     });
                 }],
             controllerAs: 'getPacientes'
@@ -59,26 +60,33 @@
             controller: ['$http', function ($http) {
                     var self = this;
                     console.log("Se busca los reportes del señor: " + idPaciente);
-                    //self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
                     self.reportesPacientes = [];
-                    //$http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
-                    //    self.pacientes=data;
-                    //});
+                    self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                    function darReportesDeId(id){
+                        console.log("Busca los reportes del id "+ id);
+                        return reportesPacientes;
+                    }
+                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
+                    self.pacientes=data;
+                    });
 
                 }],
             controllerAs: 'getReportes'
         };
     });
-
+    
     hospitalKennedy.controller('pacientesActuales', function () {
-        var pacienteActual;
         var pacientes;
+        console.log("Entro al metodo, al menos");
         this.asignarPacienteActual = function (nPaciente) {
             pacienteActual = nPaciente;
-            toolbar.selectTab(4);
+            console.log("HUEHUEHUEHUEHUEHUE");
         };
         this.asignarPacientes = function (nPacientes) {
             pacientes = nPacientes;
+        };
+        this.darActual = function () {
+            return pacienteActual;
         };
     });
     

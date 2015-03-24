@@ -1,5 +1,5 @@
 <h2 class="form-title">Reportes del Paciente</h2>
-<div class="panel panel-default" ng-controller="pacientesActuales">
+<div class="panel panel-default" >
     <!-- Default panel contents -->
     <div> Paciente: {{pacienteActual.nombre}} </div>
     <div> Doc. identificacion: {{pacienteActual.id}} </div>
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="reporte in getReportes.reportesPacientes | orderBy: 'id'">
+            <tr ng-repeat="reporte in getReportes.darReportesDeId(idActual) | orderBy: 'id'">
                 <td>{{reporte.id}}</td>
                 <td>{{reporte.gravedad}}</td>
                 <td>{{reporte.fechaCreacion}}</td>

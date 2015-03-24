@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="hospitalKennedy">
+<html lang="en" ng-app="hospitalKennedy" ng-init='idActual'>
 
     <head>
 
@@ -118,7 +118,7 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Identificación del Paciente</label>
-                                    <input type="text" class="form-control" placeholder="idPaciente" id="idPaciente" required data-validation-required-message="Por favor ingrese una Identificacación de un Paciente">
+                                    <input type="text" class="form-control" placeholder="idPaciente" id="idPaciente" required data-validation-required-message="Por favor ingrese una Identificacación de un Paciente" ng-model='idActual'>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -126,20 +126,19 @@
                             <div id="success"></div>
                             <div class="row">
                                 <div class="form-group col-xs-12">
-                                    <button type="submit" class="btn btn-success btn-lg">Buscar Reportes del Paciente</button>
+                                    <button type="submit" class="btn btn-success btn-lg" ng-click="toolbar.selectTab(4)">Buscar Reportes del Paciente</button>
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div ng-if="toolbar.isSelected(4)" >
-                        <reportes></reportes>
                     </div>
                     <div ng-if="toolbar.isSelected(4)">
                          <nuevo-reporte></nuevo-reporte>
                     </div>
                 </div>
             </div>
-            
+            <div ng-if="toolbar.isSelected(4)" >
+            <reportes></reportes>
+            </div>
         </section>
 
 

@@ -7,7 +7,7 @@
             </div>
         </div>
         <h2 class="form-title">Lista de los pacientes</h2>
-        <div class="panel panel-default" ng-controller="pacientesActuales">
+        <div class="panel panel-default" >
             <!-- Default panel contents -->
             <div class="panel-heading"></div>
             <!-- Table -->
@@ -29,10 +29,11 @@
                         <td>{{paciente.nombre}}</td>
                         <td>{{paciente.edad}}</td>
                         <td>{{paciente.altura}}</td>
-                        <td><li class="page-scroll" ng-click="toolbar.selectTab(4)"><a href="#reportes" ng-bind="paciente.id" ng-click="pacientesActuales.asignarPacienteActual(paciente.id)"  >Ver</a></li></td>
+                        <td><div ng-app="" ng-init="paci=paciente.id" ng-controller="pacientesActuales"><li class="page-scroll" ng-click="toolbar.selectTab(4)"><a href="#reportes" ng-click="pacientesActuales.asignarPacienteActual(paci)"  >{{paci}}</a></li></div></td>
                     </tr>
                 </tbody>
             </table>
+            {{'' + paci+ ' '+ 4+5}}
         </div> 
     </div>
 </nav>
