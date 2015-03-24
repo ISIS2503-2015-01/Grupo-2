@@ -1,0 +1,40 @@
+ <form name="reporteForm" ng-submit="reporteForm.$valid && reporteCtrl.addReporte()" novalidate>
+    <h2 class="form-title">Register for the Contest</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Actividad Física:</label>
+            <input ng-model="this.reporteCtrl.reporte.actividadFisica" type="text" class="form-control" required/>
+        </div>
+        <div class="col-md-6">
+            <label>Alimentacion:</label>
+            <input ng-model="this.reporteCtrl.reporte.alimentacion" type="text" class="form-control" required/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Gravedad:</label>
+            <input ng-model="this.reporteCtrl.reporte.gravedad" type="text" class="form-control" required/>
+        </div>
+        <div class="col-md-6">
+            <label>FechaCreacion:</label>
+            <input ng-model="this.reporteCtrl.reporte.fechaCreacion" type="number" class="form-control" required/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>LocalizacionDolor:</label>
+            <input ng-model="this.reporteCtrl.reporte.localizacionDolor" type="number" class="form-control" required/>
+        </div>
+        <div class="col-md-6">
+            <label>PatronSuenio:</label>
+            <input ng-model="this.reporteCtrl.reporte.patronSuenio" type="number" class="form-control" required/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>MedicamentosRecientes:</label>
+            <input ng-model="this.reporteCtrl.reporte.city" type="text" class="form-control" required/>
+        </div>
+    </div>
+    <input type="submit" value="submit" class="btn btn-default">
+</form>

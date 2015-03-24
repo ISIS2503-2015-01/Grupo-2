@@ -81,5 +81,23 @@
             pacientes = nPacientes;
         };
     });
+    
+    hospitalKennedy.directive('reporteForm', function(){
+        return{
+            restrict:'E',
+            templateUrl:'partials/nuevo-reporte.html',
+            controller: ['$http',function($http){
+                var self=this;
+                self.reporte={};
+                this.addReporte=function(){
+                    $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/pacientes/'+id+'/agregarReportes/', JSON.stringify(self.reporte)).success(function(data){
+                        self.reporte={};
+                        toolbar.tab=0;
+                    });
+                };
+            }],
+            controllerAs:'reporteCtrl'
+        };
+    });
 
 })();
