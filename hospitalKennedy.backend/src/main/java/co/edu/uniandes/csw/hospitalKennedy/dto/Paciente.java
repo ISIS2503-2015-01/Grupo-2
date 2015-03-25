@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
- 
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -31,141 +31,124 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
- 
- 
 
 /**
  *
  * @author jssalamanca1967
  */
+@Entity(name = "Paciente")
 
-@Entity
-public class Paciente implements Serializable{
-    
+public class Paciente implements Serializable {
+
     private static final long serialVersionUID = 2L;
-    
+
     //--------------------------------
     // Atributos
     //--------------------------------
-     
     /**
      * La cédula del paciente
      */
     @Id
     private Long id;
     
+    
     private int altura;
     private int edad;
-    //private int cedulaCiudadania;
+    //private Long cedulaCiudadania;
     private String nombre;
-    
+
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Reporte> reportes;
-    
-   
-    
+
     @NotNull
     @Column(name = "create_at", updatable = false)
     @Temporal(TemporalType.DATE)
     private Calendar createdAt;
- 
+
     @NotNull
     @Column(name = "updated_at")
     @Temporal(TemporalType.DATE)
     private Calendar updatedAt;
-    
-    public Paciente(){
-        
+
+    public Paciente() {
+
     }
-    
-    public Paciente(Long id, String nombre, int edad, int cedulaCiudadania, int altura, ArrayList<Reporte> reportesN){
+
+    public Paciente( Long id, String nombre, int edad, int altura, ArrayList<Reporte> reportesN) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
-//        this.cedulaCiudadania = cedulaCiudadania;
+        //this.cedulaCiudadania = cedulaCiudadania;
         this.altura = altura;
         reportes = reportesN;
     }
-    
+
     @PreUpdate
     private void updateTimestamp() {
         this.updatedAt = Calendar.getInstance();
     }
- 
+
     @PrePersist
     private void creationTimestamp() {
         this.createdAt = this.updatedAt = Calendar.getInstance();
     }
-    
-    
-    
+
     public void setReportes(List<Reporte> reportes) {
-        if(this.reportes==null)
-        {
-            reportes=new ArrayList();
+        if (this.reportes == null) {
+            reportes = new ArrayList();
         }
         this.reportes = reportes;
     }
 
     public List<Reporte> getReportes() {
-        if(this.reportes==null)
-        {
-            reportes=new ArrayList<Reporte>();
+        if (this.reportes == null) {
+            reportes = new ArrayList<Reporte>();
         }
         return reportes;
     }
-    
-    public Reporte getReporte(Long idReporte)
-    {
+
+    public Reporte getReporte(Long idReporte) {
         Reporte r = null;
         boolean ya = false;
-        for(int i=0;i<reportes.size()&&!ya;i++)
-        {
-            if(reportes.get(i).getId().equals(idReporte))
-            {
+        for (int i = 0; i < reportes.size() && !ya; i++) {
+            if (reportes.get(i).getId().equals(idReporte)) {
                 r = reportes.get(i);
-                ya=true;
+                ya = true;
             }
         }
         return r;
     }
-    
-    public List<Reporte> getReportesEntreFechas(String fecha1, String fecha2)
-    {
-        List<Reporte> estos= new ArrayList<Reporte>();
-        for(int i =0;i<reportes.size();i++)
-        {
+
+    public List<Reporte> getReportesEntreFechas(String fecha1, String fecha2) {
+        List<Reporte> estos = new ArrayList<Reporte>();
+        for (int i = 0; i < reportes.size(); i++) {
             Reporte actual = reportes.get(i);
-            
-            if(actual.getFechaCreacion().compareTo(fecha1) >= 0 && actual.getFechaCreacion().compareTo(fecha2) <= 0)
-            {
+
+            if (actual.getFechaCreacion().compareTo(fecha1) >= 0 && actual.getFechaCreacion().compareTo(fecha2) <= 0) {
                 estos.add(actual);
             }
         }
         return estos;
     }
-    
-    public void removerReporte(Long idReporte)
-    {
-        boolean ya =false;
-        for(int i =0;i<reportes.size()&&!ya;i++)
-        {
-            if(reportes.get(i).getId().equals(idReporte))
-            {
+
+    public void removerReporte(Long idReporte) {
+        boolean ya = false;
+        for (int i = 0; i < reportes.size() && !ya; i++) {
+            if (reportes.get(i).getId().equals(idReporte)) {
                 reportes.remove(i);
-                ya=true;
+                ya = true;
             }
         }
     }
-    
-//    public void setCedulaCiudadania(int cedulaCiudadania) {
-//        this.cedulaCiudadania = cedulaCiudadania;
-//    }
-//
-//    public int getCedulaCiudadania() {
-//        return cedulaCiudadania;
-//    }
-//    
+
+    //public void setCedulaCiudadania(Long cedulaCiudadania) {
+     //   this.cedulaCiudadania = cedulaCiudadania;
+    //}
+
+    //public Long getCedulaCiudadania() {
+      //  return cedulaCiudadania;
+    //}
+
     public void setAltura(int altura) {
         this.altura = altura;
     }
@@ -175,9 +158,8 @@ public class Paciente implements Serializable{
     }
 
     public void setId(Long id) {
-        this.id = id;
+       this.id = id;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -191,20 +173,16 @@ public class Paciente implements Serializable{
     }
 
     public Long getId() {
-        return id;
-    }
-
+         return id;
+     }
     public String getNombre() {
         return nombre;
     }
-    
-    public void agregarReporte(Reporte reporte)
-    {
+
+    public void agregarReporte(Reporte reporte) {
         reporte.setId(Long.parseLong(id + "" + reportes.size()));
         reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         reportes.add(reporte);
     }
-    
-    
-    
+
 }

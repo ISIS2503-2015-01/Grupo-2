@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author estudiante
  */
-@Entity
+@Entity(name="Reporte")
 public class Reporte implements Serializable{
     
     private static final long serialVersionUID = 3L;
