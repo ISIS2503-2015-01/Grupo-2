@@ -71,15 +71,19 @@
                         </a>
                     </div>
                     <div class="col-sm-4 portfolio-item">
-                        <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                            <div class="caption">
+                                             
+                       <a ng-click="toolbar.selectTab(5)" class="portfolio-link" data-toggle="modal">
+                             <div class="caption">
                                 <div class="caption-content">
                                     <i class="fa fa-search-plus fa-3x"></i>
                                 </div>
                             </div>
                             <img src="imagenes/paciente.jpg" class="img-responsive" alt="">
+                            
                         </a>
+                       
                     </div>
+                   
                     <div class="col-sm-4 portfolio-item">
                         <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
                             <div class="caption">
@@ -93,12 +97,20 @@
                     </div>
                 </div>
             </div>
+            <section>
+            <div ng-if="toolbar.isSelected(5)">
+                        <nuevo-paciente></nuevo-paciente>
+        </div>            
         </section>
+        </section>        
+        
+         
         
         <!-- About Section -->
         <section ng-if="toolbar.isSelected(2)"  id="pacientes">
             <paciente-info></paciente-info>
         </section>
+        
         
         
         <!-- Contact Section -->
@@ -140,6 +152,8 @@
             <reportes></reportes>
             </div>
         </section>
+        
+        
 
 
 
@@ -250,7 +264,7 @@
                                 <h2>Agregar Nuevo Paciente</h2>
                                 <hr class="star-primary">
                                 <img src="imagenes/paciente.jpg" class="img-centered" alt="">
-                                <form name="nuevoPaciente" ng-submit="agregarPaciente.addPaciente()" novalidate>
+                                <form name="nuevoPaciente" action="index.html" ng-submit="agregarPaciente.addPaciente()" validate>
                                     <h2 class="form-title">Register for the Contest</h2>
                                     <div class="row">
                                         <div class="col-md-6">

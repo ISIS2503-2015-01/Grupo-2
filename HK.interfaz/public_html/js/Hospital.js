@@ -38,7 +38,7 @@
     hospitalKennedy.directive('nuevoPaciente', function () {
         return{
             restrict: 'E',
-            templateUrl: 'index.html',
+            templateUrl: 'partials/nuevo-paciente.html',
             controller: ['$http', function ($http) {
                     var self = this;
                     self.paciente = {};
