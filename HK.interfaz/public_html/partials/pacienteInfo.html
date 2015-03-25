@@ -21,19 +21,18 @@
                         <th>Reportes</th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
-                    <! tr ng-repeat="paciente in self.getPacientes.pacientes| orderBy: 'id'">
-                    <tr ng-repeat="paciente in getPacientes.pacientes | orderBy: 'id'" href="index.html" >
+                    <! tr ng-repeat="paciente in self.getPacientes.pacientes | orderBy: 'id'">
+                    <tr ng-repeat="paciente in getPacientes.pacientes| orderBy: 'id'" href="index.html" >
                         <td>{{paciente.id}}</td>
                         <td>{{paciente.nombre}}</td>
                         <td>{{paciente.edad}}</td>
                         <td>{{paciente.altura}}</td>
-                        <td><div ng-app="" ng-init="paci=paciente.id" ng-controller="pacientesActuales"><li class="page-scroll" ng-click="toolbar.selectTab(4)"><a href="#reportes" ng-click="pacientesActuales.asignarPacienteActual(paci)"  >{{paci}}</a></li></div></td>
+                        <td><div ng-init="paci = paciente.id" ><li class="page-scroll" ng-click="toolbar.selectTab(3)"><a href="#reportes" ng-click="getReportes.darReportesDeId(paciente.id)"  >Ver</a></li></div></td>
                     </tr>
                 </tbody>
             </table>
-            {{'' + paci+ ' '+ 4+5}}
         </div> 
     </div>
 </nav>

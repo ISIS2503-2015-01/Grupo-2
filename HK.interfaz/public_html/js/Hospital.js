@@ -30,6 +30,7 @@
                     $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function (data) {
                         self.pacientes = data;
                     });
+                    console.log('Se obtuvo el resultado ' + pacientes);
                 }],
             controllerAs: 'getPacientes'
         };
@@ -62,14 +63,24 @@
                     var self = this;
                     console.log("Se busca los reportes del señor: " + idPaciente);
                     self.reportesPacientes = [];
-                    self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
                     this.darReportesDeId  = function (id){
                         console.log("Busca los reportes del id "+ id);
-                        self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                        //console.log('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/'+id+'/reportes/');
+                        self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"},{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
                         $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/'+id+'/reportes/').success(function(data){
                         self.reportesPacientes =data;
                         });
-                        return reportesPacientes;
+                        
+                        return self.reportesPacientes;
+                    };
+                    this.darReportesEntreFechas  = function (id, fecha1, fecha2){
+                        console.log('Yooooolooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
+                        self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                        $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/'+id+'/reportes/'+fecha1+'/'+fecha2).success(function(data){
+                        self.reportesPacientes =data;
+                        });
+                        
+                        return self.reportesPacientes;
                     };
                     
 

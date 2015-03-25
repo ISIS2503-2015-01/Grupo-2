@@ -113,6 +113,7 @@ public class PacienteService {
     @Path("{id}/reportes/")
     public Response darReportes(@PathParam("id") Long idPaciente){
         //return pacienteEjb.getReportes(id);
+        System.out.println("Se busvcan los reportes del paciente "+ idPaciente);
        List<Reporte>reportes= servicioPaciente.getReportes(idPaciente);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reportes).build();
         
@@ -130,7 +131,7 @@ public class PacienteService {
         //res.add(rep);
         //System.out.println(res);
         //return res;
-      
+        
         Reporte reporte = servicioPaciente.getReportePorPaciente(idPaciente, idReporte);
         
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
@@ -142,7 +143,14 @@ public class PacienteService {
         
         //return pacienteEjb.getReportesEntreFechas(id, codFecha1, codFecha2);
         List<Reporte> reporte = servicioPaciente.getReportesEntreFechas(idPaciente, codFecha1, codFecha2);
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reporte).build();
+        
+        Reporte[] a = new Reporte[reporte.size()];
+        
+        for(int i = 0; i < reporte.size(); i++)
+        {
+            a[i] = reporte.get(i);
+        }
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(a).build();
         
     }
     
