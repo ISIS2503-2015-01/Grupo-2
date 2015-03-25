@@ -57,18 +57,21 @@
         return{
             restrict: 'E',
             templateUrl: 'partials/reportes.html',
+            
             controller: ['$http', function ($http) {
                     var self = this;
                     console.log("Se busca los reportes del señor: " + idPaciente);
                     self.reportesPacientes = [];
                     self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
-                    function darReportesDeId(id){
+                    this.darReportesDeId  = function (id){
                         console.log("Busca los reportes del id "+ id);
+                        self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
+                        $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/'+id+'/reportes/').success(function(data){
+                        self.reportesPacientes =data;
+                        });
                         return reportesPacientes;
-                    }
-                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function(data){
-                    self.pacientes=data;
-                    });
+                    };
+                    
 
                 }],
             controllerAs: 'getReportes'
@@ -78,7 +81,7 @@
     hospitalKennedy.controller('pacientesActuales', function () {
         var pacientes;
         console.log("Entro al metodo, al menos");
-        this.asignarPacienteActual = function (nPaciente) {
+        function asignarPacienteActual(nPaciente) {
             pacienteActual = nPaciente;
             console.log("HUEHUEHUEHUEHUEHUE");
         };

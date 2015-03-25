@@ -77,6 +77,8 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
 
     @Override
     public List<Paciente> getPacientes() {
+        
+        System.out.println("asdasdasdasdasdasdasdasdasdasdasdasdasd");
         //return (ArrayList<Paciente>)entityManager.find(Paciente.class, pacientes);
         Query q = entityManager.createQuery("select u from Paciente u");
         List<Paciente> paciente = q.getResultList();     

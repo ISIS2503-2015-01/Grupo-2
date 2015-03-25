@@ -100,11 +100,20 @@ public class DoctorService {
         
     @GET
     @Path("/paciente/")
-    public List<Paciente> darPacientes(){
+    public Response darPacientes(){
      //   return doctorEjb.getPacientes();
-        
+        System.out.println("::::::::: entro a darPacientes");
         List<Paciente> p = servicioDoctor.getPacientes();
-        return p;//Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();           
+        
+        Paciente[] a = new Paciente[p.size()];
+        
+        for(int i = 0; i < p.size(); i++)
+        {
+           System.out.println("------------------------------------- " + p.get(i));
+            a[i] = p.get(i);
+        }
+//        ArrayList<Paciente> p = new ArrayList<Paciente>(ap);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(a).build();           
     }
     
 }

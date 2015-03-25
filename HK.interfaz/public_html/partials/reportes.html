@@ -2,7 +2,7 @@
 <div class="panel panel-default" >
     <!-- Default panel contents -->
     <div> Paciente: {{pacienteActual.nombre}} </div>
-    <div> Doc. identificacion: {{pacienteActual.id}} </div>
+    <div> Doc. identificacion: {{idActual}} </div>
     <div> :P {{pacienteActual}}</div>
     <!-- Table -->
     <table class="table" >
@@ -14,6 +14,7 @@
                 <th>Detalles</th>
             </tr>
         </thead>
+        
         <tbody>
             <tr ng-repeat="reporte in getReportes.darReportesDeId(idActual) | orderBy: 'id'">
                 <td>{{reporte.id}}</td>
