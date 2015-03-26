@@ -60,12 +60,14 @@ public class Reporte implements Serializable{
     @OneToOne(cascade = CascadeType.PERSIST)
     private Catalizador catalizadores;
     
+    private String url;
+    
     
     public Reporte(){
         
     }
     
-    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, Paciente paciente,String medicamentosRecientes){
+    public Reporte(Long id, String actividadFisica, String alimentacion, String gravedad, String fechaCreacion, String localizacionDolor, String patronSuenio, Paciente paciente,String medicamentosRecientes, String url){
         this.id = id;
         this.actividadFisica = actividadFisica;
         this.alimentacion = alimentacion;
@@ -159,5 +161,15 @@ public class Reporte implements Serializable{
     public String getPatronSuenio() {
         return patronSuenio;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
+    
     
 }

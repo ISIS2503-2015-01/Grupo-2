@@ -79,6 +79,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         r.setLocalizacionDolor(reporte.getLocalizacionDolor());
         r.setPatronSuenio(reporte.getPatronSuenio());
         r.setMedicamentosRecientes(reporte.getMedicamentosRecientes());
+        r.setUrl(reporte.getUrl());
 //        r.setId(reporte.getId());
 //        r.setCatalizadores(reporte.getCatalizador());
         

@@ -22,6 +22,8 @@ public class ReporteDTO {
     private String medicamentosRecientes;
     private Catalizador catalizadores;
     
+    private String url;
+    
     public ReporteDTO()
     {
         
@@ -126,4 +128,14 @@ public class ReporteDTO {
     {
         return catalizadores;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
+    
 }
