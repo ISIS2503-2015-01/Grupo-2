@@ -39,7 +39,7 @@ public class Catalizador implements Serializable{
     /**
      * Va a tener el mismo id del reporte correspondiente
      */
-//    @Id
+    @Id
     private Long id;    
     
     private String actividadesFisicas;

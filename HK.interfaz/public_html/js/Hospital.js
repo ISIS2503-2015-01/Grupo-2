@@ -111,21 +111,23 @@
             return pacienteActual;
         };
     });
-    hospitalKennedy.directive('reporteForm', function () {
+    hospitalKennedy.directive('nuevoReporte', function () {
         return{
             restrict: 'E',
             templateUrl: 'partials/nuevo-reporte.html',
             controller: ['$http', function ($http) {
                     var self = this;
                     self.reporte = {};
-                    this.addReporte = function () {
-                        $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/pacientes/' + id + '/agregarReportes/', JSON.stringify(self.reporte)).success(function (data) {
+                    this.addReporte = function (id) {
+                        console.log("Entra a metodo de agregar Reporte");
+                        $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/agregarReportes/', JSON.stringify(self.reporte)).success(function (data) {
+                            console.log("Metodo check");
                             self.reporte = {};
                             toolbar.tab = 0;
                         });
                     };
                 }],
-            controllerAs: 'reporteCtrl'
+            controllerAs: 'agregarReporte'
         };
     });
     hospitalKennedy.directive('detallesReporte', function () {

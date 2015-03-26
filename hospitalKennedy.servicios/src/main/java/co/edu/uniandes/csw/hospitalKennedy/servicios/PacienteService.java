@@ -76,6 +76,9 @@ public class PacienteService {
         //return lista;
         
         ReporteDTO r = servicioPaciente.agregarReporte(idPaciente, reporte);
+        Response.status(200).header("Access-Control-Allow-Methods", "*").entity(r).build();
+	Response.status(200).header("Access-Control-Allow-Headers", "*").entity(r).build();
+	Response.status(200).header("Access-Control-Allow-Credentials", "true").entity(r).build();
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(r).build();
         
     }
