@@ -36,7 +36,7 @@
     <!-- Navigation -->
 <toolbar></toolbar>
 <!-- Header -->
-<header>
+<header >
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -104,25 +104,19 @@
     </section>
 </section>        
 
-
-
 <!-- About Section -->
 <section ng-if="toolbar.isSelected(2)"  id="pacientes">
     <paciente-info></paciente-info>
 </section>
 
-
-
 <!-- Contact Section -->
-<section id="reportes" ng-if="toolbar.isSelected(3)">
-   
-        <reportes></reportes>
- 
+<section id="reportes" ng-show="toolbar.isSelected(3)">
+    <reportes></reportes>
 </section>
 
-
-
-
+<section id="detalles" ng-if="toolbar.isSelected(6)" >
+    <detalles-reporte></detalles-reporte>
+</section>
 
 <!-- Footer -->
 <footer class="text-center">

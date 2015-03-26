@@ -30,7 +30,7 @@
             <nuevo-reporte></nuevo-reporte>
         </div>
     </div>
-    <div class="container">
+    <div class="container" >
         <h2 class="form-title">Reportes del Paciente</h2>
         <div class="panel panel-default" >
             <!-- Default panel contents -->
@@ -45,12 +45,16 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr ng-repeat="reporte in getReportes.reportesPacientes| orderBy: 'id'">
+                <tbody >
+                    <tr ng-repeat="reporte in getReportes.reportesPacientes | orderBy: 'id'">
                         <td>{{reporte.id}}</td>
                         <td>{{reporte.gravedad}}</td>
                         <td>{{reporte.fechaCreacion}}</td>
-                        <td>Ver</td>
+                        <td>
+                            <div ng-click="toolbar.selectTab(6)">
+                                <a href="#reportes" ng-click="getReportes.darDetalles(idActual, reporte.id)">Ver</a>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -68,7 +72,7 @@
                     </tr>
                 </table>
                 <div>    
-                    <button ng-click="getReportes.darReportesEntreFechas(id, fecha1, fecha2)" class="btn btn-success btn-lg">Buscar los reportes entre las fechas</button>
+                    <button ng-click="detallesReporte.darReportesEntreFechas(id, fecha1, fecha2)" class="btn btn-success btn-lg">Buscar los reportes entre las fechas</button>
                 </div>
             </form>
         </div>
