@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
  *
  * @author estudiante
  */
-@Entity
+@Entity(name="Catalizador")
 public class Catalizador implements Serializable{
     private static final long serialVersionUID = 1L;
     //--------------------------
@@ -39,7 +39,7 @@ public class Catalizador implements Serializable{
     /**
      * Va a tener el mismo id del reporte correspondiente
      */
-    @Id
+//    @Id
     private Long id;    
     
     private String actividadesFisicas;

@@ -57,6 +57,9 @@ public class DoctorService {
     public Response agregarDoctor(DoctorDTO doctor){
         
         DoctorDTO rta = servicioDoctor.agregarDoctor(doctor);
+        Response.status(200).header("Access-Control-Allow-Methods", "*").entity(rta).build();
+        Response.status(200).header("Access-Control-Allow-Headers", "*").entity(rta).build();
+        Response.status(200).header("Access-Control-Allow-Credentials", "true").entity(rta).build();
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
 
     }
@@ -66,6 +69,12 @@ public class DoctorService {
     public Response agregarPaciente(PacienteDTO paciente){
 
         PacienteDTO p = servicioDoctor.agregarPaciente(paciente);
+        
+                                    System.out.println("HIZO LA MONDAAA Y AGREGÓ ");
+Response.status(200).header("Access-Control-Allow-Methods", "*").entity(p).build();
+        Response.status(200).header("Access-Control-Allow-Headers", "*").entity(p).build();
+        Response.status(200).header("Access-Control-Allow-Credentials", "true").entity(p).build();
+        
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(p).build();
        
     }
@@ -81,6 +90,7 @@ public class DoctorService {
         //    doctorEjb.removerPaciente(paciente);
         //}
         Paciente p = servicioDoctor.removerPaciente(idPaciente);
+        
         return Response.status(200).header("Access-Control-allow-Origin", "*").entity(p).build();
         
     }

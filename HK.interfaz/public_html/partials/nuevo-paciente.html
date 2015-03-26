@@ -1,22 +1,22 @@
-<form name="nuevoPaciente" action="index.html" ng-submit="agregarPaciente.addPaciente()" novalidate>
+<form name="nuevoPaciente" method="post "ng-submit="nuevoPaciente.$valid && agregarPaciente.addPaciente()" novalidate>
     <div class="row">
         <div class="col-md-6">
             <label>Nombre:</label>
-            <input ng-model="this.agregarPaciente.paciente.nombre" type="text" class="form-control" required/>
+            <input ng-model="agregarPaciente.paciente.nombre" type="text" class="form-control" required/>
         </div>
         <div class="col-md-6">
             <label>Cédula de Ciudadanía:</label>
-            <input ng-model="this.agregarPaciente.paciente.cedula" type="number" class="form-control" required/>
+            <input ng-model="agregarPaciente.paciente.cedulaCiudadania" type="number" class="form-control" required/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <label>Edad:</label>
-            <input ng-model="this.agregarPaciente.paciente.edad" type="number" class="form-control" required/>
+            <input ng-model="agregarPaciente.paciente.edad" type="number" class="form-control" required/>
         </div>
         <div class="col-md-6">
             <label>Altura:</label>
-            <input ng-model="this.agregarPaciente.paciente.altura" type="number" class="form-control" required/>
+            <input ng-model="agregarPaciente.paciente.altura" type="number" class="form-control" required/>
         </div>
     </div>
     <table class="table table-hover">
