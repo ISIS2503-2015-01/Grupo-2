@@ -72,7 +72,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
 
         System.out.println("asdasdasdasdasdasdasdasdasdasdasdasdasd");
         //return (ArrayList<Paciente>)entityManager.find(Paciente.class, pacientes);
-        Query q = entityManager.createQuery("select * from Paciente");
+        Query q = entityManager.createQuery("SELECT u FROM Paciente u");
         List<Paciente> paciente = q.getResultList();
         return paciente;
     }
