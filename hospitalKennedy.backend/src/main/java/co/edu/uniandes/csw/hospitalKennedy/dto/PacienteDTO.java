@@ -33,6 +33,15 @@ public class PacienteDTO {
         
     }
     
+    public PacienteDTO( Long cedulaCiudadania, String nombre, int edad, int altura, List<Reporte> reportesN) {
+//        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.cedulaCiudadania = cedulaCiudadania;
+        this.altura = altura;
+        reportes = reportesN;
+    }
+    
     public void setAltura(int altura)
     {
         this.altura=altura;

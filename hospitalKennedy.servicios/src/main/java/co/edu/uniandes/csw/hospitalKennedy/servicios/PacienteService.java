@@ -85,9 +85,12 @@ public class PacienteService {
     
     @GET
     @Path("Servicio/")
-    public void algo()
+    public Response algo()
     {
+        Paciente paciente = new Paciente(Long.parseLong("" + 123), "Johnathan", 12, 123, null);
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(paciente).build();
+
     }
     
     @DELETE

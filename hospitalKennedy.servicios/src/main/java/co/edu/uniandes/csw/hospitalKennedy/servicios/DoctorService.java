@@ -115,12 +115,15 @@ Response.status(200).header("Access-Control-Allow-Methods", "*").entity(p).build
         System.out.println("::::::::: entro a darPacientes");
         List<Paciente> p = servicioDoctor.getPacientes();
         
-        Paciente[] a = new Paciente[p.size()];
+        PacienteDTO[] a = new PacienteDTO[p.size()];
         
         for(int i = 0; i < p.size(); i++)
         {
-           System.out.println("------------------------------------- " + p.get(i));
-            a[i] = p.get(i);
+            System.out.println("------------------------------------- " + p.get(i));
+            Paciente actual = p.get(i);
+            
+            PacienteDTO n = new PacienteDTO(actual.getId(), actual.getNombre(), actual.getEdad(), actual.getEdad(), actual.getReportes());
+            a[i] = n;
         }
 //        ArrayList<Paciente> p = new ArrayList<Paciente>(ap);
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(a).build();           
