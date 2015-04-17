@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author estudiante
  */
 @Entity(name="Reporte")
+@Table(name="Reporte")
 public class Reporte implements Serializable{
     
     private static final long serialVersionUID = 3L;
