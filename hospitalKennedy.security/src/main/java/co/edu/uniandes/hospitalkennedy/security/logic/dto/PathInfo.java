@@ -26,6 +26,13 @@ public class PathInfo {
     public static boolean autenticar(String grupo){
         
         boolean rta = false;
+        
+        if(pathInfo.contains(PATH_DOCTOR) && grupo.equals(DOCTOR))
+            rta = true;
+        if(pathInfo.contains(PATH_PACIENTE) && grupo.equals(PACIENTE))
+            rta = true;
+        if(pathInfo.contains(PATH_ADMIN) && grupo.equals(ADMIN))
+            rta = true;
        
         return rta;
     }

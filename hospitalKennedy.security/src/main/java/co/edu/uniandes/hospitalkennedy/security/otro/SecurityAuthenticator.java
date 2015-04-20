@@ -81,7 +81,7 @@ public class SecurityAuthenticator implements Authenticator {
         try {
             AuthenticationRequest request = new UsernamePasswordRequest(user.getUsername(), user.getPassword());
             Tenant tenant = client.getCurrentTenant();
-            ApplicationList applications = tenant.getApplications(Applications.where(Applications.name().eqIgnoreCase("Aplicacion mundial")));
+            ApplicationList applications = tenant.getApplications(Applications.where(Applications.name().eqIgnoreCase("HospitalKennedy")));
             Application application = applications.iterator().next();
  
             AuthenticationResult resultAuth = application.authenticateAccount(request);
