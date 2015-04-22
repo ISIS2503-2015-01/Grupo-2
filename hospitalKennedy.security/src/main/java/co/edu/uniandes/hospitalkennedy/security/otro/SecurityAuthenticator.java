@@ -49,7 +49,9 @@ public class SecurityAuthenticator implements Authenticator {
                     SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo();
                     authenticationInfo.setPrincipals(new SimplePrincipalCollection(user, user.getUsername()));
                     
-                    if(!PathInfo.autenticar(user.getGrupo()))
+                    PathInfo pathInfo = PathInfo.getInstance();
+                    
+                    if(!pathInfo.autenticar(user.getGrupo()))
                         throw new AccountException("Token invalido.");
                     
                     return authenticationInfo;

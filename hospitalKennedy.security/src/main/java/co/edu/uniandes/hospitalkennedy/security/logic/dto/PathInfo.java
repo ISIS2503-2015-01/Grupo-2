@@ -23,6 +23,8 @@ public class PathInfo {
     
     public static String pathInfo;
     
+    private static PathInfo instance;
+    
     public static boolean autenticar(String grupo){
         
         boolean rta = false;
@@ -36,5 +38,12 @@ public class PathInfo {
        
         return rta;
     }
+    
+    public static PathInfo getInstance()
+	{
+		if(instance == null)
+			instance = new PathInfo();
+		return instance;
+	}
     
 }

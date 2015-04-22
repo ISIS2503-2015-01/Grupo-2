@@ -29,6 +29,7 @@ public class SecurityFilter extends AuthenticatingFilter{
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse sr1) throws Exception {
                
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
+        
         PathInfo.pathInfo = httpRequest.getPathInfo();
         System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + httpRequest.getPathInfo());
         return new JwtToken(httpRequest.getHeader("x_rest_user"));
