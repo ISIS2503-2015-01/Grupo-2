@@ -13,7 +13,7 @@
     <class>co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador</class>
    
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sun-appserv-samples"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/jdbcISIS4719"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.user" value=""/>
