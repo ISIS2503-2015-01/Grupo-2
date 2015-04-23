@@ -63,7 +63,6 @@ public class UserLoginService {
             
             for(Group p: g)
             {
-                
                 userStorm.setGrupo(p.getName());
                 System.out.println(p.getName() + " - " + userStorm.getGrupo());
             }
