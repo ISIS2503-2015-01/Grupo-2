@@ -27,6 +27,21 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import static javax.swing.text.html.FormSubmitEvent.MethodType.GET;
 import javax.ws.rs.core.Response;
+import com.stormpath.sdk.client.Clients;
+import com.stormpath.sdk.client.Client;
+import com.stormpath.sdk.api.ApiKeys;
+import com.stormpath.sdk.api.ApiKey;
+import com.stormpath.sdk.tenant.*;
+import com.stormpath.sdk.application.*;
+import com.stormpath.sdk.account.*;
+import com.stormpath.sdk.application.*;
+import com.stormpath.sdk.directory.*;
+import com.stormpath.sdk.group.Group;
+import com.stormpath.sdk.group.GroupList;
+import com.stormpath.sdk.group.Groups;
+import java.util.Iterator;
+
+
 
 /**
  *
@@ -39,6 +54,9 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     //public static IServicioPersistenciaMockLocal persistencia;
     @PersistenceUnit(unitName = "HospitalKennedyPU")
     EntityManager entityManager;
+    
+    Client client;
+    Application application;
 
     private ArrayList<Paciente> pacientes;
 
@@ -55,6 +73,16 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         //}
         //else
         //    persistencia = ServicioPacienteMock.persistencia;
+        //Path currentRelativePath = Paths.get("");
+	//String s = currentRelativePath.toAbsolutePath().toString();
+        
+        //Implementación STORMPATH
+        String s="C:\\Users\\template\\Documents\\proyectoSeguridad\\Servicios\\src\\main\\webapp\\WEB-INF\\apiKey-4Q4FXMVW3LPNYYFXEX4A7J3S7.properties";
+        ApiKey apiKey = ApiKeys.builder().setFileLocation(s).build();
+        client = Clients.builder().setApiKey(apiKey).build();
+        Tenant tenant = client.getCurrentTenant();
+        ApplicationList applications = tenant.getApplications(Applications.where(Applications.name().eqIgnoreCase("HospitalKennedy")));
+        application = applications.iterator().next();
     }
 
     @Override
@@ -90,6 +118,17 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
         p.setId(paciente.getCedulaCiudadania());
         p.setEdad(paciente.getEdad());
         p.setNombre(paciente.getNombre());
+        
+        //Crea una cuenta para el paciente y la agrega a Stormpath
+        Account account = client.instantiate(Account.class);
+        account.setGivenName(paciente.getNombre());
+        account.setSurname(paciente.getNombre());
+        account.setEmail(paciente.getNombre()+paciente.getCedulaCiudadania());
+        account.setPassword(String.valueOf(paciente.getCedulaCiudadania()));
+        GroupList grupos = application.getGroups(Groups.where(Groups.name().eqIgnoreCase("Paciente")));
+        Iterator iterGrupo = grupos.iterator();
+        account.addGroup((Group)iterGrupo.next());
+        application.createAccount(account);
 
         System.out.println("La altura es: " + paciente.getAltura());
         System.out.println("La cédula es: " + paciente.getCedulaCiudadania());
@@ -132,6 +171,16 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
     public DoctorDTO agregarDoctor(DoctorDTO doctor) {
 
         Doctor d = new Doctor(doctor.getId(), doctor.getNombre(), doctor.getPassword(), doctor.getLogin());
+        //Crea una cuenta para el doctor y la agrega a Stormpath
+        Account account = client.instantiate(Account.class);
+        account.setGivenName(doctor.getNombre());
+        account.setSurname(doctor.getNombre());
+        account.setEmail(doctor.getLogin());
+        account.setPassword(doctor.getPassword());
+        GroupList grupos = application.getGroups(Groups.where(Groups.name().eqIgnoreCase("Doctor")));
+        Iterator iterGrupo = grupos.iterator();
+        account.addGroup((Group)iterGrupo.next());
+        application.createAccount(account);
 
         try {
             entityManager.getTransaction().begin();
