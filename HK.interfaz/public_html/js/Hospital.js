@@ -5,15 +5,24 @@
         return{
             restrict: 'E',
             templateUrl: 'partials/toolbar.html',
-            controller: function () {
+            controller: [ '$http', function ($http) {
                 this.tab = 0;
+                this.credenciales= {username: '', password: ''};
                 this.selectTab = function (setTab) {
                     this.tab = setTab;
                 };
                 this.isSelected = function (tabParam) {
                     return this.tab === tabParam;
                 };
-            },
+                this.hacerLogin = function () {
+
+                        console.log("Haciendo login");
+                        console.log(this.credenciales.username + " " + this.credenciales.password);
+                        $http.post('http://localhost:8083/webresources/auth/login', JSON.stringify(this.credenciales)).success(function (data) {
+                            console.log(this.credenciales.username + " " + this.credenciales.password);
+                        });
+                    };
+            }],
             controllerAs: 'toolbar'
         };
     });
@@ -26,7 +35,7 @@
                     console.log("Put a message here.");
                     self.pacientes = [];
                     self.pacientes = [{id: '12345678', nombre: 'Yolo', edad: '19', altura: '50'}, {id: '87654321', nombre: 'Yolo2', edad: '17', altura: '148'}];
-                    $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function (data) {
+                    $http.get('http://localhost:8083/hospitalKennedy.servicios/webresources/Doctor/paciente').success(function (data) {
                         self.pacientes = data;
                     });
                     console.log('Se obtuvo el resultado ' + pacientes);
@@ -45,7 +54,7 @@
 
                         console.log("::::::::::::::::::::::::::::----------------:::::::::::::::::::: ENTRO AL METODO PARA AGREGAR PACIENTE");
 
-                        $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/Doctor/agregarPaciente', JSON.stringify(self.paciente)).success(function (data) {
+                        $http.post('http://localhost:8083/hospitalKennedy.servicios/webresources/Doctor/agregarPaciente', JSON.stringify(self.paciente)).success(function (data) {
                             console.log("HIZO EL METODO :) :) :) :) :) :) :) ")
                             self.paciente = {};
                             toolbar.tab = 0;
@@ -68,7 +77,7 @@
                         console.log("Busca los reportes del id " + id);
                         //console.log('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/'+id+'/reportes/');
                         self.reportesPacientes = [{id: '87654321', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}, {id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
-                        $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/reportes/').success(function (data) {
+                        $http.get('http://localhost:8083/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/reportes/').success(function (data) {
                             self.reportesPacientes = data;
                         });
                         return self.reportesPacientes;
@@ -76,14 +85,14 @@
                     this.darReportesEntreFechas = function (id, fecha1, fecha2) {
                         console.log('Yooooolooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
                         self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
-                        $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/reportes/' + fecha1 + '/' + fecha2).success(function (data) {
+                        $http.get('http://localhost:8083/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/reportes/' + fecha1 + '/' + fecha2).success(function (data) {
                             self.reportesPacientes = data;
                         });
                         return self.reportesPacientes;
                     };
                     this.darDetalles = function (idPaciente, idReporte) {
                         console.log('entroo a dar detalles del paciente: ' + idPaciente + ' sobre el reporte: ' + idReporte);
-                        $http.get('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/' + idPaciente + '/reportes/' + idReporte).success(function (data) {
+                        $http.get('http://localhost:8083/hospitalKennedy.servicios/webresources/Pacientes/' + idPaciente + '/reportes/' + idReporte).success(function (data) {
                             self.reporte = data;
                         });
                         self.reportesPacientes = [{id: '12345678', actividadFisica: 'Yoloismo', alimentacion: "Carne", gravedad: "gravisima", fechaCreacion: "2015/04/03", localizacionDolor: "detras de la cabeza", patronSuenio: "poco sueño", medicamentosRecientes: "Vicodin"}];
@@ -119,7 +128,7 @@
                     self.reporte = {};
                     this.addReporte = function (id) {
                         console.log("Entra a metodo de agregar Reporte");
-                        $http.post('http://localhost:8080/hospitalKennedy.servicios/webresources/Pacientes/10203040/agregarReportes/', JSON.stringify(self.reporte)).success(function (data) {
+                        $http.post('http://localhost:8083/hospitalKennedy.servicios/webresources/Pacientes/10203040/agregarReportes/', JSON.stringify(self.reporte)).success(function (data) {
                             console.log("Metodo check");
                             self.reporte = {};
                             toolbar.tab = 0;

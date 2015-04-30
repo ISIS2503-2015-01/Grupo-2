@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" >
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -30,8 +30,25 @@
                 <li ng-class="{active:toolbar.isSelected(4)}" class="page-scroll">
                     <a ng-click="toolbar.selectTab(4)" href="#reporte">agregar Reporte</a>
                 </li>
+                <li>
+                    <a ng-click="login = true" class="page-scroll"> Login </a>
+                </li>
             </ul>
 
+        </div>
+        <div ng-show="login" class="panel panel-default">
+            <!--<form name="idPaciente" action="http://localhost:8083/webresources/auth/login" method="post" id="contactForm" novalidate> -->
+            <form name="idPaciente" method="post" ng-submit="toolbar.hacerLogin()" id="contactForm" novalidate>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <input type="text" ng-model="toolbar.credenciales.username" placeholder="id" id="username" required data-validation-required-message="Por favor ingrese una Identificacación">
+                        <input type="password" ng-model="toolbar.credenciales.password" class="page-scroll" placeholder="password" id="password" required data-validation-required-message="Por favor ingrese una contraseña">
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                        <button type="submit" class="btn btn-success btn-lg" ng-click="login = false">Login</button>
+
+            </form>
         </div>
         <!-- /.navbar-collapse -->
     </div>
