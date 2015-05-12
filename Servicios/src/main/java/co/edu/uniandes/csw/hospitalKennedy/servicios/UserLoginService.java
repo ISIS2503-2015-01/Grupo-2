@@ -25,6 +25,7 @@ import com.stormpath.sdk.group.GroupList;
 import com.stormpath.sdk.resource.ResourceException;
 import com.stormpath.sdk.tenant.Tenant;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -79,6 +80,16 @@ public class UserLoginService {
         }
 
         return Response.status(status).entity(token).build();
+    }
+    
+    @OPTIONS
+    @Path("/login")
+    public Response aa() {
+        Response.status(200).header("Access-Control-Allow-Methods", "*").entity("").build();
+        Response.status(200).header("Access-Control-Allow-Headers", "*").entity("").build();
+        Response.status(200).header("Access-Control-Allow-Credentials", "true").entity("").build();
+
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("").build();
     }
     
 }
