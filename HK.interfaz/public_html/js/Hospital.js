@@ -1,6 +1,8 @@
 (function () {
     var hospitalKennedy = angular.module('hospitalKennedy', []);
     var pacienteActual;
+    var token;
+    var certificado;
     hospitalKennedy.directive('toolbar', function () {
         return{
             restrict: 'E',
@@ -18,8 +20,11 @@
 
                         console.log("Haciendo login");
                         console.log(this.credenciales.username + " " + this.credenciales.password + " Credenciales: " +this.credenciales);
-                        $http.post('http://localhost:8083/webresources/auth/login', JSON.stringify(this.credenciales,['username', 'password'])).success(function (data) {
-                            console.log(this.credenciales.username + " " + this.credenciales.password);
+                        console.log(JSON.stringify(this.credenciales,['username', 'password']));
+                        certi = $http.post('http://localhost:8083/webresources/auth/login', JSON.stringify(this.credenciales,['username', 'password'])).success(function (data) {
+                            console.log(certi);
+                            console.log(certi.$$state.value.data);
+                            token = certi.$$state.value.data;
                         });
                     };
             }],
