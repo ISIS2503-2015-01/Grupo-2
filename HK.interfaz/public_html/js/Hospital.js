@@ -17,8 +17,8 @@
                 this.hacerLogin = function () {
 
                         console.log("Haciendo login");
-                        console.log(this.credenciales.username + " " + this.credenciales.password);
-                        $http.post('http://localhost:8083/webresources/auth/login', JSON.stringify(this.credenciales)).success(function (data) {
+                        console.log(this.credenciales.username + " " + this.credenciales.password + " Credenciales: " +this.credenciales);
+                        $http.post('http://localhost:8083/webresources/auth/login', JSON.stringify(this.credenciales,['username', 'password'])).success(function (data) {
                             console.log(this.credenciales.username + " " + this.credenciales.password);
                         });
                     };
