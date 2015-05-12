@@ -11,16 +11,17 @@
     <dependencies>
         <!-- Jetty Libreria-->
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>7.6.0.v20120127</version>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>4.1</version>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
+<!--                <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             
             <version>7.6.0.v20120127</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Shiro -->
         <dependency>
@@ -167,4 +168,5 @@
         </pluginManagement>
     </build>
     <name>Servicios</name>
+    <packaging>war</packaging>
 </project>
