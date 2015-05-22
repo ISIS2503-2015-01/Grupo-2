@@ -6,7 +6,13 @@
                 <hr class="star-light">
             </div>
         </div>
-        <form name="nuevoReporte" method="post" ng-submit="nuevoReporte.$valid && agregarReporte.addReporte()" validate>
+        <form name="nuevoReporte" method="post" ng-submit="nuevoReporte.$valid;agregarReporte.addReporte(id);toolbar.selectTab(1)" validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Cedula del paciente: </label>
+                    <input ng-model="id" type="text" class="form-control" required/>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <label>Actividad Física:</label>
@@ -23,23 +29,23 @@
                     <input ng-model="agregarReporte.reporte.gravedad" type="text" class="form-control" required/>
                 </div>
                 <div class="col-md-6">
-                    <label>FechaCreacion:</label>
+                    <label>Fecha del episodio:</label>
                     <input ng-model="agregarReporte.reporte.fechaCreacion" type="text" class="form-control" required/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label>LocalizacionDolor:</label>
+                    <label>Localizacion del dolor:</label>
                     <input ng-model="agregarReporte.reporte.localizacionDolor" type="text" class="form-control" required/>
                 </div>
                 <div class="col-md-6">
-                    <label>PatronSuenio:</label>
+                    <label>Patron Sueño:</label>
                     <input ng-model="agregarReporte.reporte.patronSuenio" type="text" class="form-control" required/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label>MedicamentosRecientes:</label>
+                    <label>Medicamentos Recientes:</label>
                     <input ng-model="agregarReporte.reporte.medicamentosRecientes" type="text" class="form-control" required/>
                 </div>
             </div>

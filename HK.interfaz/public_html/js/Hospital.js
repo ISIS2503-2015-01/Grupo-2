@@ -36,7 +36,13 @@
     paciente2.reportes = [];
     for (i = 0; i < 30; i++) {
         var num = Math.round(Math.random() * 2);
-        var fecha = Math.round(Math.random() * 30);
+        var fechaN = Math.round(Math.random() * 30);
+        var fecha = "";
+        if (fechaN < 10) {
+            fecha = "0" + fechaN;
+        } else {
+            fecha = fechaN
+        }
         var idn = idn + 1;
         var reporte = {id: idn, actividadFisica: 'Estar sentado', alimentacion: "Dulces", gravedad: gravedades[num],
             fechaCreacion: "2015/04/" + fecha, localizacionDolor: "en la frente", patronSuenio: "poco sueño", medicamentosRecientes: "Acetaminofen"};
@@ -50,6 +56,7 @@
             controller: ['$http', function ($http) {
                     this.tab = 0;
                     this.credenciales = {username: '', password: ''};
+                    this.reporte = [];
                     this.selectTab = function (setTab) {
                         this.tab = setTab;
                     };
@@ -69,6 +76,15 @@
                         setTimeout(function () {
                             window.alert("Usted se ha logeado exitosamente")
                         }, 1000);
+                    };
+                    this.setReporte = function (reporte) {
+                        console.log("Set reporte to ");
+                        console.log(reporte);
+                        self.reporte = reporte;
+
+                    };
+                    this.getReporte = function () {
+                        return self.reporte;
                     };
                 }],
             controllerAs: 'toolbar'
@@ -122,13 +138,14 @@
                     self.idActual = new String;
                     console.log("Se busca los reportes del señor: " + idPaciente);
                     self.reportesPacientes = [];
+                    self.currentPage = [];
                     self.reporte = {};
                     this.setId = function (id) {
                         self.idActual = id;
                         console.log("Id set to: " + id);
                         self.reportesPacientes = this.darReportesDeId(id);
                     }
-                    this.getId=function(){
+                    this.getId = function () {
                         return self.idActual;
                     }
                     this.darReportesDeId = function (id) {
@@ -142,32 +159,50 @@
                             if (listaPacientes[i].cedulaCiudadania.localeCompare(id) === 0) {
                                 console.log(listaPacientes[i].reportes);
                                 self.reportesPacientes = listaPacientes[i].reportes;
+                                this.setCurrentPage(this.getPageReportesActual(1));
                                 return listaPacientes[i].reportes;
                             }
                         }
-
                         return self.reportesPacientes;
                     };
+                    this.setCurrentPage = function (reportes) {
+                        console.log("Camiar reportes actuales por ");
+                        console.log(reportes);
+                        self.currentPage = reportes;
+                    };
+                    this.getPageReportesActual = function (page) {
+                        console.log("Busca sacar la pagina " + page);
+                        var res = [];
+                        for (i = page * 10 - 10; i < page * 10 && i < self.reportesPacientes.length; i++) {
+                            res.push(self.reportesPacientes[i]);
+                        }
+                        return res;
+                    };
+                    this.getCurrentPage = function () {
+                        return self.currentPage;
+                    };
                     this.darReportesEntreFechas = function (id, fecha1, fecha2) {
-                        console.log("Se buscan los reportes entre fechas del id "+id)
+                        console.log("Se buscan los reportes entre fechas del id " + id)
                         $http.get('http://172.24.99.164:80/hospitalKennedy.servicios/webresources/Pacientes/' + id + '/reportes/' + fecha1 + '/' + fecha2).success(function (data) {
                             self.reportesPacientes = data;
                         });
                         var res = [];
                         for (i = 0; i < listaPacientes.length; i++) {
                             if (listaPacientes[i].cedulaCiudadania.localeCompare(id) === 0) {
-                                console.log("Encontro al paciente " +i);
+                                console.log("Encontro al paciente " + i);
                                 var reports = listaPacientes[i].reportes;
-                                for (j = 0; j < reports.length; j++){
-                                    if(reports[j].fechaCreacion.localeCompare(fecha1)>= 1 && reports[j].fechaCreacion.localeCompare(fecha2) <= -1)
-                                    res.push(reports[j]);
+                                for (j = 0; j < reports.length; j++) {
+                                    if (reports[j].fechaCreacion.localeCompare(fecha1) >= 1 && reports[j].fechaCreacion.localeCompare(fecha2) <= -1)
+                                        res.push(reports[j]);
                                 }
 
                             }
                         }
-                        res.sort(function(a,b){
-                            a.fechaCreacion.localeCompare(b.fechaCreacion)});
+                        res.sort(function (a, b) {
+                            a.fechaCreacion.localeCompare(b.fechaCreacion);
+                        });
                         self.reportesPacientes = res;
+                        this.setCurrentPage(this.getPageReportesActual(1));
                         console.log(res);
                         return self.reportesPacientes;
                     };
@@ -221,9 +256,23 @@
                         console.log("Entra a metodo de agregar Reporte");
                         $http.post('http://172.24.99.164:80/hospitalKennedy.servicios/webresources/Pacientes/10203040/agregarReportes/', JSON.stringify(self.reporte)).success(function (data) {
                             console.log("Metodo check");
-                            self.reporte = {};
                             toolbar.tab = 0;
                         });
+                        console.log("id:");
+                        console.log(id);
+                        console.log(self.reporte);
+                        for (i = 0; i < listaPacientes.length; i++) {
+                            if (listaPacientes[i].cedulaCiudadania.localeCompare(id) === 0) {
+                                
+                                if (listaPacientes[i].reportes != undefined ) {
+                                    var cod = listaPacientes[i].reportes.length;
+                                    self.reporte.id = cod + 1;
+                                    listaPacientes[i].reportes.push(self.reporte);
+                                } else {
+                                    listaPacientes[i].reportes = [self.reporte];
+                                }
+                            }
+                        }
                     };
                 }],
             controllerAs: 'agregarReporte'
@@ -235,15 +284,11 @@
             templateUrl: 'partials/detallesReporte.html',
             controller: ['$http', function ($http) {
                     var self = this;
-                    self.reporte = [];
-                    sself.reporte = getReportes.darReporte;
-                    console.log('El reporte a dar detalles es ' + self.reporte);
-                    this.setReporte = function(reporte){
-                        self.reporte = reporte;
-                        
-                    }
-                    this.getReporte = function(){
-                        return self.reporte();
+                    self.reporte = toolbar.reporte;
+                    console.log('Entro a dar detalles');
+                    console.log(toolbar.reporte);
+                    this.getReporte = function () {
+                        return self.reporte;
                     }
                 }],
             controllerAs: 'detallesReporte'

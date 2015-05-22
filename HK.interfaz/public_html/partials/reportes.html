@@ -1,4 +1,4 @@
-<nav class="panel panel-default">
+<nav class="panel panel-default" >
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -35,7 +35,7 @@
         <div class="panel panel-default" >
             <!-- Default panel contents -->
             <!-- Table -->
-            <table class="table" >
+            <table ng-if="getReportes.reportesPacientes.length" datatable-setup class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Identificación</th>
@@ -46,19 +46,26 @@
                 </thead>
 
                 <tbody >
-                    <tr ng-repeat="reporte in getReportes.reportesPacientes | orderBy: 'id'">
+                    <tr ng-repeat="reporte in getReportes.getCurrentPage()| orderBy: 'id'">
                         <td>{{reporte.id}}</td>
                         <td>{{reporte.gravedad}}</td>
                         <td>{{reporte.fechaCreacion}}</td>
                         <td>
                             <div ng-click="toolbar.selectTab(6)">
-                                <a href="#reportes" ng-click="detallesReporte.setReporte(reporte)">Ver</a>
+                                <a href="#reportes" ng-click="toolbar.setReporte([reporte])">Ver</a>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <ul class="pagination">
+            <li><a ng-click="getReportes.setCurrentPage(getReportes.getPageReportesActual(1))">1</a></li>
+            <li><a ng-click="getReportes.setCurrentPage(getReportes.getPageReportesActual(2))">2</a></li>
+            <li><a ng-click="getReportes.setCurrentPage(getReportes.getPageReportesActual(3))">3</a></li>
+            <li><a ng-click="getReportes.setCurrentPage(getReportes.getPageReportesActual(4))">4</a></li>
+            <li><a ng-click="getReportes.setCurrentPage(getReportes.getPageReportesActual(5))">5</a></li>
+        </ul>
         <div>
             <form >
                 <table>

@@ -11,7 +11,7 @@
             <!-- Default panel contents -->
             <div class="panel-heading"></div>
             <!-- Table -->
-            <table class="table" ng-model="reporte = detallesReporte.getReporte()">
+            <table class="table" ng-repeat="reporte in toolbar.getReporte()">
                 <tbody>
                     <tr>
                         <td>Actividad fisica: </td>
