@@ -25,11 +25,11 @@
                 <tbody>
                     <! tr ng-repeat="paciente in self.getPacientes.pacientes | orderBy: 'id'">
                     <tr ng-repeat="paciente in getPacientes.pacientes| orderBy: 'id'" href="index.html" >
-                        <td>{{paciente.id}}</td>
+                        <td>{{paciente.cedulaCiudadania}}</td>
                         <td>{{paciente.nombre}}</td>
                         <td>{{paciente.edad}}</td>
                         <td>{{paciente.altura}}</td>
-                        <td><div ng-init="paci = paciente.id" ><li class="page-scroll" ng-click="toolbar.selectTab(3)"><a href="#reportes" ng-click="getReportes.darReportesDeId(paciente.id)"  >Ver</a></li></div></td>
+                        <td><div ng-init="paci = paciente.id" ><li class="page-scroll" ng-click="toolbar.selectTab(3)"><a href="#reportes" ng-click="getReportes.setId(paciente.cedulaCiudadania)"  >Ver</a></li></div></td>
                     </tr>
                 </tbody>
             </table>

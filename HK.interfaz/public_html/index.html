@@ -54,12 +54,12 @@
 
 <section id="portfolio">
     <section>
-        
-        
+
+
         <div ng-if="toolbar.isSelected(4)">
             <nuevo-reporte></nuevo-reporte>
-            
-            
+        </div>
+
     </section>
     <div class="container">
         <div class="row">
@@ -80,6 +80,7 @@
                 </a>
             </div>
             <div class="col-sm-4 portfolio-item">
+                <div align="center"><h4>Agregar Paciente</h4></div>
 
                 <a ng-click="toolbar.selectTab(5)" class="portfolio-link" data-toggle="modal">
                     <div class="caption">
@@ -94,7 +95,8 @@
             </div>
 
             <div class="col-sm-4 portfolio-item">
-                <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                <div align="center"><h4>Agregar Paciente</h4></div>
+                <a  class="portfolio-link" data-toggle="modal" ng-click="toolbar.selectTab(7)">
                     <div class="caption">
                         <div class="caption-content">
                             <i class="fa fa-search-plus fa-3x"></i>
@@ -105,13 +107,16 @@
                 </a>
             </div>
         </div>
-    </div>
-    <section>
-        <div ng-if="toolbar.isSelected(5)">
-            <nuevo-paciente></nuevo-paciente>
-        </div>            
-    </section>    
-</section>        
+    </div> 
+</section>
+
+<div id="nuevoPaciente" ng-if="toolbar.isSelected(5)" >
+    <nuevo-paciente></nuevo-paciente>
+</div> 
+
+<div id="nuevoReporte" ng-if="toolbar.isSelected(7)" >
+    <nuevo-reporte></nuevo-reporte>
+</div> 
 
 <!-- About Section -->
 <section ng-if="toolbar.isSelected(2)"  id="pacientes">
